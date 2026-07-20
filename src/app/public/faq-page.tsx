@@ -1,0 +1,67 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { messages } from "@/messages/pt-BR"
+
+/** Perguntas frequentes (PUB-013). Accordion com deep-link por item. Conteúdo editável via CMS (RF-028). */
+const faqItems = [
+  {
+    id: "anonimato",
+    question: "Posso registrar sem me identificar?",
+    answer:
+      "Sim. Você pode registrar a manifestação sem informar seu nome. Mesmo no modo anônimo, pedimos um e-mail, usado somente para confirmação e devolutivas do Comitê de Ética.",
+  },
+  {
+    id: "acompanhamento",
+    question: "Como acompanho minha manifestação?",
+    answer:
+      "Ao registrar, você recebe um protocolo e um código de acesso. Guarde ambos: eles permitem consultar o status e as devolutivas na página Acompanhar manifestação, sem precisar criar conta.",
+  },
+  {
+    id: "sigilo",
+    question: "Quem tem acesso ao que eu escrever?",
+    answer:
+      "O conteúdo da manifestação é acessado somente pelo Comitê de Ética, sob dever de confidencialidade.",
+  },
+  {
+    id: "retaliacao",
+    question: "Posso sofrer retaliação por usar o canal?",
+    answer:
+      "A Pitang não tolera retaliação contra pessoas que utilizam este canal de boa-fé.",
+  },
+  {
+    id: "evidencias",
+    question: "Posso anexar evidências?",
+    answer:
+      "Sim. Você pode anexar documentos, imagens, áudio ou vídeo dentro dos limites indicados no formulário. Anexar evidências é opcional.",
+  },
+]
+
+export function FaqPage() {
+  return (
+    <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+      <header className="space-y-3">
+        <h1 className="font-heading text-3xl font-semibold tracking-tight">
+          {messages.faq.title}
+        </h1>
+        <p className="text-muted-foreground text-lg text-pretty">{messages.faq.subtitle}</p>
+      </header>
+
+      <Accordion type="single" collapsible className="mt-8 w-full">
+        {faqItems.map((item) => (
+          <AccordionItem key={item.id} value={item.id} id={item.id}>
+            <AccordionTrigger className="text-left text-base">
+              {item.question}
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
+              {item.answer}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  )
+}

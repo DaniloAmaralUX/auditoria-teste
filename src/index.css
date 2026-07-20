@@ -39,6 +39,21 @@
     --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
     --sidebar-border: oklch(0.923 0.003 48.717);
     --sidebar-ring: oklch(0.709 0.01 56.259);
+
+    /* Tokens semânticos de status — workflow (PRD RF-023: 5 canônicos) + auxiliares.
+       Não dependem só de cor: sempre acompanhados de rótulo/ícone (RNF-007). */
+    --status-received: oklch(0.55 0.13 250);        /* Recebida — azul */
+    --status-analysis: oklch(0.62 0.14 90);         /* Em análise — âmbar */
+    --status-investigation: oklch(0.55 0.16 300);   /* Em apuração — violeta */
+    --status-completed: oklch(0.6 0.15 150);        /* Concluída — verde */
+    --status-archived: oklch(0.55 0.01 60);         /* Arquivada — neutro */
+    --status-waiting: oklch(0.65 0.13 60);          /* flag: Aguardando informações */
+    --status-overdue: oklch(0.58 0.22 27);          /* derivado do SLA: atrasada */
+
+    /* Superfície de dados sensíveis (doc 10: surface-sensitive / SensitiveDataPanel) */
+    --surface-sensitive: oklch(0.97 0.02 40);
+    --surface-sensitive-foreground: oklch(0.3 0.05 40);
+    --surface-sensitive-border: oklch(0.85 0.06 40);
 }
 
 .dark {
@@ -73,6 +88,18 @@
     --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.553 0.013 58.071);
+
+    --status-received: oklch(0.68 0.13 250);
+    --status-analysis: oklch(0.75 0.14 90);
+    --status-investigation: oklch(0.7 0.15 300);
+    --status-completed: oklch(0.72 0.17 150);
+    --status-archived: oklch(0.7 0.01 60);
+    --status-waiting: oklch(0.76 0.13 60);
+    --status-overdue: oklch(0.7 0.19 22);
+
+    --surface-sensitive: oklch(0.28 0.03 40);
+    --surface-sensitive-foreground: oklch(0.92 0.03 60);
+    --surface-sensitive-border: oklch(0.4 0.05 40);
 }
 
 @theme inline {
@@ -109,6 +136,16 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
+    --color-status-received: var(--status-received);
+    --color-status-analysis: var(--status-analysis);
+    --color-status-investigation: var(--status-investigation);
+    --color-status-completed: var(--status-completed);
+    --color-status-archived: var(--status-archived);
+    --color-status-waiting: var(--status-waiting);
+    --color-status-overdue: var(--status-overdue);
+    --color-surface-sensitive: var(--surface-sensitive);
+    --color-surface-sensitive-foreground: var(--surface-sensitive-foreground);
+    --color-surface-sensitive-border: var(--surface-sensitive-border);
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
@@ -116,6 +153,20 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Tokens de motion (doc 16). Durações em ms, curvas bezier explícitas.
+   Consumidos por src/lib/motion-tokens.ts e utilitários de animação. */
+:root {
+  --motion-instant: 80ms;
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 260ms;
+  --motion-emphasis: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 1, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1.2);
 }
 
 @layer base {
@@ -128,4 +179,20 @@
   html {
     @apply font-sans;
     }
+  h1, h2, h3, h4 {
+    @apply font-heading;
+    }
+}
+
+/* reduced motion obrigatório (RNF-007 / doc 16): remove deslocamento/escala,
+   reduz durações a ~1ms sem desativar mudanças de opacidade essenciais. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
