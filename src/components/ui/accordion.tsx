@@ -71,7 +71,10 @@ function AccordionContent({
     >
       <div
         className={cn(
-          "h-(--radix-accordion-content-height) pt-0 pb-4 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+          // Reveal "Animate UI, com contenção": o conteúdo entra com fade + 4px
+          // de subida sobre a abertura de altura do Radix. motion-safe: sob
+          // reduced-motion, aparece direto (ver /design/motion).
+          "h-(--radix-accordion-content-height) pt-0 pb-4 motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-top-1 motion-safe:duration-[var(--motion-base)] motion-safe:ease-[var(--ease-standard)] [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
           className
         )}
       >

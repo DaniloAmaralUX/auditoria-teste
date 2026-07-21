@@ -295,6 +295,26 @@
     }
   }
 
+  /* Draw-on de ícone (Animate UI, com contenção — ver /design/motion).
+     Base = traço cheio e visível: se a animação não rodar (aba em segundo
+     plano, motion indisponível), o ícone continua visível. Requer pathLength=1
+     no <path>. O stagger vem de animation-delay inline por segmento. */
+  .icon-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: icon-draw var(--motion-emphasis) var(--ease-out-strong) both;
+  }
+  @keyframes icon-draw {
+    from {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    to {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
   /* Grade de pontos flat, SEM mask de fade — usar dentro de painel com
      border + overflow-hidden (recorte duro, à la Vercel). */
   .dot-grid {

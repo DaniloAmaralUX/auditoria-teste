@@ -2,6 +2,14 @@ import * as React from "react"
 import { RotateCcw } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { IconTile } from "@/components/ui/icon-tile"
+import { AnimatedIcon } from "@/components/ui/animated-icon"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { PageHeader, GuideSection, DemoPanel, RuleList } from "./design-ui"
 
 /* ------------------------- dados das tabelas ------------------------- */
@@ -100,6 +108,44 @@ function EnterDemo() {
   )
 }
 
+/* --- Demo: Animate UI com contenção — ícones draw-on + reveal do accordion --- */
+
+const iconDemo = [
+  { name: "lock" as const, label: "Sigilo" },
+  { name: "anonymity" as const, label: "Anonimato" },
+  { name: "shield" as const, label: "Não retaliação" },
+]
+
+function AnimateUiDemo() {
+  const [key, setKey] = React.useState(0)
+  return (
+    <DemoPanel className="space-y-4">
+      <div className="flex items-center justify-between">
+        <p className="font-heading text-sm font-semibold">Ícones draw-on</p>
+        <Button variant="outline" size="sm" onClick={() => setKey((k) => k + 1)}>
+          <RotateCcw aria-hidden className="size-3.5" />
+          Repetir
+        </Button>
+      </div>
+      <div key={key} className="flex gap-6">
+        {iconDemo.map((icon, i) => (
+          <div key={icon.name} className="flex flex-col items-center gap-2">
+            <IconTile>
+              <AnimatedIcon name={icon.name} delay={i * 0.12} />
+            </IconTile>
+            <span className="text-muted-foreground text-xs">{icon.label}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-muted-foreground text-xs">
+        Traço desenhado (pathLength) uma vez ao entrar na viewport, stagger de 120ms,
+        ease-out forte. Usado só nas garantias da home (primeira impressão) — sob
+        reduced-motion vira contorno estático. Vive em ui/animated-icon.tsx.
+      </p>
+    </DemoPanel>
+  )
+}
+
 /* ----------------------------- página ----------------------------- */
 
 export default function MotionPage() {
@@ -193,6 +239,39 @@ export default function MotionPage() {
             </p>
           </DemoPanel>
           <EnterDemo />
+        </div>
+      </GuideSection>
+
+      <GuideSection
+        title="Animate UI, com contenção"
+        description="Em vez de importar o registry inteiro, adaptamos dois efeitos sobre o motion (a lib de spring/gesto já escolhida) e os submetemos ao filtro acima. Mesma disciplina das outras libs da comunidade: adotar pouco, registrar a decisão."
+      >
+        <div className="space-y-4">
+          <AnimateUiDemo />
+          <DemoPanel className="space-y-3">
+            <p className="font-heading text-sm font-semibold">Reveal do accordion (FAQ)</p>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="a">
+                <AccordionTrigger className="text-base">
+                  Como o conteúdo entra ao abrir?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
+                  Fade + 4px de subida sobre a abertura de altura do Radix (que continua
+                  cuidando de acessibilidade e teclado). Frequência ocasional → animação
+                  padrão; a saída acompanha o colapso de altura, mais rápida que a entrada.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="b">
+                <AccordionTrigger className="text-base">
+                  E sob prefers-reduced-motion?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
+                  O reveal é gated por motion-safe: quem pediu redução vê o conteúdo
+                  aparecer direto, sem deslocamento.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </DemoPanel>
         </div>
       </GuideSection>
 

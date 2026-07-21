@@ -1,6 +1,13 @@
 import { Lock } from "lucide-react"
 
+import { Spot } from "@/components/ui/spot"
 import { PageHeader, GuideSection, DemoPanel, RuleList } from "./design-ui"
+
+const spots = [
+  { name: "empty" as const, label: "Nada encontrado", use: "404, resultados vazios" },
+  { name: "sealed" as const, label: "Registrado e selado", use: "sucesso do protocolo" },
+  { name: "track" as const, label: "Acompanhamento", use: "estado inicial de /acompanhar" },
+]
 
 const radii = [
   { name: "sm", px: "~5px", className: "rounded-sm", use: "chips pequenos" },
@@ -117,10 +124,37 @@ export default function MaterialsPage() {
         </div>
       </GuideSection>
 
+      <GuideSection
+        title="Spot illustrations — blueprint hairline"
+        description="A assinatura estendida à ilustração: cada spot é um diagrama de registro de engenharia — painel com dot-grid recortado por borda, marca “+” de registro no canto e o assunto em contorno de 1,5px. Monocromáticos (herdam currentColor); o laranja só entra onde marca um estado ativo, como o nó atual da linha do tempo. Estáticos por design — a personalidade está no diagrama, não em animá-lo. Vivem em ui/spot.tsx."
+      >
+        <div className="grid gap-4 sm:grid-cols-3">
+          {spots.map((s) => (
+            <DemoPanel key={s.name} className="space-y-3">
+              <div className="bg-muted/30 flex items-center justify-center rounded-lg border p-2">
+                <Spot name={s.name} className="w-44" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="font-heading text-sm font-semibold">{s.label}</p>
+                <p className="text-muted-foreground text-xs">{s.use}</p>
+              </div>
+            </DemoPanel>
+          ))}
+        </div>
+        <p className="text-muted-foreground text-sm">
+          <span className="text-foreground font-medium">empty</span> e{" "}
+          <span className="text-foreground font-medium">sealed</span> são um par: o
+          retículo vazio (não encontrado) e o documento selado (registrado). Colocação
+          restrita aos momentos raros / primeira vez — o mesmo orçamento do deleite do{" "}
+          <span className="text-foreground font-medium">/design/motion</span>.
+        </p>
+      </GuideSection>
+
       <GuideSection title="Regras">
         <RuleList
           items={[
             { do: true, text: "hairline border-y/border-x para estruturar seções e colunas — o esqueleto visível da página." },
+            { do: true, text: "spot illustration só em momento raro (404, sucesso, estado inicial); monocromática, laranja apenas para estado." },
             { do: false, text: "sombras em cards de conteúdo — borda 1px resolve em qualquer fundo." },
             { do: false, text: "dot-grid solto no fundo da página ou com fade — sempre dentro de painel com borda." },
           ]}

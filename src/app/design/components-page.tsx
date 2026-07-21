@@ -616,6 +616,12 @@ export default function ComponentsPage() {
                   rejected:
                     "TextMorph avaliado: morphing é deleite sem propósito nomeável no portal; reavaliar no admin",
                 },
+                {
+                  src: "Animate UI",
+                  adopted: "draw-on de ícones + reveal do accordion (reescritos sobre motion)",
+                  rejected:
+                    "registry inteiro: importar componentes prontos traria motion decorativo que o filtro de frequência rejeita",
+                },
               ].map((row) => (
                 <tr key={row.src} className="border-b align-top last:border-0">
                   <td className="px-4 py-2.5 text-xs font-medium whitespace-nowrap">{row.src}</td>
@@ -681,7 +687,7 @@ export default function ComponentsPage() {
                 { task: "Toasts", lib: "sonner" },
                 { task: "Código de acesso (OTP)", lib: "input-otp" },
                 { task: "Ícones", lib: "lucide-react (strokeWidth 1.75 em tiles)" },
-                { task: "Componentes animados prontos", lib: "Animate UI (registry shadcn) — com contenção" },
+                { task: "Componentes animados prontos", lib: "Animate UI — adaptado (draw-on de ícones, reveal do accordion), não importado" },
                 { task: "Adaptações pontuais (MIT)", lib: "Magic UI (BlurFade, NumberTicker) · Fancy Components (link-underline)" },
               ].map((row) => (
                 <tr key={row.task} className="border-b last:border-0">

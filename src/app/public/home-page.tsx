@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom"
-import { ArrowRight, Mail, Phone, ShieldCheck, Lock, EyeOff } from "lucide-react"
+import { ArrowRight, Mail, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Grid, GridCell, GridCross } from "@/components/ui/grid"
+import { Grid, GridCell } from "@/components/ui/grid"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { IconTile } from "@/components/ui/icon-tile"
 import { Chip } from "@/components/ui/chip"
+import { AnimatedIcon } from "@/components/ui/animated-icon"
 import { ContactLink } from "@/components/public/contact-link"
 import { TrustNotice } from "@/components/feedback/trust-notice"
 import { messages } from "@/messages/pt-BR"
 import { siteConfig } from "@/lib/site-config"
 
-const guaranteeIcons = [Lock, EyeOff, ShieldCheck]
+/** Ícones das garantias, na ordem sigilo · anonimato · não retaliação. */
+const guaranteeIcons = ["lock", "anonymity", "shield"] as const
 
 /** Entrada escalonada do hero (nível 3 permitido só aqui — doc 13 §6). */
 const enterClass =
@@ -76,24 +78,23 @@ export function HomePage() {
             rows={{ sm: 3, md: 1 }}
             className="mt-8"
           >
-            <GridCross column={2} row={1} className="hidden md:block" />
-            {t.guarantees.map((g, i) => {
-              const Icon = guaranteeIcons[i] ?? ShieldCheck
-              return (
-                <GridCell
-                  key={g.title}
-                  className="flex-col items-start justify-start gap-3 p-6 text-left"
-                >
-                  <IconTile>
-                    <Icon aria-hidden strokeWidth={1.75} />
-                  </IconTile>
-                  <h3 className="font-heading text-base font-semibold">{g.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {g.description}
-                  </p>
-                </GridCell>
-              )
-            })}
+            {t.guarantees.map((g, i) => (
+              <GridCell
+                key={g.title}
+                className="flex-col items-start justify-start gap-3 p-6 text-left"
+              >
+                <IconTile>
+                  <AnimatedIcon
+                    name={guaranteeIcons[i] ?? "shield"}
+                    delay={i * 0.12}
+                  />
+                </IconTile>
+                <h3 className="font-heading text-base font-semibold">{g.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {g.description}
+                </p>
+              </GridCell>
+            ))}
           </Grid>
         </div>
       </section>
@@ -129,7 +130,6 @@ export function HomePage() {
             className="mt-8"
             role="list"
           >
-            <GridCross column={2} row={2} className="hidden md:block" />
             {t.howItWorks.map((s) => (
               <GridCell
                 key={s.step}

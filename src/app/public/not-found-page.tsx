@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Spot } from "@/components/ui/spot"
+import { Eyebrow } from "@/components/ui/eyebrow"
 import { messages } from "@/messages/pt-BR"
 
 /** Página não encontrada (PUB-015). Recupera a navegação, sem humor inadequado. */
@@ -9,7 +11,8 @@ export function NotFoundPage() {
   return (
     <div className="mx-auto flex min-h-[60vh] w-full max-w-xl flex-col items-start justify-center gap-4 px-4 py-16 sm:px-6">
       <div className="animate-in fade-in slide-in-from-bottom-1.5 fill-mode-both flex flex-col items-start gap-4 duration-[var(--motion-base)] ease-[var(--ease-enter)]">
-        <p className="text-primary-text font-heading text-sm font-semibold">Erro 404</p>
+        <Spot name="empty" className="w-40" />
+        <Eyebrow>Erro 404</Eyebrow>
         <h1 className="font-heading text-3xl font-semibold tracking-tight">
           {messages.notFound.title}
         </h1>

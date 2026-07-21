@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Link, Navigate } from "react-router-dom"
-import { CheckCircle2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Spot } from "@/components/ui/spot"
 import { ProtocolCard } from "@/components/forms/protocol-card"
 import { TrustNotice } from "@/components/feedback/trust-notice"
 import { useRegistration } from "@/features/registration/registration-context"
@@ -22,18 +22,14 @@ export function SuccessStep() {
 
   return (
     <div>
-      <div className="flex items-center gap-3">
-        <span className="bg-status-completed/12 flex size-12 shrink-0 items-center justify-center rounded-xl">
-          <CheckCircle2 aria-hidden className="text-status-completed size-6" />
-        </span>
-        <h1
-          ref={headingRef}
-          tabIndex={-1}
-          className="font-heading text-2xl font-semibold tracking-tight outline-none"
-        >
-          Manifestação registrada
-        </h1>
-      </div>
+      <Spot name="sealed" className="w-36" />
+      <h1
+        ref={headingRef}
+        tabIndex={-1}
+        className="font-heading mt-4 text-2xl font-semibold tracking-tight outline-none"
+      >
+        Manifestação registrada
+      </h1>
       <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
         Enviamos uma confirmação para o e-mail informado. Guarde o protocolo e o código de acesso
         abaixo: você precisará deles para acompanhar sua manifestação.
