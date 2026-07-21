@@ -17,8 +17,9 @@ import { primaryNav, siteConfig } from "@/lib/site-config"
 import { messages } from "@/messages/pt-BR"
 
 const linkBase =
-  "text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-const linkActive = "text-foreground font-medium"
+  "relative text-sm font-medium text-muted-foreground transition-colors duration-[var(--motion-fast)] hover:text-foreground focus-visible:text-foreground rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+const linkActive =
+  "text-foreground after:absolute after:inset-x-0 after:-bottom-[22px] after:h-0.5 after:rounded-full after:bg-primary"
 
 /** Header sticky do portal público (RF-002). Navegação por teclado, estado atual e menu mobile acessível. */
 export function PublicHeader() {

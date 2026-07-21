@@ -13,11 +13,24 @@ type CopyFieldProps = {
 
 function CopyField({ label, value }: CopyFieldProps) {
   const [copied, setCopied] = React.useState(false)
+  const [failed, setFailed] = React.useState(false)
   const timeout = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const valueRef = React.useRef<HTMLParagraphElement>(null)
 
   React.useEffect(() => () => clearTimeout(timeout.current), [])
 
+  const selectValue = () => {
+    const el = valueRef.current
+    if (!el) return
+    const range = document.createRange()
+    range.selectNodeContents(el)
+    const selection = window.getSelection()
+    selection?.removeAllRanges()
+    selection?.addRange(range)
+  }
+
   const onCopy = async () => {
+    setFailed(false)
     try {
       await navigator.clipboard.writeText(value)
       setCopied(true)
@@ -25,6 +38,8 @@ function CopyField({ label, value }: CopyFieldProps) {
       timeout.current = setTimeout(() => setCopied(false), 1800)
     } catch {
       setCopied(false)
+      setFailed(true)
+      selectValue()
     }
   }
 
@@ -32,7 +47,9 @@ function CopyField({ label, value }: CopyFieldProps) {
     <div className="bg-background rounded-lg border p-4">
       <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{label}</p>
       <div className="mt-1 flex items-center justify-between gap-3">
-        <p className="font-mono text-lg font-semibold break-all">{value}</p>
+        <p ref={valueRef} className="font-mono text-lg font-semibold break-all tabular-nums">
+          {value}
+        </p>
         <Button
           type="button"
           variant="outline"
@@ -41,19 +58,30 @@ function CopyField({ label, value }: CopyFieldProps) {
           className="shrink-0"
           aria-label={`Copiar ${label.toLowerCase()}`}
         >
-          {copied ? (
-            <>
-              <Check aria-hidden className="size-4" />
-              Copiado
-            </>
-          ) : (
-            <>
-              <Copy aria-hidden className="size-4" />
-              Copiar
-            </>
-          )}
+          {/* crossfade dos ícones (ambos no DOM, um absoluto) — sem dependência de motion */}
+          <span className="relative inline-flex size-4 items-center justify-center">
+            <Check
+              aria-hidden
+              className={cn(
+                "absolute size-4 transition-[opacity,scale,filter] duration-[var(--motion-fast)] ease-[var(--ease-standard)]",
+                copied ? "scale-100 opacity-100 blur-0" : "scale-[0.25] opacity-0 blur-[4px]"
+              )}
+            />
+            <Copy
+              aria-hidden
+              className={cn(
+                "size-4 transition-[opacity,scale,filter] duration-[var(--motion-fast)] ease-[var(--ease-standard)]",
+                copied ? "scale-[0.25] opacity-0 blur-[4px]" : "scale-100 opacity-100 blur-0"
+              )}
+            />
+          </span>
+          {copied ? "Copiado" : "Copiar"}
         </Button>
       </div>
+      <span aria-live="polite" className="sr-only">
+        {copied ? `${label} copiado.` : ""}
+        {failed ? "Não foi possível copiar. Selecionamos o valor para você copiar manualmente." : ""}
+      </span>
     </div>
   )
 }

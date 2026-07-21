@@ -18,7 +18,7 @@ export function StepProgress({ currentIndex }: StepProgressProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium">
+        <p className="text-sm font-medium tabular-nums">
           Etapa {current} de {totalSteps}
         </p>
         <p className="text-muted-foreground text-sm">{registrationSteps[currentIndex]?.label}</p>
@@ -33,20 +33,21 @@ export function StepProgress({ currentIndex }: StepProgressProps) {
         aria-valuetext={`Etapa ${current} de ${totalSteps}: ${registrationSteps[currentIndex]?.title}`}
       >
         <div
-          className="bg-primary h-full rounded-full transition-[width] duration-200"
+          className="bg-primary h-full rounded-full transition-[width] duration-[var(--motion-slow)] ease-[var(--ease-standard)] motion-reduce:transition-none"
           style={{ width: `${pct}%` }}
         />
       </div>
 
-      <ol className="hidden gap-2 sm:flex" aria-hidden>
+      <ol className="hidden items-center gap-2 sm:flex" aria-hidden>
         {registrationSteps.map((step, index) => {
           const done = index < currentIndex
           const active = index === currentIndex
+          const isLast = index === registrationSteps.length - 1
           return (
-            <li key={step.key} className="flex flex-1 items-center gap-2">
+            <li key={step.key} className={cn("flex items-center gap-2", !isLast && "flex-1")}>
               <span
                 className={cn(
-                  "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium",
+                  "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium tabular-nums transition-colors duration-[var(--motion-fast)]",
                   done && "bg-primary border-primary text-primary-foreground",
                   active && "border-primary text-primary",
                   !done && !active && "border-border text-muted-foreground"
@@ -56,12 +57,20 @@ export function StepProgress({ currentIndex }: StepProgressProps) {
               </span>
               <span
                 className={cn(
-                  "truncate text-xs",
+                  "text-xs whitespace-nowrap",
                   active ? "text-foreground font-medium" : "text-muted-foreground"
                 )}
               >
                 {step.label}
               </span>
+              {!isLast ? (
+                <span
+                  className={cn(
+                    "h-px flex-1 rounded-full transition-colors duration-[var(--motion-fast)]",
+                    done ? "bg-primary/40" : "bg-border"
+                  )}
+                />
+              ) : null}
             </li>
           )
         })}

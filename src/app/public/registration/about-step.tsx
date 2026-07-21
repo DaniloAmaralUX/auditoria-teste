@@ -23,6 +23,7 @@ import {
 import { FormStep } from "@/components/forms/form-step"
 import { FormNavigation } from "@/components/forms/form-navigation"
 import { ErrorSummary } from "@/components/forms/error-summary"
+import { MotionCollapse } from "@/components/forms/motion-collapse"
 import { aboutSchema, type AboutValues } from "@/schemas/registration"
 import {
   manifestationTypes,
@@ -109,7 +110,7 @@ export function AboutStep() {
             )}
           />
 
-          {type === "outro" ? (
+          <MotionCollapse open={type === "outro"}>
             <FormField
               control={form.control}
               name="typeOther"
@@ -123,7 +124,7 @@ export function AboutStep() {
                 </FormItem>
               )}
             />
-          ) : null}
+          </MotionCollapse>
 
           <FormField
             control={form.control}
@@ -150,7 +151,7 @@ export function AboutStep() {
             )}
           />
 
-          {category === "outro" ? (
+          <MotionCollapse open={category === "outro"}>
             <FormField
               control={form.control}
               name="categoryOther"
@@ -164,7 +165,7 @@ export function AboutStep() {
                 </FormItem>
               )}
             />
-          ) : null}
+          </MotionCollapse>
 
           <div className="grid gap-6 sm:grid-cols-2">
             <FormField

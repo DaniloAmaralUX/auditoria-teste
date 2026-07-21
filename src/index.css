@@ -15,8 +15,8 @@
     --popover-foreground: oklch(0.147 0.004 49.25);
     --primary: oklch(0.553 0.195 38.402);
     --primary-foreground: oklch(0.98 0.016 73.684);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
+    --secondary: oklch(0.967 0.001 106.424);
+    --secondary-foreground: oklch(0.216 0.006 56.043);
     --muted: oklch(0.97 0.001 106.424);
     --muted-foreground: oklch(0.553 0.013 58.071);
     --accent: oklch(0.97 0.001 106.424);
@@ -65,8 +65,8 @@
     --popover-foreground: oklch(0.985 0.001 106.423);
     --primary: oklch(0.47 0.157 37.304);
     --primary-foreground: oklch(0.98 0.016 73.684);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.268 0.007 34.298);
+    --secondary-foreground: oklch(0.985 0.001 106.423);
     --muted: oklch(0.268 0.007 34.298);
     --muted-foreground: oklch(0.709 0.01 56.259);
     --accent: oklch(0.268 0.007 34.298);
@@ -155,8 +155,8 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Tokens de motion (doc 16). Durações em ms, curvas bezier explícitas.
-   Consumidos por src/lib/motion-tokens.ts e utilitários de animação. */
+/* Tokens de motion (doc 16 §2). Durações em ms, curvas bezier canônicas (sem overshoot —
+   contexto calmo). Consumidos por src/lib/motion-tokens.ts e pelas classes de animação. */
 :root {
   --motion-instant: 80ms;
   --motion-fast: 120ms;
@@ -164,9 +164,31 @@
   --motion-slow: 260ms;
   --motion-emphasis: 360ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --ease-enter: cubic-bezier(0, 0, 0, 1);
-  --ease-exit: cubic-bezier(0.3, 0, 1, 1);
-  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1.2);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-distance-xs: 2px;
+  --motion-distance-sm: 6px;
+  --motion-distance-md: 12px;
+  --motion-scale-enter: 0.98;
+  --motion-scale-press: 0.98;
+
+  /* Sombra em camadas no lugar de borda dura (profundidade natural em qualquer fundo).
+     1ª camada = anel de 1px; 2ª = leve elevação; 3ª = profundidade ambiente. */
+  --shadow-border:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  --shadow-border-hover:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.08),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  /* Em fundo escuro, camadas de sombra somem — usar um anel branco único. */
+  --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-border-hover: 0 0 0 1px rgba(255, 255, 255, 0.13);
 }
 
 @layer base {
@@ -175,12 +197,31 @@
     }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     }
   html {
     @apply font-sans;
+    /* Transição suave de tema (escopada, não universal). */
+    transition:
+      background-color var(--motion-slow) var(--ease-standard),
+      color var(--motion-slow) var(--ease-standard);
     }
   h1, h2, h3, h4 {
     @apply font-heading;
+    text-wrap: balance;
+    }
+  p {
+    text-wrap: pretty;
+    }
+  /* Seleção de texto na identidade terracota (frequente nas páginas de leitura longa). */
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 18%, transparent);
+    color: var(--foreground);
+    }
+  .dark ::selection {
+    background: color-mix(in oklch, var(--primary) 30%, transparent);
     }
 }
 

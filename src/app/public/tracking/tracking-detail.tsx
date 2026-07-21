@@ -35,7 +35,15 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-muted-foreground text-sm">Protocolo</p>
-          <p className="font-heading font-mono text-lg font-semibold">{record.protocol}</p>
+          <h1
+            tabIndex={-1}
+            className="font-heading font-mono text-2xl font-semibold tracking-tight outline-none"
+          >
+            {record.protocol}
+          </h1>
+          <div className="mt-3">
+            <StatusBadge status={record.status} />
+          </div>
         </div>
         <Button type="button" variant="outline" size="sm" onClick={onReset}>
           <RotateCcw aria-hidden className="size-4" />
@@ -43,17 +51,20 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
         </Button>
       </div>
 
-      <div className="mt-6 rounded-lg border p-5">
-        <div className="flex flex-wrap items-center gap-3">
-          <StatusBadge status={record.status} />
-          <span className="text-muted-foreground text-sm">
-            Registrada em {formatDate(record.createdAt)} · Atualizada em{" "}
-            {formatDate(record.updatedAt)}
-          </span>
-        </div>
-        <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+      <div className="bg-card mt-6 rounded-xl border p-5 shadow-[var(--shadow-border)] sm:p-6">
+        <p className="text-muted-foreground text-sm leading-relaxed">
           {status.publicDescription}
         </p>
+        <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-muted-foreground">Registrada em</dt>
+            <dd className="font-medium">{formatDate(record.createdAt)}</dd>
+          </div>
+          <div>
+            <dt className="text-muted-foreground">Última atualização</dt>
+            <dd className="font-medium">{formatDate(record.updatedAt)}</dd>
+          </div>
+        </dl>
       </div>
 
       <section className="mt-8" aria-labelledby="timeline-title">

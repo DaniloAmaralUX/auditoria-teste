@@ -36,6 +36,7 @@ export function StatusTimeline({ events }: StatusTimelineProps) {
         const meta = kindMeta[event.kind]
         const Icon = meta.icon
         const isLast = index === ordered.length - 1
+        const isCurrent = index === 0
         const token =
           event.kind === "status" && event.status
             ? `var(--${statusConfig[event.status].token})`
@@ -45,18 +46,40 @@ export function StatusTimeline({ events }: StatusTimelineProps) {
           <li key={index} className="flex gap-3">
             <div className="flex flex-col items-center">
               <span
-                className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border"
-                style={{ color: token }}
+                className={cn(
+                  "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border",
+                  isCurrent ? "border-primary/30 bg-primary/10" : "border-border"
+                )}
               >
-                <Icon aria-hidden className="size-4" />
+                {/* ícone neutro (contraste AA garantido); a cor de status fica num dot secundário */}
+                <Icon
+                  aria-hidden
+                  className={cn(
+                    "size-4",
+                    isCurrent ? "text-foreground" : "text-muted-foreground"
+                  )}
+                />
               </span>
               {!isLast ? <span className="bg-border w-px flex-1" /> : null}
             </div>
             <div className={cn("pb-6", isLast && "pb-0")}>
-              <p className="text-muted-foreground text-xs">
+              <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
+                <span
+                  aria-hidden
+                  className="size-1.5 rounded-full"
+                  style={{ backgroundColor: token }}
+                />
                 {meta.label} · {formatDate(event.date)}
+                {isCurrent ? " · Mais recente" : ""}
               </p>
-              <p className="mt-0.5 text-sm font-medium">{event.title}</p>
+              <p
+                className={cn(
+                  "mt-0.5 text-sm",
+                  isCurrent ? "text-foreground font-semibold" : "font-medium"
+                )}
+              >
+                {event.title}
+              </p>
               {event.description ? (
                 <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
                   {event.description}

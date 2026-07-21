@@ -1,9 +1,12 @@
+import * as React from "react"
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { messages } from "@/messages/pt-BR"
 
 /** Perguntas frequentes (PUB-013). Accordion com deep-link por item. Conteúdo editável via CMS (RF-028). */
@@ -41,6 +44,22 @@ const faqItems = [
 ]
 
 export function FaqPage() {
+  const reduced = useReducedMotion()
+  const [open, setOpen] = React.useState<string>(() =>
+    typeof window !== "undefined" ? decodeURIComponent(window.location.hash.slice(1)) : ""
+  )
+
+  // Deep-link por hash (PUB-013): /faq#anonimato abre e rola até o item.
+  React.useEffect(() => {
+    if (!open) return
+    const el = document.getElementById(open)
+    if (el) {
+      el.scrollIntoView({ block: "start", behavior: reduced ? "auto" : "smooth" })
+    }
+    // roda uma vez no mount para o item vindo do hash
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
       <header className="space-y-3">
@@ -50,9 +69,15 @@ export function FaqPage() {
         <p className="text-muted-foreground text-lg text-pretty">{messages.faq.subtitle}</p>
       </header>
 
-      <Accordion type="single" collapsible className="mt-8 w-full">
+      <Accordion
+        type="single"
+        collapsible
+        value={open}
+        onValueChange={setOpen}
+        className="mt-8 w-full"
+      >
         {faqItems.map((item) => (
-          <AccordionItem key={item.id} value={item.id} id={item.id}>
+          <AccordionItem key={item.id} value={item.id} id={item.id} className="scroll-mt-24">
             <AccordionTrigger className="text-left text-base">
               {item.question}
             </AccordionTrigger>

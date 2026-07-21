@@ -23,6 +23,7 @@ import {
 import { FormStep } from "@/components/forms/form-step"
 import { FormNavigation } from "@/components/forms/form-navigation"
 import { ErrorSummary } from "@/components/forms/error-summary"
+import { MotionCollapse } from "@/components/forms/motion-collapse"
 import { TrustNotice } from "@/components/feedback/trust-notice"
 import { identificationSchema, type IdentificationValues } from "@/schemas/registration"
 import { relationshipOptions } from "@/lib/registration-taxonomy"
@@ -87,7 +88,7 @@ export function IdentificationStep() {
                     value={field.value}
                     className="gap-3"
                   >
-                    <label className="border-input has-[:checked]:border-primary has-[:checked]:bg-primary/5 flex cursor-pointer items-start gap-3 rounded-lg border p-4">
+                    <label className="border-input hover:bg-muted/40 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors duration-[var(--motion-fast)] ease-[var(--ease-standard)]">
                       <RadioGroupItem value="anonimo" className="mt-0.5" />
                       <span className="space-y-1">
                         <span className="block text-sm font-medium">Anônima</span>
@@ -97,7 +98,7 @@ export function IdentificationStep() {
                         </span>
                       </span>
                     </label>
-                    <label className="border-input has-[:checked]:border-primary has-[:checked]:bg-primary/5 flex cursor-pointer items-start gap-3 rounded-lg border p-4">
+                    <label className="border-input hover:bg-muted/40 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors duration-[var(--motion-fast)] ease-[var(--ease-standard)]">
                       <RadioGroupItem value="identificado" className="mt-0.5" />
                       <span className="space-y-1">
                         <span className="block text-sm font-medium">Identificada</span>
@@ -113,7 +114,7 @@ export function IdentificationStep() {
             )}
           />
 
-          {mode === "identificado" ? (
+          <MotionCollapse open={mode === "identificado"}>
             <FormField
               control={form.control}
               name="name"
@@ -127,7 +128,7 @@ export function IdentificationStep() {
                 </FormItem>
               )}
             />
-          ) : null}
+          </MotionCollapse>
 
           <FormField
             control={form.control}
@@ -185,12 +186,12 @@ export function IdentificationStep() {
             )}
           />
 
-          {mode === "anonimo" ? (
+          <MotionCollapse open={mode === "anonimo"}>
             <TrustNotice variant="anonymity">
               No modo anônimo, seu nome não é solicitado nem registrado. Evitamos promessas
               absolutas: anonimato não é o mesmo que confidencialidade técnica total.
             </TrustNotice>
-          ) : null}
+          </MotionCollapse>
 
           <FormNavigation nextLabel="Continuar para a manifestação" onBack={onBack} />
         </form>

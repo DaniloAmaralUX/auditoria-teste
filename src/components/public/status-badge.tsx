@@ -22,13 +22,13 @@ export function StatusBadge({ status, flag, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        "border-border bg-muted/40 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium",
+        "border-border bg-muted/40 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium transition-colors duration-[var(--motion-fast)]",
         className
       )}
     >
       <span
         aria-hidden
-        className="size-2 rounded-full"
+        className="size-2 rounded-full ring-1 ring-black/10 ring-inset dark:ring-white/20"
         style={{ backgroundColor: `var(--${config.token})` }}
       />
       {config.label}

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Upload, File as FileIcon, X, AlertCircle, CheckCircle2 } from "lucide-react"
+import { Upload, X, AlertCircle, CheckCircle2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -95,7 +95,7 @@ export function FileUpload({ value, onChange }: FileUploadProps) {
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
         className={cn(
-          "border-input rounded-lg border border-dashed p-6 text-center transition-colors",
+          "border-input rounded-lg border border-dashed p-6 text-center transition-colors duration-[var(--motion-fast)] ease-[var(--ease-standard)]",
           dragOver && "border-primary bg-primary/5"
         )}
       >
@@ -143,7 +143,7 @@ export function FileUpload({ value, onChange }: FileUploadProps) {
               <li
                 key={item.id}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg border p-3",
+                  "flex items-center gap-3 rounded-lg border p-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-[var(--motion-base)] motion-safe:ease-[var(--ease-standard)]",
                   rejected ? "border-destructive/40 bg-destructive/5" : "border-input"
                 )}
               >
@@ -152,13 +152,12 @@ export function FileUpload({ value, onChange }: FileUploadProps) {
                 ) : (
                   <CheckCircle2 aria-hidden className="text-status-completed size-5 shrink-0" />
                 )}
-                <FileIcon aria-hidden className="text-muted-foreground size-4 shrink-0" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">{item.name}</p>
                   <p
                     className={cn(
                       "text-xs",
-                      rejected ? "text-destructive" : "text-muted-foreground"
+                      rejected ? "text-destructive" : "text-muted-foreground tabular-nums"
                     )}
                   >
                     {rejected ? item.error : formatBytes(item.size)}
@@ -181,7 +180,7 @@ export function FileUpload({ value, onChange }: FileUploadProps) {
       ) : null}
 
       {value.length > 0 ? (
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-xs tabular-nums">
           {value.filter((a) => a.status === "valid").length} de {uploadConfig.maxFiles} arquivos ·{" "}
           {formatBytes(totalBytes)} de {formatBytes(uploadConfig.maxTotalBytes)}
         </p>

@@ -2,7 +2,7 @@ import * as React from "react"
 import { Navigate, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, Loader2 } from "lucide-react"
 
 import {
   Form,
@@ -211,10 +211,16 @@ export function ReviewStep() {
             >
               Voltar
             </Button>
-            <Button type="submit" disabled={submitting} className="sm:min-w-48">
-              {submitting ? "Enviando…" : "Enviar manifestação"}
+            <Button type="submit" disabled={submitting} aria-busy={submitting} className="min-w-52">
+              {submitting ? (
+                <Loader2 aria-hidden className="size-4 animate-spin motion-reduce:animate-none" />
+              ) : null}
+              Enviar manifestação
             </Button>
           </div>
+          <span aria-live="polite" className="sr-only">
+            {submitting ? "Enviando manifestação…" : ""}
+          </span>
         </form>
       </Form>
     </FormStep>

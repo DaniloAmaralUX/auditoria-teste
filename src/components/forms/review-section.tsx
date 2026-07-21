@@ -16,12 +16,12 @@ type ReviewSectionProps = {
 /** Bloco de revisão editável (doc 15 — ReviewSection). */
 export function ReviewSection({ title, editHref, rows }: ReviewSectionProps) {
   return (
-    <section className="rounded-lg border p-4">
+    <section className="bg-card rounded-lg border p-4 sm:p-6">
       <div className="flex items-center justify-between gap-3">
         <h2 className="font-heading text-base font-semibold">{title}</h2>
         <Link
           to={editHref}
-          className="text-primary inline-flex items-center gap-1.5 rounded-sm text-sm outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+          className="text-primary hover:bg-muted/60 -m-2 inline-flex items-center gap-1.5 rounded-md p-2 text-sm transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <Pencil aria-hidden className="size-3.5" />
           Editar

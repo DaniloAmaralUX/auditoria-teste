@@ -1,6 +1,8 @@
 import * as React from "react"
 import { AlertCircle } from "lucide-react"
 
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
+
 type ErrorItem = {
   /** id do campo (para mover o foco). */
   fieldId: string
@@ -22,6 +24,7 @@ type ErrorSummaryProps = {
  */
 export function ErrorSummary({ errors, title, onSelect }: ErrorSummaryProps) {
   const ref = React.useRef<HTMLDivElement>(null)
+  const reduced = useReducedMotion()
 
   React.useEffect(() => {
     if (errors.length > 0) {
@@ -42,7 +45,7 @@ export function ErrorSummary({ errors, title, onSelect }: ErrorSummaryProps) {
     const el = document.getElementById(fieldId)
     if (el) {
       el.focus()
-      el.scrollIntoView({ block: "center", behavior: "smooth" })
+      el.scrollIntoView({ block: "center", behavior: reduced ? "auto" : "smooth" })
     }
   }
 
@@ -52,7 +55,7 @@ export function ErrorSummary({ errors, title, onSelect }: ErrorSummaryProps) {
       tabIndex={-1}
       role="alert"
       aria-labelledby="error-summary-title"
-      className="border-destructive/40 bg-destructive/5 rounded-lg border p-4 outline-none"
+      className="border-destructive/40 bg-destructive/5 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-fast)] rounded-lg border p-4 outline-none"
     >
       <div className="flex items-center gap-2">
         <AlertCircle aria-hidden className="text-destructive size-5" />

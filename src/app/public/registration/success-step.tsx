@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Link, Navigate } from "react-router-dom"
 import { CheckCircle2 } from "lucide-react"
 
@@ -8,6 +9,11 @@ import { useRegistration } from "@/features/registration/registration-context"
 
 export function SuccessStep() {
   const { result } = useRegistration()
+  const headingRef = React.useRef<HTMLHeadingElement>(null)
+
+  React.useEffect(() => {
+    headingRef.current?.focus()
+  }, [])
 
   // Sem resultado (acesso direto ou refresh), não há o que confirmar.
   if (!result) {
@@ -15,10 +21,11 @@ export function SuccessStep() {
   }
 
   return (
-    <div>
+    <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1.5 motion-safe:duration-[var(--motion-base)] motion-safe:ease-[var(--ease-enter)]">
       <div className="flex items-center gap-3">
         <CheckCircle2 aria-hidden className="text-status-completed size-8 shrink-0" />
         <h1
+          ref={headingRef}
           tabIndex={-1}
           className="font-heading text-2xl font-semibold tracking-tight outline-none"
         >

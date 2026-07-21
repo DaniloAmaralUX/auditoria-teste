@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AlertCircle, Search, ShieldCheck } from "lucide-react"
+import { AlertCircle, Search, ShieldCheck, Loader2 } from "lucide-react"
 
 import {
   Form,
@@ -28,11 +28,19 @@ const GENERIC_ERROR =
 
 export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   const [error, setError] = React.useState<string | null>(null)
+  const errorRef = React.useRef<HTMLDivElement>(null)
 
   const form = useForm<TrackingLookupValues>({
     resolver: zodResolver(trackingLookupSchema),
     defaultValues: { protocol: "", accessCode: "", website: "" },
   })
+
+  // Ao falhar, leva o foco ao alerta (resgate por teclado/leitor de tela).
+  React.useEffect(() => {
+    if (error) {
+      errorRef.current?.focus()
+    }
+  }, [error])
 
   const onSubmit = (values: TrackingLookupValues) => {
     setError(null)
@@ -62,9 +70,14 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
     onSuccess(result.record)
   }
 
+  const submitting = form.formState.isSubmitting
+
   return (
     <div className="mx-auto w-full max-w-md">
-      <h1 className="font-heading text-2xl font-semibold tracking-tight">
+      <h1
+        tabIndex={-1}
+        className="font-heading text-2xl font-semibold tracking-tight outline-none"
+      >
         Acompanhar manifestação
       </h1>
       <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
@@ -72,15 +85,21 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
         conta.
       </p>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="mt-6 space-y-6">
-          {error ? (
-            <Alert variant="destructive">
-              <AlertCircle aria-hidden className="size-4" />
-              <AlertTitle>Não foi possível consultar</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          ) : null}
+      <div className="bg-card mt-6 rounded-xl border p-6 shadow-[var(--shadow-border)] sm:p-8">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6">
+            {error ? (
+              <Alert
+                ref={errorRef}
+                tabIndex={-1}
+                variant="destructive"
+                className="outline-none motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-fast)]"
+              >
+                <AlertCircle aria-hidden className="size-4" />
+                <AlertTitle>Não foi possível consultar</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            ) : null}
 
           <FormField
             control={form.control}
@@ -135,17 +154,27 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
             />
           </div>
 
-          <Button type="submit" className="w-full">
-            <Search aria-hidden className="size-4" />
-            Consultar
-          </Button>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={submitting}
+              aria-busy={submitting}
+            >
+              {submitting ? (
+                <Loader2 aria-hidden className="size-4 animate-spin motion-reduce:animate-none" />
+              ) : (
+                <Search aria-hidden className="size-4" />
+              )}
+              {submitting ? "Consultando…" : "Consultar"}
+            </Button>
+          </form>
+        </Form>
+      </div>
 
-          <p className="text-muted-foreground flex items-center justify-center gap-2 text-xs">
-            <ShieldCheck aria-hidden className="size-3.5" />
-            Consulta protegida contra abuso e limitada por segurança.
-          </p>
-        </form>
-      </Form>
+      <p className="text-muted-foreground mt-4 flex items-center justify-center gap-2 text-xs">
+        <ShieldCheck aria-hidden className="size-3.5" />
+        Consulta protegida contra abuso e limitada por segurança.
+      </p>
     </div>
   )
 }

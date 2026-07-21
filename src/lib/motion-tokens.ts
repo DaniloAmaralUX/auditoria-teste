@@ -14,9 +14,9 @@ export const motionDuration = {
 
 export const motionEase = {
   standard: "cubic-bezier(0.2, 0, 0, 1)",
-  enter: "cubic-bezier(0, 0, 0, 1)",
-  exit: "cubic-bezier(0.3, 0, 1, 1)",
-  emphasis: "cubic-bezier(0.2, 0, 0, 1.2)",
+  enter: "cubic-bezier(0, 0, 0.2, 1)",
+  exit: "cubic-bezier(0.4, 0, 1, 1)",
+  emphasis: "cubic-bezier(0.2, 0.8, 0.2, 1)",
 } as const
 
 /** Deslocamentos de entrada/saída aprovados (doc 16). */

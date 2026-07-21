@@ -6,20 +6,28 @@ type TrustNoticeVariant = "info" | "confidential" | "anonymity" | "warning"
 
 const variantConfig: Record<
   TrustNoticeVariant,
-  { icon: typeof Info; className: string }
+  { icon: typeof Info; className: string; iconClassName: string }
 > = {
-  info: { icon: Info, className: "border-border bg-muted/40 text-foreground" },
+  info: {
+    icon: Info,
+    className: "border-border border-l-2 border-l-border bg-muted/40 text-foreground",
+    iconClassName: "text-muted-foreground",
+  },
   confidential: {
     icon: ShieldCheck,
-    className: "border-primary/20 bg-primary/5 text-foreground",
+    className: "border-primary/20 border-l-2 border-l-primary/50 bg-primary/5 text-foreground",
+    iconClassName: "text-primary",
   },
   anonymity: {
     icon: Lock,
-    className: "border-primary/20 bg-primary/5 text-foreground",
+    className: "border-primary/20 border-l-2 border-l-primary/50 bg-primary/5 text-foreground",
+    iconClassName: "text-primary",
   },
   warning: {
     icon: AlertTriangle,
-    className: "border-status-waiting/30 bg-status-waiting/10 text-foreground",
+    className:
+      "border-status-waiting/30 border-l-2 border-l-status-waiting/60 bg-status-waiting/10 text-foreground dark:bg-status-waiting/15",
+    iconClassName: "text-status-waiting",
   },
 }
 
@@ -40,7 +48,7 @@ export function TrustNotice({
   children,
   className,
 }: TrustNoticeProps) {
-  const { icon: Icon, className: variantClass } = variantConfig[variant]
+  const { icon: Icon, className: variantClass, iconClassName } = variantConfig[variant]
 
   return (
     <div
@@ -50,7 +58,7 @@ export function TrustNotice({
         className
       )}
     >
-      <Icon aria-hidden className="text-primary mt-0.5 size-5 shrink-0" />
+      <Icon aria-hidden className={cn("mt-0.5 size-5 shrink-0", iconClassName)} />
       <div className="space-y-1">
         {title ? <p className="font-medium">{title}</p> : null}
         <p className="text-muted-foreground">{children}</p>
