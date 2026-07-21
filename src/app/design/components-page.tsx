@@ -2,7 +2,7 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { ArrowRight, Lock, Mail, EyeOff, ShieldCheck } from "lucide-react"
+import { ArrowRight, Lock, Mail, EyeOff, ShieldCheck, RotateCcw } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -36,6 +36,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { IconTile } from "@/components/ui/icon-tile"
 import { Chip } from "@/components/ui/chip"
+import { BlurFade } from "@/components/ui/blur-fade"
+import { NumberTicker } from "@/components/ui/number-ticker"
 import { AlertCircle } from "lucide-react"
 
 import { StatusBadge } from "@/components/public/status-badge"
@@ -194,6 +196,34 @@ function FormStepDemo() {
           demo não monta junto com a página.
         </p>
       )}
+    </DemoPanel>
+  )
+}
+
+/* --------- Demo: BlurFade (adaptado de Magic UI) com replay --------- */
+
+function BlurFadeDemo() {
+  const [key, setKey] = React.useState(0)
+  return (
+    <DemoPanel className="space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-heading text-sm font-semibold">BlurFade</p>
+        <Button variant="outline" size="sm" onClick={() => setKey((k) => k + 1)}>
+          <RotateCcw aria-hidden className="size-3.5" />
+          Repetir
+        </Button>
+      </div>
+      <div key={key} className="grid gap-3 sm:grid-cols-3">
+        {["Sigilo", "Anonimato", "Não retaliação"].map((label, i) => (
+          <BlurFade key={label} delay={i * 0.06}>
+            <div className="bg-muted/60 rounded-lg border p-4 text-sm">{label}</div>
+          </BlurFade>
+        ))}
+      </div>
+      <p className="text-muted-foreground text-xs">
+        Fade + blur 4px + 6px de deslocamento em 260ms, stagger de 60ms. Uso: entradas
+        raras (hero, sucesso, ilustrações) — com reduced-motion vira fade puro.
+      </p>
     </DemoPanel>
   )
 }
@@ -523,7 +553,89 @@ export default function ComponentsPage() {
         </div>
       </GuideSection>
 
-      {/* ============ 8. BIBLIOTECAS ============ */}
+      {/* ============ 8. ADAPTADOS DA COMUNIDADE ============ */}
+      <GuideSection
+        title="Adaptados da comunidade (open source)"
+        description="Mapeamento de magicui.design, fancycomponents.dev e torph.lochie.me (todos MIT). Cada candidato passou pelo filtro de motion do guia — a maioria foi rejeitada de propósito; o que entrou foi reescrito sobre os nossos tokens."
+      >
+        <div className="overflow-x-auto rounded-xl border">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-muted/40 border-b text-left">
+                <th className="px-4 py-2 text-xs font-semibold">Fonte (MIT)</th>
+                <th className="px-4 py-2 text-xs font-semibold">Adotado</th>
+                <th className="px-4 py-2 text-xs font-semibold">Rejeitado — motivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {
+                  src: "Magic UI",
+                  adopted: "BlurFade · NumberTicker",
+                  rejected:
+                    "meteors, sparkles, marquee, efeitos de texto — decoração em elementos frequentes viola o filtro",
+                },
+                {
+                  src: "Fancy Components",
+                  adopted: "sublinhado center-out (reescrito em CSS puro)",
+                  rejected:
+                    "typewriter, scramble, letter-swap — registro lúdico demais para uma ouvidoria",
+                },
+                {
+                  src: "torph",
+                  adopted: "—",
+                  rejected:
+                    "TextMorph avaliado: morphing é deleite sem propósito nomeável no portal; reavaliar no admin",
+                },
+              ].map((row) => (
+                <tr key={row.src} className="border-b align-top last:border-0">
+                  <td className="px-4 py-2.5 text-xs font-medium whitespace-nowrap">{row.src}</td>
+                  <td className="px-4 py-2.5 text-xs">{row.adopted}</td>
+                  <td className="text-muted-foreground px-4 py-2.5 text-xs">{row.rejected}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <BlurFadeDemo />
+
+        <DemoPanel className="space-y-3">
+          <p className="font-heading text-sm font-semibold">NumberTicker</p>
+          <p className="font-heading text-4xl font-semibold">
+            <NumberTicker value={1284} />
+          </p>
+          <p className="text-muted-foreground text-xs">
+            Contagem com spring (sem overshoot), formatação{" "}
+            <code className="bg-muted rounded px-1 py-0.5">Intl.NumberFormat pt-BR</code> e
+            tabular-nums. Reservado às estatísticas do painel admin — no portal público
+            não há contagem que justifique (protocolo é identificador, não número).
+          </p>
+        </DemoPanel>
+
+        <DemoPanel className="space-y-3">
+          <p className="font-heading text-sm font-semibold">Sublinhado center-out</p>
+          <div className="flex gap-6 text-sm font-medium">
+            <a href="#" className="link-underline" onClick={(e) => e.preventDefault()}>
+              Acompanhar
+            </a>
+            <a href="#" className="link-underline" onClick={(e) => e.preventDefault()}>
+              FAQ
+            </a>
+            <a href="#" className="link-underline" onClick={(e) => e.preventDefault()}>
+              LGPD
+            </a>
+          </div>
+          <p className="text-muted-foreground text-xs">
+            Utility <code className="bg-muted rounded px-1 py-0.5">.link-underline</code> —
+            cresce do centro no hover/focus via transform (120ms), atrás de{" "}
+            <code className="bg-muted rounded px-1 py-0.5">@media (hover: hover)</code>.
+            Candidata ao nav e footer no repasse.
+          </p>
+        </DemoPanel>
+      </GuideSection>
+
+      {/* ============ 9. BIBLIOTECAS ============ */}
       <GuideSection
         title="Bibliotecas escolhidas"
         description="Escolhas deliberadas, uma por tarefa — não trocar sem decisão registrada aqui. Alinhadas à lista curada da skill pick-ui-library (Emil Kowalski)."
@@ -539,6 +651,7 @@ export default function ComponentsPage() {
                 { task: "Código de acesso (OTP)", lib: "input-otp" },
                 { task: "Ícones", lib: "lucide-react (strokeWidth 1.75 em tiles)" },
                 { task: "Componentes animados prontos", lib: "Animate UI (registry shadcn) — com contenção" },
+                { task: "Adaptações pontuais (MIT)", lib: "Magic UI (BlurFade, NumberTicker) · Fancy Components (link-underline)" },
               ].map((row) => (
                 <tr key={row.task} className="border-b last:border-0">
                   <td className="text-muted-foreground px-4 py-2.5 text-xs">{row.task}</td>
