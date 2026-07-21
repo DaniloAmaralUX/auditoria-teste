@@ -17,6 +17,9 @@ export const siteConfig = {
   codeOfConductPdf: "/documentos/codigo-de-conduta.pdf",
 } as const
 
+/** Versão vigente dos Termos de uso, registrada junto ao aceite (RF-005). */
+export const TERMS_VERSION = "0.1"
+
 /** Navegação principal do header (RF-002). */
 export const primaryNav = [
   { label: "Início", href: "/" },
