@@ -1,24 +1,23 @@
-import { Mail, Phone, ShieldCheck } from "lucide-react"
+import { Mail, Phone } from "lucide-react"
 
+import { PitangLogo } from "@/components/ui/pitang-logo"
+import { ContactLink } from "@/components/public/contact-link"
 import { PublicNavLink } from "@/components/public/nav-link"
 import { footerNav, siteConfig } from "@/lib/site-config"
 import { messages } from "@/messages/pt-BR"
 
 const linkClass =
-  "text-sm text-muted-foreground transition-colors duration-[var(--motion-fast)] hover:text-foreground rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-const contactClass =
-  "-mx-3 inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm text-muted-foreground transition-colors duration-[var(--motion-fast)] hover:bg-muted hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  "link-underline text-sm text-muted-foreground transition-colors duration-[var(--motion-fast)] hover:text-foreground rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
 
 /** Rodapé global do portal público (RF-002): contatos, documentos e termos. */
 export function PublicFooter() {
   return (
     <footer className="border-t bg-muted/30">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <ShieldCheck aria-hidden className="text-primary-text size-5 shrink-0" />
-            <p className="font-heading text-sm font-semibold">{siteConfig.shortName}</p>
-          </div>
+        <div className="space-y-3">
+          {/* Logo institucional vermelha: no footer não há ação competindo (guia /design/marca). */}
+          <PitangLogo variant="brand" className="h-5" />
+          <p className="font-heading text-sm font-semibold">{siteConfig.shortName}</p>
           <p className="text-muted-foreground max-w-xs text-sm">{messages.footer.rights}</p>
         </div>
 
@@ -35,18 +34,24 @@ export function PublicFooter() {
 
         <div className="space-y-1">
           <p className="text-foreground text-sm font-medium">Contato</p>
-          <ul>
+          <ul className="space-y-1">
             <li>
-              <a href={`mailto:${siteConfig.contact.email}`} className={contactClass}>
-                <Mail aria-hidden className="size-4" />
+              <ContactLink
+                href={`mailto:${siteConfig.contact.email}`}
+                icon={Mail}
+                className="text-muted-foreground hover:text-foreground font-normal"
+              >
                 {siteConfig.contact.email}
-              </a>
+              </ContactLink>
             </li>
             <li>
-              <a href={siteConfig.contact.phoneHref} className={contactClass}>
-                <Phone aria-hidden className="size-4" />
+              <ContactLink
+                href={siteConfig.contact.phoneHref}
+                icon={Phone}
+                className="text-muted-foreground hover:text-foreground font-normal"
+              >
                 {siteConfig.contact.phone}
-              </a>
+              </ContactLink>
             </li>
           </ul>
         </div>

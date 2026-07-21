@@ -21,7 +21,7 @@ export function SuccessStep() {
   }
 
   return (
-    <div className="brand-glow relative">
+    <div>
       <div className="flex items-center gap-3">
         <span className="bg-status-completed/12 flex size-12 shrink-0 items-center justify-center rounded-xl">
           <CheckCircle2 aria-hidden className="text-status-completed size-6" />

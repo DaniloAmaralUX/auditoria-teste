@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { ArrowRight, ShieldCheck } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Eyebrow } from "@/components/ui/eyebrow"
+import { Chip } from "@/components/ui/chip"
 import { TrustNotice } from "@/components/feedback/trust-notice"
 import { registrationSteps } from "@/features/registration/steps"
 import { messages } from "@/messages/pt-BR"
@@ -14,10 +16,8 @@ export function StartPage() {
   const t = messages.registrationStart
 
   return (
-    <div className="brand-glow relative">
-      <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
-        {t.eyebrow}
-      </p>
+    <div>
+      <Eyebrow>{t.eyebrow}</Eyebrow>
       <h1
         tabIndex={-1}
         className="font-heading mt-3 text-3xl font-semibold tracking-tight outline-none"
@@ -30,12 +30,11 @@ export function StartPage() {
 
       <ul className="mt-5 flex flex-wrap gap-2">
         {t.trustChips.map((chip) => (
-          <li
-            key={chip}
-            className="border-primary/25 bg-primary/5 text-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm"
-          >
-            <ShieldCheck aria-hidden className="text-primary-text size-3.5" />
-            {chip}
+          <li key={chip}>
+            <Chip>
+              <ShieldCheck aria-hidden className="text-muted-foreground size-3.5" strokeWidth={1.75} />
+              {chip}
+            </Chip>
           </li>
         ))}
       </ul>
@@ -50,7 +49,7 @@ export function StartPage() {
             return (
               <li key={step.key} className="flex gap-3">
                 <div className="flex flex-col items-center">
-                  <span className="border-border bg-card text-muted-foreground flex size-8 shrink-0 items-center justify-center rounded-full border text-sm font-medium tabular-nums shadow-[var(--shadow-border)]">
+                  <span className="border-border bg-card text-muted-foreground flex size-8 shrink-0 items-center justify-center rounded-full border text-sm font-medium tabular-nums">
                     {i + 1}
                   </span>
                   {!isLast ? <span className="bg-border w-px flex-1" /> : null}

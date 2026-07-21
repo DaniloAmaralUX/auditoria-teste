@@ -2,7 +2,12 @@ import { Link } from "react-router-dom"
 import { ArrowRight, Mail, Phone, ShieldCheck, Lock, EyeOff } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
+import { Grid, GridCell, GridCross } from "@/components/ui/grid"
+import { Eyebrow } from "@/components/ui/eyebrow"
+import { IconTile } from "@/components/ui/icon-tile"
+import { Chip } from "@/components/ui/chip"
+import { ContactLink } from "@/components/public/contact-link"
 import { TrustNotice } from "@/components/feedback/trust-notice"
 import { messages } from "@/messages/pt-BR"
 import { siteConfig } from "@/lib/site-config"
@@ -20,14 +25,12 @@ export function HomePage() {
   return (
     <div>
       {/* 1. Hero + CTAs + aviso de sigilo */}
-      <section aria-labelledby="hero-title" className="brand-glow brand-dots">
+      <section aria-labelledby="hero-title">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <div className="max-w-2xl space-y-6">
-            <p
-              className={`text-primary-text text-sm font-medium tracking-wide uppercase ${enterClass}`}
-            >
+            <Eyebrow className={enterClass}>
               {siteConfig.org} · Canal oficial
-            </p>
+            </Eyebrow>
             <h1
               id="hero-title"
               className={`font-heading text-4xl leading-[1.1] font-semibold tracking-tight sm:text-5xl ${enterClass} delay-[60ms]`}
@@ -59,7 +62,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 2. Garantias — faixa alternada */}
+      {/* 2. Garantias — faixa alternada sobre o Grid assinatura (hairline + crosshair) */}
       <section aria-labelledby="guarantees-title" className="bg-muted/30 border-y">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <h2
@@ -68,27 +71,30 @@ export function HomePage() {
           >
             {t.guaranteesTitle}
           </h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <Grid
+            columns={{ sm: 1, md: 3 }}
+            rows={{ sm: 3, md: 1 }}
+            className="mt-8"
+          >
+            <GridCross column={2} row={1} className="hidden md:block" />
             {t.guarantees.map((g, i) => {
               const Icon = guaranteeIcons[i] ?? ShieldCheck
               return (
-                <Card
+                <GridCell
                   key={g.title}
-                  className="border-transparent shadow-[var(--shadow-border)] transition-[box-shadow] duration-[var(--motion-fast)] ease-[var(--ease-standard)] hover:shadow-[var(--shadow-border-hover)]"
+                  className="flex-col items-start justify-start gap-3 p-6 text-left"
                 >
-                  <CardHeader>
-                    <div className="bg-primary/10 text-primary-text flex size-10 items-center justify-center rounded-lg">
-                      <Icon aria-hidden className="size-5" />
-                    </div>
-                    <CardTitle className="mt-1 text-base">{g.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-muted-foreground text-sm leading-relaxed">
+                  <IconTile>
+                    <Icon aria-hidden strokeWidth={1.75} />
+                  </IconTile>
+                  <h3 className="font-heading text-base font-semibold">{g.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
                     {g.description}
-                  </CardContent>
-                </Card>
+                  </p>
+                </GridCell>
               )
             })}
-          </div>
+          </Grid>
         </div>
       </section>
 
@@ -103,47 +109,52 @@ export function HomePage() {
           </h2>
           <ul className="mt-6 flex flex-wrap gap-2">
             {t.audience.map((a) => (
-              <li
-                key={a}
-                className="border-border bg-muted/40 text-foreground rounded-full border px-4 py-1.5 text-sm"
-              >
-                {a}
+              <li key={a}>
+                <Chip>{a}</Chip>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* 4. Como funciona — faixa alternada, 4 passos em sequência */}
+      {/* 4. Como funciona — sequência real de 4 passos com numerais fantasma */}
       <section aria-labelledby="how-title" className="bg-muted/30 border-y">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <h2 id="how-title" className="font-heading text-2xl font-semibold tracking-tight">
             {t.howItWorksTitle}
           </h2>
-          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {t.howItWorks.map((s, i) => (
-              <li key={s.step} className="relative">
-                <Card className="h-full border-transparent shadow-[var(--shadow-border)]">
-                  <CardHeader>
-                    <span className="bg-primary text-primary-foreground flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold tabular-nums">
-                      {s.step}
-                    </span>
-                    <CardTitle className="mt-2 text-base">{s.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-muted-foreground text-sm leading-relaxed">
-                    {s.description}
-                  </CardContent>
-                </Card>
-                {/* conector de sequência (só entre colunas no desktop) */}
-                {i < t.howItWorks.length - 1 ? (
-                  <span
-                    aria-hidden
-                    className="bg-border absolute top-10 -right-4 hidden h-px w-4 lg:block"
-                  />
-                ) : null}
-              </li>
+          <Grid
+            columns={{ sm: 1, md: 2, lg: 4 }}
+            rows={{ sm: 4, md: 2, lg: 1 }}
+            className="mt-8"
+            role="list"
+          >
+            <GridCross column={2} row={2} className="hidden md:block" />
+            {t.howItWorks.map((s) => (
+              <GridCell
+                key={s.step}
+                role="listitem"
+                className="flex-col items-start justify-start gap-2 p-6 text-left"
+              >
+                <span
+                  aria-hidden
+                  className="font-heading text-5xl leading-none font-semibold tabular-nums"
+                  style={{
+                    color: "color-mix(in oklch, var(--foreground) 18%, var(--background))",
+                  }}
+                >
+                  {s.step}
+                </span>
+                <h3 className="font-heading mt-1 text-base font-semibold">
+                  <span className="sr-only">Passo {s.step}: </span>
+                  {s.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {s.description}
+                </p>
+              </GridCell>
             ))}
-          </ol>
+          </Grid>
         </div>
       </section>
 
@@ -170,32 +181,20 @@ export function HomePage() {
           </h2>
           <p className="text-muted-foreground mt-2 text-sm">{t.contactDescription}</p>
           <div className="mt-4 flex flex-col sm:flex-row sm:gap-4">
-            <a
-              href={`mailto:${siteConfig.contact.email}`}
-              className="hover:bg-muted -mx-3 inline-flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <span className="bg-primary/10 text-primary-text flex size-9 items-center justify-center rounded-md">
-                <Mail aria-hidden className="size-4" />
-              </span>
+            <ContactLink href={`mailto:${siteConfig.contact.email}`} icon={Mail}>
               {siteConfig.contact.email}
-            </a>
-            <a
-              href={siteConfig.contact.phoneHref}
-              className="hover:bg-muted -mx-3 inline-flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <span className="bg-primary/10 text-primary-text flex size-9 items-center justify-center rounded-md">
-                <Phone aria-hidden className="size-4" />
-              </span>
+            </ContactLink>
+            <ContactLink href={siteConfig.contact.phoneHref} icon={Phone}>
               {siteConfig.contact.phone}
-            </a>
+            </ContactLink>
           </div>
         </div>
       </section>
 
-      {/* 7. Chamada final */}
+      {/* 7. Chamada final — superfície neutra; o laranja fica só no CTA */}
       <section aria-labelledby="final-cta-title">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-          <Card className="bg-primary/5 border-primary/20">
+          <Card className="hover:border-foreground/20 transition-colors duration-[var(--motion-fast)]">
             <CardContent className="flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
               <div>
                 <h2

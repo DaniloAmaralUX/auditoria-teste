@@ -1,11 +1,12 @@
-{
+﻿{
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "ouvidoria-dev",
+      "name": "ouvidoria-dev-c",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["exec", "vite", "--port", "5174", "--strictPort"],
-      "port": 5174
+      "runtimeArgs": ["exec", "vite", "--port", "5179", "--strictPort"],
+      "port": 5179,
+      "autoPort": false
     }
   ]
 }

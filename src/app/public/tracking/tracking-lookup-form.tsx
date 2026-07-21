@@ -20,6 +20,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button"
+import { Eyebrow } from "@/components/ui/eyebrow"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { trackingLookupSchema, type TrackingLookupValues } from "@/schemas/tracking"
 import { lookup, type TrackingRecord } from "@/features/tracking/mock-store"
@@ -79,10 +80,8 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   const submitting = form.formState.isSubmitting
 
   return (
-    <div className="brand-glow relative mx-auto w-full max-w-md">
-      <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
-        Acompanhamento
-      </p>
+    <div className="mx-auto w-full max-w-md">
+      <Eyebrow>Acompanhamento</Eyebrow>
       <h1
         tabIndex={-1}
         className="font-heading mt-1 text-2xl font-semibold tracking-tight outline-none"
@@ -94,7 +93,7 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
         conta.
       </p>
 
-      <div className="bg-card mt-6 rounded-xl border p-6 shadow-[var(--shadow-border)] sm:p-8">
+      <div className="bg-card mt-6 rounded-xl border p-6 sm:p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6">
             {error ? (

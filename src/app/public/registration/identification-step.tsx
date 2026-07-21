@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { RadioGroup } from "@/components/ui/radio-group"
 import {
   Select,
   SelectContent,
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select"
 import { FormStep } from "@/components/forms/form-step"
 import { FormNavigation } from "@/components/forms/form-navigation"
+import { RadioCard } from "@/components/forms/radio-card"
 import { ErrorSummary } from "@/components/forms/error-summary"
 import { MotionCollapse } from "@/components/forms/motion-collapse"
 import { TrustNotice } from "@/components/feedback/trust-notice"
@@ -88,25 +89,16 @@ export function IdentificationStep() {
                     value={field.value}
                     className="gap-3"
                   >
-                    <label className="border-input hover:bg-muted/40 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors duration-[var(--motion-fast)] ease-[var(--ease-standard)]">
-                      <RadioGroupItem value="anonimo" className="mt-0.5" />
-                      <span className="space-y-1">
-                        <span className="block text-sm font-medium">Anônima</span>
-                        <span className="text-muted-foreground block text-sm">
-                          Sem informar seu nome. O e-mail é usado somente pelo Comitê para as
-                          devolutivas.
-                        </span>
-                      </span>
-                    </label>
-                    <label className="border-input hover:bg-muted/40 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors duration-[var(--motion-fast)] ease-[var(--ease-standard)]">
-                      <RadioGroupItem value="identificado" className="mt-0.5" />
-                      <span className="space-y-1">
-                        <span className="block text-sm font-medium">Identificada</span>
-                        <span className="text-muted-foreground block text-sm">
-                          Com seu nome e contato, mantidos sob sigilo do Comitê de Ética.
-                        </span>
-                      </span>
-                    </label>
+                    <RadioCard
+                      value="anonimo"
+                      title="Anônima"
+                      description="Sem informar seu nome. O e-mail é usado somente pelo Comitê para as devolutivas."
+                    />
+                    <RadioCard
+                      value="identificado"
+                      title="Identificada"
+                      description="Com seu nome e contato, mantidos sob sigilo do Comitê de Ética."
+                    />
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />

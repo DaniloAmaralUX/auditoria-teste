@@ -1,8 +1,9 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-import { Menu, ShieldCheck } from "lucide-react"
+import { Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { PitangLogo } from "@/components/ui/pitang-logo"
 import {
   Sheet,
   SheetContent,
@@ -17,9 +18,8 @@ import { primaryNav, siteConfig } from "@/lib/site-config"
 import { messages } from "@/messages/pt-BR"
 
 const linkBase =
-  "relative text-sm font-medium text-muted-foreground transition-colors duration-[var(--motion-fast)] hover:text-foreground focus-visible:text-foreground rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-const linkActive =
-  "text-foreground after:absolute after:inset-x-0 after:-bottom-[22px] after:h-0.5 after:rounded-full after:bg-primary"
+  "link-underline text-sm font-medium text-muted-foreground transition-colors duration-[var(--motion-fast)] hover:text-foreground focus-visible:text-foreground rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+const linkActive = "text-foreground"
 
 /** Header sticky do portal público (RF-002). Navegação por teclado, estado atual e menu mobile acessível. */
 export function PublicHeader() {
@@ -28,16 +28,14 @@ export function PublicHeader() {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 sm:px-6">
+        {/* Logo mono no header: o CTA laranja é o único ponto de cor (guia /design/marca). */}
         <Link
           to="/"
-          className="flex items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex items-center gap-3 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <ShieldCheck aria-hidden className="text-primary-text size-6 shrink-0" />
-          <span className="font-heading text-sm leading-tight font-semibold sm:text-base">
+          <PitangLogo variant="mono" className="text-foreground h-5 shrink-0" />
+          <span className="text-muted-foreground border-l pl-3 text-xs leading-tight font-medium">
             {siteConfig.shortName}
-            <span className="text-muted-foreground block text-xs font-normal">
-              {siteConfig.org}
-            </span>
           </span>
         </Link>
 

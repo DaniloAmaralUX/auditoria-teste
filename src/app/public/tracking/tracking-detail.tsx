@@ -8,6 +8,7 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Eyebrow } from "@/components/ui/eyebrow"
 import { Separator } from "@/components/ui/separator"
 import { StatusBadge } from "@/components/public/status-badge"
 import { StatusTimeline } from "@/components/public/status-timeline"
@@ -51,9 +52,7 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
     <div className="mx-auto w-full max-w-2xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
-            Acompanhamento
-          </p>
+          <Eyebrow>Acompanhamento</Eyebrow>
           <h1
             tabIndex={-1}
             className="font-heading mt-1 font-mono text-2xl font-semibold tracking-tight outline-none"
@@ -68,7 +67,7 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
       </div>
 
       {/* Card-herói do estado atual (padrão order-tracking) */}
-      <div className="bg-card mt-6 rounded-xl p-5 shadow-[var(--shadow-border)] sm:p-6">
+      <div className="bg-card mt-6 rounded-xl border p-5 sm:p-6">
         <div className="flex items-start gap-4">
           <span
             className="flex size-12 shrink-0 items-center justify-center rounded-xl"

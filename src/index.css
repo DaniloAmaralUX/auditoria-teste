@@ -285,6 +285,10 @@
   .link-underline:focus-visible::after {
     transform: scaleX(1);
   }
+  /* Item de navegação atual mantém o sublinhado (NavLink emite aria-current). */
+  .link-underline[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
   @media (hover: hover) and (pointer: fine) {
     .link-underline:hover::after {
       transform: scaleX(1);

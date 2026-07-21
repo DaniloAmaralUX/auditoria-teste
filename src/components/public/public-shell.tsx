@@ -7,7 +7,7 @@ import { messages } from "@/messages/pt-BR"
 /** Layout do portal público: skip link + header sticky + conteúdo + rodapé global. */
 export function PublicShell() {
   return (
-    <div className="bg-page flex min-h-svh flex-col">
+    <div className="bg-background flex min-h-svh flex-col">
       <a
         href="#conteudo"
         className="bg-primary text-primary-foreground sr-only z-50 rounded-md px-4 py-2 focus:not-sr-only focus:absolute focus:top-3 focus:left-3"

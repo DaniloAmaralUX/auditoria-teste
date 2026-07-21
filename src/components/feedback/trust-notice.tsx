@@ -13,15 +13,17 @@ const variantConfig: Record<
     className: "border-border border-l-2 border-l-border bg-muted/40 text-foreground",
     iconClassName: "text-muted-foreground",
   },
+  /* Confiança é informação, não ação: superfície neutra com fio esquerdo mais
+     firme e ícone em foreground — o laranja fica para CTA e estado (guia /design/cores). */
   confidential: {
     icon: ShieldCheck,
-    className: "border-primary/20 border-l-2 border-l-primary/50 bg-primary/5 text-foreground",
-    iconClassName: "text-primary-text",
+    className: "border-border border-l-2 border-l-foreground/30 bg-muted/40 text-foreground",
+    iconClassName: "text-foreground",
   },
   anonymity: {
     icon: Lock,
-    className: "border-primary/20 border-l-2 border-l-primary/50 bg-primary/5 text-foreground",
-    iconClassName: "text-primary-text",
+    className: "border-border border-l-2 border-l-foreground/30 bg-muted/40 text-foreground",
+    iconClassName: "text-foreground",
   },
   warning: {
     icon: AlertTriangle,

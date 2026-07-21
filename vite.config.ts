@@ -5,6 +5,8 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
+  // PORT vem do runner de preview (várias sessões no mesmo repo); default 5173.
+  server: { port: Number(process.env.PORT) || 5173 },
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

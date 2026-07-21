@@ -1,28 +1,5 @@
+import { PitangLogo } from "@/components/ui/pitang-logo"
 import { PageHeader, GuideSection, DemoPanel, RuleList } from "./design-ui"
-
-/** Logo monocromática via mask — herda currentColor sem duplicar o SVG. */
-function LogoMono({ className }: { className?: string }) {
-  return (
-    <span
-      role="img"
-      aria-label="Pitang (monocromática)"
-      className={className}
-      style={{
-        display: "inline-block",
-        backgroundColor: "currentColor",
-        maskImage: "url(/pitang-logo.svg)",
-        WebkitMaskImage: "url(/pitang-logo.svg)",
-        maskSize: "contain",
-        WebkitMaskSize: "contain",
-        maskRepeat: "no-repeat",
-        WebkitMaskRepeat: "no-repeat",
-        maskPosition: "center",
-        WebkitMaskPosition: "center",
-        aspectRatio: "137 / 39",
-      }}
-    />
-  )
-}
 
 export default function BrandPage() {
   return (
@@ -39,26 +16,32 @@ export default function BrandPage() {
             <img src="/pitang-logo.svg" alt="Pitang" width={137} height={39} className="h-9 w-auto" />
           </DemoPanel>
           <DemoPanel className="flex h-32 items-center justify-center">
-            <LogoMono className="text-foreground h-9" />
+            <PitangLogo
+              variant="mono"
+              label="Pitang (monocromática)"
+              className="text-foreground h-9"
+            />
           </DemoPanel>
         </div>
         <p className="text-muted-foreground text-sm">
           À esquerda, a versão institucional (vermelho #ED1C24). À direita, a
           monocromática — obtida por CSS mask sobre o mesmo arquivo
           (<code className="bg-muted rounded px-1.5 py-0.5 text-xs">public/pitang-logo.svg</code>),
-          sem asset duplicado; herda a cor do contexto e funciona nos dois temas.
+          sem asset duplicado; herda a cor do contexto e funciona nos dois temas. As
+          duas vivem no componente{" "}
+          <code className="bg-muted rounded px-1.5 py-0.5 text-xs">ui/pitang-logo.tsx</code>.
         </p>
       </GuideSection>
 
       <GuideSection
         title="Aplicação no portal"
-        description="Proposta em validação: monocromática no header (o vermelho ao lado de CTAs laranja criaria disputa), institucional vermelha no footer e em documentos, onde não há ação por perto."
+        description="Aplicada no repasse: monocromática no header (o vermelho ao lado de CTAs laranja criaria disputa), institucional vermelha no footer e em documentos, onde não há ação por perto."
       >
         <div className="space-y-4">
           <div className="overflow-hidden rounded-xl border">
             <div className="bg-background/90 flex items-center justify-between border-b px-4 py-3">
               <span className="flex items-center gap-3">
-                <LogoMono className="text-foreground h-5" />
+                <PitangLogo variant="mono" className="text-foreground h-5" />
                 <span className="text-muted-foreground border-l pl-3 text-xs">
                   Canal de Ética e Ouvidoria
                 </span>

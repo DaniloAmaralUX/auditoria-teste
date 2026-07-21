@@ -42,7 +42,9 @@ import { AlertCircle } from "lucide-react"
 
 import { StatusBadge } from "@/components/public/status-badge"
 import { StatusTimeline } from "@/components/public/status-timeline"
+import { ContactLink } from "@/components/public/contact-link"
 import { TrustNotice } from "@/components/feedback/trust-notice"
+import { RadioCard } from "@/components/forms/radio-card"
 import { FormStep } from "@/components/forms/form-step"
 import { FormNavigation } from "@/components/forms/form-navigation"
 import { StepProgress } from "@/components/forms/step-progress"
@@ -500,7 +502,7 @@ export default function ComponentsPage() {
       {/* ============ 7. PADRÕES PROMOVIDOS ============ */}
       <GuideSection
         title="Padrões promovidos a componente"
-        description="O censo achou 3–5 cópias inline de cada um destes, com pequenas divergências. Agora são primitivos em ui/ — o repasse do portal adota."
+        description="O censo achou 3–5 cópias inline de cada um destes, com pequenas divergências. Agora são primitivos em ui/ — adotados pelo portal no repasse."
       >
         <div className="space-y-4">
           <DemoPanel className="space-y-3">
@@ -543,13 +545,40 @@ export default function ComponentsPage() {
               contidos; pill fica só no StatusBadge.
             </p>
           </DemoPanel>
-          <p className="text-muted-foreground text-sm">
-            Ainda a promover no repasse: <span className="text-foreground font-medium">ContactLink</span> (home
-            + footer duplicam a mesma âncora com tile) e{" "}
-            <span className="text-foreground font-medium">RadioCard</span> (labels
-            selecionáveis com <code className="bg-muted rounded px-1 py-0.5">:has()</code> na
-            etapa de identificação).
-          </p>
+          <DemoPanel className="space-y-3">
+            <div className="flex flex-col sm:flex-row sm:gap-4">
+              <ContactLink href="mailto:ouvidoria@pitang.com" icon={Mail}>
+                ouvidoria@pitang.com
+              </ContactLink>
+            </div>
+            <p className="text-muted-foreground text-xs">
+              <code className="bg-muted rounded px-1 py-0.5">ContactLink</code> — home e
+              footer duplicavam a mesma âncora com tile; agora é um componente
+              (<code className="bg-muted rounded px-1 py-0.5">public/contact-link.tsx</code>),
+              sempre com IconTile neutro.
+            </p>
+          </DemoPanel>
+          <DemoPanel className="space-y-3">
+            <RadioGroup defaultValue="anonimo" className="max-w-md gap-3">
+              <RadioCard
+                value="anonimo"
+                title="Anônima"
+                description="Sem informar seu nome. O e-mail é usado somente para as devolutivas."
+              />
+              <RadioCard
+                value="identificado"
+                title="Identificada"
+                description="Com seu nome e contato, mantidos sob sigilo do Comitê de Ética."
+              />
+            </RadioGroup>
+            <p className="text-muted-foreground text-xs">
+              <code className="bg-muted rounded px-1 py-0.5">RadioCard</code> — o cartão
+              selecionável via <code className="bg-muted rounded px-1 py-0.5">:has()</code> da
+              etapa de identificação, promovido a{" "}
+              <code className="bg-muted rounded px-1 py-0.5">forms/radio-card.tsx</code>. O
+              laranja aqui é estado selecionado — uso permitido.
+            </p>
+          </DemoPanel>
         </div>
       </GuideSection>
 
@@ -630,7 +659,9 @@ export default function ComponentsPage() {
             Utility <code className="bg-muted rounded px-1 py-0.5">.link-underline</code> —
             cresce do centro no hover/focus via transform (120ms), atrás de{" "}
             <code className="bg-muted rounded px-1 py-0.5">@media (hover: hover)</code>.
-            Candidata ao nav e footer no repasse.
+            Adotada no nav do header e no footer; o item de navegação atual mantém o
+            sublinhado via{" "}
+            <code className="bg-muted rounded px-1 py-0.5">[aria-current="page"]</code>.
           </p>
         </DemoPanel>
       </GuideSection>
