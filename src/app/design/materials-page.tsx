@@ -108,7 +108,10 @@ export default function MaterialsPage() {
             </span>
             <p className="font-heading mt-2 text-sm font-semibold">Numeral fantasma</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Passos de sequência em cinza-borda gigante — personalidade editorial sem cor.
+              Passos de sequência em cinza-borda gigante — personalidade editorial sem
+              cor. <span className="text-foreground font-medium">Só onde há sequência
+              real</span> (o “Como funciona” é um processo de 4 passos); numerar lista
+              sem ordem é decoração, não informação.
             </p>
           </DemoPanel>
         </div>

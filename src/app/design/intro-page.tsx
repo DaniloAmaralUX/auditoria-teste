@@ -122,6 +122,22 @@ export default function IntroPage() {
       </GuideSection>
 
       <GuideSection
+        title="Assinatura"
+        description="Todo sistema memorável tem um elemento que é só dele. O nosso: o esqueleto hairline com crosshairs — a coluna central emoldurada por bordas de 1px, com marcas “+” nos encontros. A página se lê como um documento técnico de engenharia: preciso, auditável, confiável."
+      >
+        <div className="corner-marks border-y">
+          <div className="mx-6 border-x px-6 py-8">
+            <p className="font-heading text-sm font-semibold">A estrutura é visível</p>
+            <p className="text-muted-foreground mt-1 max-w-prose text-sm">
+              O branco deixa de ser vazio quando o esqueleto aparece. Este é o único
+              ornamento que se repete em todas as páginas — todo o resto fica quieto
+              ao redor dele.
+            </p>
+          </div>
+        </div>
+      </GuideSection>
+
+      <GuideSection
         title="Princípios"
         description="Síntese das referências (Notion, Perplexity, Vercel/Geist) e da skill apple-design, aplicada ao caso de uso de uma ouvidoria."
       >
@@ -133,6 +149,49 @@ export default function IntroPage() {
             </div>
           ))}
         </dl>
+      </GuideSection>
+
+      <GuideSection
+        title="Como evoluir este sistema"
+        description="Processo da skill frontend-design (.agents/skills/frontend-design), transcrito em regras operacionais para qualquer pessoa — ou agente — que for estender o design."
+      >
+        <ol className="space-y-4">
+          {[
+            {
+              title: "Duas passadas, sempre",
+              text: "Antes de escrever código, escreva o plano: tokens de cor, papéis tipográficos, conceito de layout e onde entra a assinatura. Só depois construa — derivando cada decisão do plano.",
+            },
+            {
+              title: "Autocrítica anti-default",
+              text: "Se a escolha serviria para qualquer projeto parecido, ela não serve para este. Papel quente + laranja aqui não é o default de IA: é a marca Pitang, decidida pelo designer — mas cada escolha nova precisa passar pelo mesmo teste.",
+            },
+            {
+              title: "A regra de Chanel",
+              text: "Antes de publicar, olhe no espelho e remova um acessório. A boldness mora num lugar só (a assinatura); todo o resto fica disciplinado.",
+            },
+            {
+              title: "Piso de qualidade, sem anúncio",
+              text: "Responsivo até mobile, foco de teclado visível, reduced-motion respeitado, contraste AA. Não é feature — é o chão.",
+            },
+          ].map((step, i) => (
+            <li key={step.title} className="flex gap-4">
+              <span
+                aria-hidden
+                className="font-heading text-3xl leading-none font-semibold tabular-nums"
+                style={{
+                  color:
+                    "color-mix(in oklch, var(--foreground) 18%, var(--background))",
+                }}
+              >
+                {i + 1}
+              </span>
+              <div className="space-y-0.5 pt-0.5">
+                <p className="font-heading text-sm font-semibold">{step.title}</p>
+                <p className="text-muted-foreground text-sm">{step.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </GuideSection>
 
       <GuideSection title="Como usar">

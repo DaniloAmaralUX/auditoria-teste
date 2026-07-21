@@ -25,6 +25,7 @@ const DesignColorsPage = lazy(() => import("@/app/design/colors-page"))
 const DesignTypographyPage = lazy(() => import("@/app/design/typography-page"))
 const DesignMaterialsPage = lazy(() => import("@/app/design/materials-page"))
 const DesignBrandPage = lazy(() => import("@/app/design/brand-page"))
+const DesignContentPage = lazy(() => import("@/app/design/content-page"))
 const DesignMotionPage = lazy(() => import("@/app/design/motion-page"))
 const DesignComponentsPage = lazy(() => import("@/app/design/components-page"))
 
@@ -42,6 +43,7 @@ export const router = createBrowserRouter([
       { path: "tipografia", element: <DesignTypographyPage /> },
       { path: "materiais", element: <DesignMaterialsPage /> },
       { path: "marca", element: <DesignBrandPage /> },
+      { path: "conteudo", element: <DesignContentPage /> },
       { path: "motion", element: <DesignMotionPage /> },
       { path: "componentes", element: <DesignComponentsPage /> },
     ],

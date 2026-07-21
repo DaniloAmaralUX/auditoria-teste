@@ -12,6 +12,7 @@ const foundations = [
   { to: "/design/tipografia", label: "Tipografia" },
   { to: "/design/materiais", label: "Materiais" },
   { to: "/design/marca", label: "Marca" },
+  { to: "/design/conteudo", label: "Conteúdo" },
   { to: "/design/motion", label: "Motion" },
 ]
 
