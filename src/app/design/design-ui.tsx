@@ -61,6 +61,15 @@ export function DemoPanel({
   )
 }
 
+/** Meta de uso real de um componente (censo): nº de arquivos e rotas. */
+export function UsageMeta({ files, where }: { files: string; where: string }) {
+  return (
+    <p className="text-muted-foreground font-mono text-[11px]">
+      uso: {files} · {where}
+    </p>
+  )
+}
+
 /** Lista de regras "faça / não faça" compacta. */
 export function RuleList({ items }: { items: { do: boolean; text: string }[] }) {
   return (

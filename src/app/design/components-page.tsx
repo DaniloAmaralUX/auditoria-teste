@@ -1,103 +1,432 @@
-import { Lock, ArrowRight } from "lucide-react"
+import * as React from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { ArrowRight, Lock, Mail, EyeOff, ShieldCheck } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Progress } from "@/components/ui/progress"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Eyebrow } from "@/components/ui/eyebrow"
+import { IconTile } from "@/components/ui/icon-tile"
+import { Chip } from "@/components/ui/chip"
+import { AlertCircle } from "lucide-react"
+
 import { StatusBadge } from "@/components/public/status-badge"
+import { StatusTimeline } from "@/components/public/status-timeline"
 import { TrustNotice } from "@/components/feedback/trust-notice"
+import { FormStep } from "@/components/forms/form-step"
+import { FormNavigation } from "@/components/forms/form-navigation"
+import { StepProgress } from "@/components/forms/step-progress"
+import { ReviewSection } from "@/components/forms/review-section"
+import { ProtocolCard } from "@/components/forms/protocol-card"
 import { statusConfig, type ManifestationStatus } from "@/lib/manifestation-status"
-import { PageHeader, GuideSection, DemoPanel } from "./design-ui"
+import type { TrackingEvent } from "@/features/tracking/mock-store"
+import { PageHeader, GuideSection, DemoPanel, UsageMeta } from "./design-ui"
+
+/* ------------------------------------------------------------------ */
+/* Demo: mini-formulário vivo (RHF + zod) — o padrão real do registro */
+/* ------------------------------------------------------------------ */
+
+const demoSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Informe um e-mail para receber as devolutivas.")
+    .email("Informe um e-mail válido."),
+  relato: z.string().min(1, "Descreva o que aconteceu."),
+})
+
+type DemoValues = z.infer<typeof demoSchema>
+
+function LiveFormDemo() {
+  const [sent, setSent] = React.useState(false)
+  const form = useForm<DemoValues>({
+    resolver: zodResolver(demoSchema),
+    defaultValues: { email: "", relato: "" },
+  })
+  const errors = form.formState.errors
+
+  return (
+    <DemoPanel>
+      <Form {...form}>
+        <form
+          noValidate
+          onSubmit={form.handleSubmit(() => setSent(true))}
+          className="max-w-md space-y-4"
+        >
+          {/* ErrorSummary real: submeta vazio para vê-lo aparecer e focar. */}
+          {Object.keys(errors).length > 0 ? (
+            <div
+              role="alert"
+              className="border-destructive/40 bg-destructive/5 rounded-lg border p-4"
+            >
+              <div className="flex items-center gap-2">
+                <AlertCircle aria-hidden className="text-destructive size-5" />
+                <p className="text-destructive text-sm font-semibold">
+                  Encontramos {Object.keys(errors).length}{" "}
+                  {Object.keys(errors).length === 1 ? "erro" : "erros"} para corrigir
+                </p>
+              </div>
+              <ul className="mt-3 list-disc space-y-1 pl-8 text-sm">
+                {Object.entries(errors).map(([field, err]) => (
+                  <li key={field} className="text-destructive">
+                    {err?.message as string}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>E-mail para devolutivas</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="voce@exemplo.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="relato"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Relato</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Descreva a situação com o máximo de detalhes que se sentir confortável."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex items-center gap-3">
+            <Button type="submit">Enviar demonstração</Button>
+            {sent && Object.keys(errors).length === 0 ? (
+              <p className="text-status-completed text-sm font-medium" role="status">
+                Validação passou.
+              </p>
+            ) : null}
+          </div>
+          <p className="text-muted-foreground text-xs">
+            Demo viva: envie vazio para ver as mensagens reais dos schemas (zod) e o
+            resumo de erros com <code className="bg-muted rounded px-1 py-0.5">role="alert"</code> (RF-013).
+          </p>
+        </form>
+      </Form>
+    </DemoPanel>
+  )
+}
+
+/* --------------------------------------------------- */
+/* Demo: FormStep monta sob demanda (o título rouba o  */
+/* foco ao montar — comportamento correto no fluxo)    */
+/* --------------------------------------------------- */
+
+function FormStepDemo() {
+  const [mounted, setMounted] = React.useState(false)
+  return (
+    <DemoPanel className="space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-heading text-sm font-semibold">FormStep + FormNavigation</p>
+        <Button variant="outline" size="sm" onClick={() => setMounted((m) => !m)}>
+          {mounted ? "Desmontar" : "Montar etapa"}
+        </Button>
+      </div>
+      {mounted ? (
+        <div className="rounded-lg border p-5">
+          <FormStep
+            title="Sobre a manifestação"
+            description="Conte o que aconteceu. Você pode revisar tudo antes de enviar."
+          >
+            <p className="text-muted-foreground text-sm">
+              (conteúdo da etapa entra aqui)
+            </p>
+            <FormNavigation
+              nextLabel="Continuar para o relato"
+              onBack={() => setMounted(false)}
+              isSubmit={false}
+              onNext={() => {}}
+            />
+          </FormStep>
+        </div>
+      ) : (
+        <p className="text-muted-foreground text-sm">
+          Montar a etapa demonstra o foco automático no título (RF-006) — por isso a
+          demo não monta junto com a página.
+        </p>
+      )}
+    </DemoPanel>
+  )
+}
+
+/* ------------------- dados fake para singletons ------------------- */
+
+const demoResult = {
+  protocol: "OUV-2026-004217",
+  accessCode: "K7QM-3XWD-92RF",
+  submittedAt: "2026-07-21T14:32:00.000Z",
+}
+
+const demoEvents: TrackingEvent[] = [
+  {
+    kind: "status",
+    status: "recebida",
+    title: "Manifestação recebida",
+    description: "Sua manifestação foi registrada e está na fila de triagem do Comitê.",
+    date: "2026-07-01T09:00:00.000Z",
+  },
+  {
+    kind: "status",
+    status: "em_analise",
+    title: "Análise iniciada",
+    description: "O Comitê de Ética está analisando as informações da sua manifestação.",
+    date: "2026-07-04T11:20:00.000Z",
+  },
+  {
+    kind: "request",
+    title: "Pedido de complemento",
+    description: "O Comitê solicitou informações complementares. Verifique as devolutivas.",
+    date: "2026-07-10T16:05:00.000Z",
+  },
+]
 
 const statuses = Object.keys(statusConfig) as ManifestationStatus[]
 
+/* ------------------------------- página ------------------------------- */
+
 export default function ComponentsPage() {
+  const [stepIndex, setStepIndex] = React.useState(2)
+
   return (
     <>
       <PageHeader
         eyebrow="Componentes"
         title="Componentes"
-        lede="Os primitivos do portal renderizados ao vivo, já calibrados pela direção: cantos de 8px, borda 1px, laranja apenas onde há ação ou estado."
+        lede="Mapa dos componentes que o portal mais usa, por função — com contagem real de uso (censo de imports) e demos vivas. Frequência baixa não é importância baixa: os singletons do registro cobrem requisitos inteiros."
       />
 
-      <GuideSection title="Botões" description="rounded-lg, press scale no pointer-down. O primário é o único elemento laranja da tela.">
-        <DemoPanel className="flex flex-wrap items-center gap-3">
-          <Button>
-            Registrar manifestação
-            <ArrowRight aria-hidden className="size-4" />
-          </Button>
-          <Button variant="outline">Acompanhar</Button>
-          <Button variant="secondary">Secundário</Button>
-          <Button variant="ghost">Cancelar</Button>
-          <Button variant="destructive">Excluir anexo</Button>
-          <Button variant="link">Link de texto</Button>
+      {/* ============ 1. AÇÕES ============ */}
+      <GuideSection
+        title="Ações — Button"
+        description="O componente mais usado do portal. O primário é o único elemento laranja da tela; asChild encaixa o <Link> do router."
+      >
+        <UsageMeta files="11 arquivos" where="todas as rotas" />
+        <DemoPanel className="space-y-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button size="lg">
+              Registrar manifestação
+              <ArrowRight aria-hidden className="size-4" />
+            </Button>
+            <Button size="lg" variant="outline">
+              Acompanhar manifestação
+            </Button>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button>Default</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="destructive">Destructive</Button>
+            <Button variant="link">Link</Button>
+            <Button size="sm" variant="outline">
+              sm
+            </Button>
+            <Button size="icon" variant="outline" aria-label="Exemplo de botão de ícone">
+              <ArrowRight aria-hidden />
+            </Button>
+          </div>
         </DemoPanel>
       </GuideSection>
 
-      <GuideSection title="Formulário">
-        <DemoPanel className="max-w-md space-y-4">
+      {/* ============ 2. FORMULÁRIO ============ */}
+      <GuideSection
+        title="Formulário — o padrão RHF + zod"
+        description="A espinha dorsal do registro e do acompanhamento: FormField liga o schema ao campo; FormLabel/FormMessage cuidam de id, aria e erro. Label puro só fora de formulários validados."
+      >
+        <UsageMeta files="7 arquivos (Form) · 5 (Input) · 4 (Textarea)" where="/registrar, /acompanhar" />
+        <LiveFormDemo />
+      </GuideSection>
+
+      <GuideSection title="Campos de entrada" description="Specimens dos demais controles usados no registro e no acompanhamento.">
+        <DemoPanel className="grid max-w-md gap-5">
           <div className="space-y-2">
-            <Label htmlFor="demo-protocol">Número do protocolo</Label>
-            <Input id="demo-protocol" placeholder="OUV-2026-000000" />
+            <Label htmlFor="spec-select">Tipo de manifestação</Label>
+            <Select>
+              <SelectTrigger id="spec-select" className="w-full">
+                <SelectValue placeholder="Selecione o tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="denuncia">Denúncia</SelectItem>
+                <SelectItem value="reclamacao">Reclamação</SelectItem>
+                <SelectItem value="sugestao">Sugestão</SelectItem>
+                <SelectItem value="elogio">Elogio</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
+
+          <fieldset className="space-y-2">
+            <legend className="text-sm font-medium">Identificação</legend>
+            <RadioGroup defaultValue="anonima" className="gap-2">
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="anonima" id="spec-anon" />
+                <Label htmlFor="spec-anon" className="font-normal">
+                  Anônima
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="identificada" id="spec-ident" />
+                <Label htmlFor="spec-ident" className="font-normal">
+                  Identificada
+                </Label>
+              </div>
+            </RadioGroup>
+          </fieldset>
+
+          <div className="flex items-start gap-2">
+            <Checkbox id="spec-consent" className="mt-0.5" />
+            <Label htmlFor="spec-consent" className="font-normal leading-snug">
+              Li e concordo com o tratamento dos dados conforme a LGPD.
+            </Label>
+          </div>
+
           <div className="space-y-2">
-            <Label htmlFor="demo-report">Relato</Label>
-            <Textarea
-              id="demo-report"
-              placeholder="Descreva a situação com o máximo de detalhes que se sentir confortável."
-            />
+            <Label htmlFor="spec-otp">Código de acesso</Label>
+            <InputOTP maxLength={6} id="spec-otp">
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+              </InputOTPGroup>
+              <InputOTPSeparator />
+              <InputOTPGroup>
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
           </div>
-          <Button className="w-full">Consultar</Button>
         </DemoPanel>
       </GuideSection>
 
-      <GuideSection title="Card" description="Borda 1px, radius xl, hover pela borda. Tile de ícone neutro — o laranja não decora.">
-        <Card className="hover:border-foreground/20 max-w-sm transition-colors duration-[var(--motion-fast)]">
-          <CardHeader>
-            <div className="bg-muted flex size-10 items-center justify-center rounded-lg border">
-              <Lock aria-hidden className="size-5" strokeWidth={1.75} />
+      {/* ============ 3. FLUXO DE REGISTRO ============ */}
+      <GuideSection
+        title="Fluxo de registro"
+        description="Os singletons críticos: cada um cobre um requisito (RF-006, RF-010, RF-013). O progresso oficial de formulário é o StepProgress — ui/progress fica reservado."
+      >
+        <UsageMeta files="StepProgress, FormStep (6), FormNavigation (5), ReviewSection, ProtocolCard" where="/registrar" />
+        <div className="space-y-4">
+          <DemoPanel className="space-y-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-heading text-sm font-semibold">StepProgress</p>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={stepIndex === 0}
+                  onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
+                >
+                  Voltar
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={stepIndex === 4}
+                  onClick={() => setStepIndex((i) => Math.min(4, i + 1))}
+                >
+                  Avançar
+                </Button>
+              </div>
             </div>
-            <CardTitle className="mt-1">Sigilo</CardTitle>
-          </CardHeader>
-          <CardContent className="text-muted-foreground text-sm leading-relaxed">
-            O conteúdo da manifestação é acessado somente pelo Comitê de Ética, sob
-            dever de confidencialidade.
-          </CardContent>
-        </Card>
+            <StepProgress currentIndex={stepIndex} />
+          </DemoPanel>
+
+          <FormStepDemo />
+
+          <ReviewSection
+            title="Sobre a manifestação"
+            editHref="/design/componentes"
+            rows={[
+              { label: "Tipo", value: "Denúncia" },
+              { label: "Categoria", value: "Conduta" },
+              { label: "Relato", value: "Exemplo de relato registrado no fluxo…" },
+            ]}
+          />
+
+          <DemoPanel className="space-y-3">
+            <p className="font-heading text-sm font-semibold">ProtocolCard</p>
+            <ProtocolCard result={demoResult} />
+            <p className="text-muted-foreground text-xs">
+              Copiar e baixar funcionam de verdade — dados fictícios.
+            </p>
+          </DemoPanel>
+        </div>
       </GuideSection>
 
+      {/* ============ 4. ACOMPANHAMENTO ============ */}
       <GuideSection
-        title="Status"
-        description="Pills mantidos (convenção de badge). Cor + rótulo, nunca cor sozinha (RNF-007)."
+        title="Acompanhamento"
+        description="Coração de /acompanhar. Cor nunca comunica sozinha: badge tem rótulo, evento tem ícone + tipo textual (RNF-007)."
       >
-        <DemoPanel className="flex flex-wrap gap-2">
-          {statuses.map((s) => (
-            <StatusBadge key={s} status={s} />
-          ))}
-          <StatusBadge status="recebida" flag="aguardando_informacoes" />
-        </DemoPanel>
+        <UsageMeta files="StatusBadge, StatusTimeline, Alert" where="/acompanhar" />
+        <div className="space-y-4">
+          <DemoPanel className="flex flex-wrap gap-2">
+            {statuses.map((s) => (
+              <StatusBadge key={s} status={s} />
+            ))}
+            <StatusBadge status="recebida" flag="aguardando_informacoes" />
+          </DemoPanel>
+          <DemoPanel>
+            <StatusTimeline events={demoEvents} />
+          </DemoPanel>
+          <Alert variant="destructive">
+            <AlertCircle aria-hidden className="size-4" />
+            <AlertTitle>Não encontramos uma manifestação com esses dados.</AlertTitle>
+            <AlertDescription>
+              Verifique o protocolo e o código de acesso e tente novamente.
+            </AlertDescription>
+          </Alert>
+        </div>
       </GuideSection>
 
+      {/* ============ 5. CONFIANÇA ============ */}
       <GuideSection
-        title="Progresso"
-        description="Barra do fluxo de registro — laranja como estado de avanço (uso funcional)."
+        title="Confiança — TrustNotice"
+        description="Tão usado quanto o Form (7 arquivos): as mensagens de sigilo, anonimato e não retaliação que sustentam o canal."
       >
-        <DemoPanel>
-          <Progress value={60} aria-label="Etapa 3 de 5" />
-        </DemoPanel>
-      </GuideSection>
-
-      <GuideSection
-        title="Trust notice"
-        description="O aviso de confiança — presente no hero e no fluxo de registro. Acento pela régua esquerda + ícone."
-      >
+        <UsageMeta files="7 arquivos" where="/, /registrar (todas as etapas-chave)" />
         <div className="space-y-3">
           <TrustNotice variant="anonymity" title="Sigilo e possibilidade de anonimato">
             Você pode registrar a manifestação sem informar seu nome. O e-mail será
@@ -109,6 +438,82 @@ export default function ComponentsPage() {
           <TrustNotice variant="warning" title="Atenção">
             O Comitê solicitou informações complementares. Verifique as devolutivas.
           </TrustNotice>
+        </div>
+      </GuideSection>
+
+      {/* ============ 6. ESTRUTURA ============ */}
+      <GuideSection
+        title="Estrutura — Card"
+        description="Borda 1px, radius xl, hover pela borda; tiles de ícone neutros."
+      >
+        <UsageMeta files="1 arquivo (home) — padrão-base das seções" where="/" />
+        <Card className="hover:border-foreground/20 max-w-sm transition-colors duration-[var(--motion-fast)]">
+          <CardHeader>
+            <IconTile>
+              <Lock aria-hidden strokeWidth={1.75} />
+            </IconTile>
+            <CardTitle className="mt-1">Sigilo</CardTitle>
+          </CardHeader>
+          <CardContent className="text-muted-foreground text-sm leading-relaxed">
+            O conteúdo da manifestação é acessado somente pelo Comitê de Ética, sob
+            dever de confidencialidade.
+          </CardContent>
+        </Card>
+      </GuideSection>
+
+      {/* ============ 7. PADRÕES PROMOVIDOS ============ */}
+      <GuideSection
+        title="Padrões promovidos a componente"
+        description="O censo achou 3–5 cópias inline de cada um destes, com pequenas divergências. Agora são primitivos em ui/ — o repasse do portal adota."
+      >
+        <div className="space-y-4">
+          <DemoPanel className="space-y-3">
+            <Eyebrow>Pitang · Canal oficial</Eyebrow>
+            <p className="text-muted-foreground text-xs">
+              <code className="bg-muted rounded px-1 py-0.5">Eyebrow</code> — era 5
+              cópias inline; neutro por padrão (o laranja saiu dos rótulos).
+            </p>
+          </DemoPanel>
+          <DemoPanel className="space-y-3">
+            <div className="flex gap-3">
+              <IconTile>
+                <Lock aria-hidden strokeWidth={1.75} />
+              </IconTile>
+              <IconTile>
+                <EyeOff aria-hidden strokeWidth={1.75} />
+              </IconTile>
+              <IconTile>
+                <ShieldCheck aria-hidden strokeWidth={1.75} />
+              </IconTile>
+              <IconTile size="sm">
+                <Mail aria-hidden strokeWidth={1.75} />
+              </IconTile>
+            </div>
+            <p className="text-muted-foreground text-xs">
+              <code className="bg-muted rounded px-1 py-0.5">IconTile</code> — era 5
+              cópias com radius divergindo (lg/md/full); agora um só sistema.
+            </p>
+          </DemoPanel>
+          <DemoPanel className="space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {["Colaboradores", "Ex-colaboradores", "Candidatos", "Fornecedores"].map(
+                (c) => (
+                  <Chip key={c}>{c}</Chip>
+                )
+              )}
+            </div>
+            <p className="text-muted-foreground text-xs">
+              <code className="bg-muted rounded px-1 py-0.5">Chip</code> — cantos
+              contidos; pill fica só no StatusBadge.
+            </p>
+          </DemoPanel>
+          <p className="text-muted-foreground text-sm">
+            Ainda a promover no repasse: <span className="text-foreground font-medium">ContactLink</span> (home
+            + footer duplicam a mesma âncora com tile) e{" "}
+            <span className="text-foreground font-medium">RadioCard</span> (labels
+            selecionáveis com <code className="bg-muted rounded px-1 py-0.5">:has()</code> na
+            etapa de identificação).
+          </p>
         </div>
       </GuideSection>
     </>
