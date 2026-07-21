@@ -19,6 +19,7 @@ Regras inegociáveis (detalhes e demos no guia):
 - **Marca**: logo em `public/pitang-logo.svg`; versão monocromática via CSS mask (ver `/design/marca`). Mono onde houver CTA laranja por perto; vermelha em footer/documentos.
 - **Escrita**: voz ativa, do lado do usuário, mesma palavra na ação inteira; erros orientam sem se desculpar (padrão em `src/messages/pt-BR.ts` e `/design/conteudo`).
 - **A11y piso**: AA de contraste, foco visível, cor nunca comunica sozinha (RNF-007).
+- **Piso de interface (Web Interface Guidelines/Vercel)**: `color-scheme` segue o tema; `touch-action: manipulation` nos interativos; overlays com `overscroll-contain`; skip link em todo shell; inputs com `type`/`autocomplete` corretos e sem bloqueio de colar; imagens com `width`/`height`; `…` tipográfico e `tabular-nums` em dígitos. Auditoria: skills `web-design-guidelines` e `writing-guidelines` (vercel-labs/agent-skills — buscam as regras frescas antes de revisar); regras de copy adaptadas ao pt-BR (sentence case, não Title Case).
 
 Docs de UX complementares em `../pitang-ouvidoria-ux-docs/docs/ux/` (PRD, especificações de tela, motion — doc 16).
 

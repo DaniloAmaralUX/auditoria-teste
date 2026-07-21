@@ -36,7 +36,7 @@ export default function BrandPage() {
       <GuideSection title="Logo oficial">
         <div className="grid gap-4 sm:grid-cols-2">
           <DemoPanel className="flex h-32 items-center justify-center">
-            <img src="/pitang-logo.svg" alt="Pitang" className="h-9 w-auto" />
+            <img src="/pitang-logo.svg" alt="Pitang" width={137} height={39} className="h-9 w-auto" />
           </DemoPanel>
           <DemoPanel className="flex h-32 items-center justify-center">
             <LogoMono className="text-foreground h-9" />
@@ -73,7 +73,7 @@ export default function BrandPage() {
           </div>
           <div className="overflow-hidden rounded-xl border">
             <div className="bg-background flex items-center justify-between border-b px-4 py-3">
-              <img src="/pitang-logo.svg" alt="" aria-hidden className="h-5 w-auto" />
+              <img src="/pitang-logo.svg" alt="" aria-hidden width={137} height={39} className="h-5 w-auto" />
               <span className="text-muted-foreground text-xs">© 2026 Pitang</span>
             </div>
             <p className="text-muted-foreground px-4 py-2.5 text-xs">
@@ -86,7 +86,7 @@ export default function BrandPage() {
       <GuideSection title="Favicon">
         <div className="flex items-center gap-4">
           <DemoPanel className="flex size-16 items-center justify-center p-3">
-            <img src="/favicon.svg" alt="Favicon" className="size-9" />
+            <img src="/favicon.svg" alt="Favicon" width={36} height={36} className="size-9" />
           </DemoPanel>
           <p className="text-muted-foreground max-w-prose text-sm">
             O símbolo isolado (sem wordmark) em vermelho institucional —

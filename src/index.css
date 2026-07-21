@@ -203,10 +203,21 @@
     }
   html {
     @apply font-sans;
+    /* Scrollbars e controles nativos seguem o tema (Web Interface Guidelines). */
+    color-scheme: light;
+    /* Feedback de toque é nosso (press scale); highlight nativo desligado
+       e sem atraso de double-tap zoom. */
+    -webkit-tap-highlight-color: transparent;
     /* Transição suave de tema (escopada, não universal). */
     transition:
       background-color var(--motion-slow) var(--ease-standard),
       color var(--motion-slow) var(--ease-standard);
+    }
+  html.dark {
+    color-scheme: dark;
+    }
+  a, button, input, select, textarea, label, [role="button"] {
+    touch-action: manipulation;
     }
   h1, h2, h3, h4 {
     @apply font-heading;

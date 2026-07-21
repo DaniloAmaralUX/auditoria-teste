@@ -79,11 +79,17 @@ function ThemeToggle() {
 export default function DesignLayout() {
   return (
     <div className="bg-background text-foreground min-h-svh">
+      <a
+        href="#guia-conteudo"
+        className="bg-primary text-primary-foreground sr-only z-50 rounded-md px-4 py-2 focus:not-sr-only focus:absolute focus:top-3 focus:left-3"
+      >
+        Pular para o conteúdo
+      </a>
       <div className="mx-auto flex w-full max-w-6xl">
         <aside className="border-border sticky top-0 hidden h-svh w-56 shrink-0 flex-col gap-6 overflow-y-auto border-r px-3 py-6 md:flex">
           <div className="flex items-center justify-between gap-2 px-2.5">
             <Link to="/design" className="flex items-center gap-2">
-              <img src="/favicon.svg" alt="" aria-hidden className="size-5" />
+              <img src="/favicon.svg" alt="" aria-hidden width={20} height={20} className="size-5" />
               <span className="font-heading text-sm font-semibold">Design</span>
             </Link>
             <ThemeToggle />
@@ -123,7 +129,11 @@ export default function DesignLayout() {
               </NavLink>
             ))}
           </div>
-          <main className="px-6 py-10 sm:px-10 sm:py-14">
+          <main
+            id="guia-conteudo"
+            tabIndex={-1}
+            className="px-6 py-10 outline-none sm:px-10 sm:py-14"
+          >
             <div className="max-w-2xl">
               <Suspense fallback={null}>
                 <Outlet />

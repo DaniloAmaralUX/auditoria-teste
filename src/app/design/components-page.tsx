@@ -110,7 +110,13 @@ function LiveFormDemo() {
               <FormItem>
                 <FormLabel>E-mail para devolutivas</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="voce@exemplo.com" {...field} />
+                  <Input
+                    type="email"
+                    autoComplete="email"
+                    spellCheck={false}
+                    placeholder="voce@exemplo.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -39,7 +39,7 @@ const foundationCards = [
     to: "/design/marca",
     title: "Marca",
     description: "Logo oficial Pitang e a convivência do vermelho com o laranja.",
-    art: <img src="/favicon.svg" alt="" aria-hidden className="size-10" />,
+    art: <img src="/favicon.svg" alt="" aria-hidden width={40} height={40} className="size-10" />,
   },
   {
     to: "/design/motion",
@@ -201,6 +201,27 @@ export default function IntroPage() {
           acha onde motion agrega (e rejeita o resto); <code className="bg-muted rounded px-1 py-0.5 text-xs">review-animations</code>{" "}
           roda antes de mergear qualquer animação.
         </p>
+      </GuideSection>
+
+      <GuideSection
+        title="Piso de interface"
+        description="Consolidado das Web Interface Guidelines (Vercel) — o que já está garantido na base e vale para tudo que for construído. Auditoria completa: skills web-design-guidelines e writing-guidelines (vercel-labs/agent-skills)."
+      >
+        <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+          {[
+            { t: "Tema de verdade", d: "color-scheme acompanha o tema (scrollbars e controles nativos); theme-color no index.html." },
+            { t: "Toque sem atraso", d: "touch-action: manipulation nos interativos; tap-highlight nativo desligado — o feedback é o press scale." },
+            { t: "Teclado primeiro", d: "skip link em todos os shells, foco visível via focus-visible, foco movido em erro/etapa." },
+            { t: "Overlays contidos", d: "sheets com overscroll-behavior: contain e rolagem própria." },
+            { t: "Formulários honestos", d: "type/autocomplete corretos, labels clicáveis, erro inline + resumo com role=alert, nunca bloquear colar." },
+            { t: "Conteúdo resiliente", d: "textos longos com break-words/truncate, estados vazios desenhados, imagens com width/height (sem CLS)." },
+          ].map((item) => (
+            <div key={item.t} className="space-y-1">
+              <dt className="font-heading text-sm font-semibold">{item.t}</dt>
+              <dd className="text-muted-foreground text-sm">{item.d}</dd>
+            </div>
+          ))}
+        </dl>
       </GuideSection>
 
       <GuideSection title="Como usar">
