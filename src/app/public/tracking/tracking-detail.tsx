@@ -1,12 +1,28 @@
-import { RotateCcw } from "lucide-react"
+import {
+  RotateCcw,
+  Inbox,
+  FileSearch,
+  SearchCheck,
+  CheckCircle2,
+  Archive,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { StatusBadge } from "@/components/public/status-badge"
 import { StatusTimeline } from "@/components/public/status-timeline"
 import { TrustNotice } from "@/components/feedback/trust-notice"
-import { statusConfig } from "@/lib/manifestation-status"
+import { statusConfig, type ManifestationStatus } from "@/lib/manifestation-status"
 import type { TrackingRecord } from "@/features/tracking/mock-store"
+
+/** Ícone grande por status — âncora visual do card-herói (padrão order-tracking). */
+const statusIcons: Record<ManifestationStatus, typeof Inbox> = {
+  recebida: Inbox,
+  em_analise: FileSearch,
+  em_apuracao: SearchCheck,
+  concluida: CheckCircle2,
+  arquivada: Archive,
+}
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("pt-BR", {
@@ -29,21 +45,21 @@ type TrackingDetailProps = {
  */
 export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
   const status = statusConfig[record.status]
+  const StatusIcon = statusIcons[record.status]
 
   return (
     <div className="mx-auto w-full max-w-2xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-muted-foreground text-sm">Protocolo</p>
+          <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
+            Acompanhamento
+          </p>
           <h1
             tabIndex={-1}
-            className="font-heading font-mono text-2xl font-semibold tracking-tight outline-none"
+            className="font-heading mt-1 font-mono text-2xl font-semibold tracking-tight outline-none"
           >
             {record.protocol}
           </h1>
-          <div className="mt-3">
-            <StatusBadge status={record.status} />
-          </div>
         </div>
         <Button type="button" variant="outline" size="sm" onClick={onReset}>
           <RotateCcw aria-hidden className="size-4" />
@@ -51,11 +67,26 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
         </Button>
       </div>
 
-      <div className="bg-card mt-6 rounded-xl border p-5 shadow-[var(--shadow-border)] sm:p-6">
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          {status.publicDescription}
-        </p>
-        <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+      {/* Card-herói do estado atual (padrão order-tracking) */}
+      <div className="bg-card mt-6 rounded-xl p-5 shadow-[var(--shadow-border)] sm:p-6">
+        <div className="flex items-start gap-4">
+          <span
+            className="flex size-12 shrink-0 items-center justify-center rounded-xl"
+            style={{
+              backgroundColor: `color-mix(in oklch, var(--${status.token}) 13%, transparent)`,
+              color: `var(--${status.token})`,
+            }}
+          >
+            <StatusIcon aria-hidden className="size-6" />
+          </span>
+          <div className="min-w-0">
+            <StatusBadge status={record.status} />
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {status.publicDescription}
+            </p>
+          </div>
+        </div>
+        <dl className="mt-5 grid gap-3 border-t pt-4 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-muted-foreground">Registrada em</dt>
             <dd className="font-medium">{formatDate(record.createdAt)}</dd>

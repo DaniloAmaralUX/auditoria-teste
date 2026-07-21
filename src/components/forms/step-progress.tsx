@@ -53,7 +53,11 @@ export function StepProgress({ currentIndex }: StepProgressProps) {
                   !done && !active && "border-border text-muted-foreground"
                 )}
               >
-                {done ? <Check className="size-3.5" /> : index + 1}
+                {done ? (
+                  <Check className="motion-safe:animate-in motion-safe:zoom-in-75 motion-safe:fade-in size-3.5 duration-[var(--motion-fast)] ease-[var(--ease-out-strong)]" />
+                ) : (
+                  index + 1
+                )}
               </span>
               <span
                 className={cn(

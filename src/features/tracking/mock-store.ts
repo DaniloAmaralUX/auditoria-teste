@@ -36,12 +36,14 @@ export type TrackingRecord = {
 const store = new Map<string, TrackingRecord>()
 
 const normalize = (value: string) => value.trim().toUpperCase()
+/** Códigos comparados sem separadores (o campo segmentado envia só os caracteres). */
+const normalizeCode = (value: string) => normalize(value).replace(/[^A-Z0-9]/g, "")
 const keyOf = (protocol: string) => normalize(protocol)
 
 /** Fixture de demonstração — permite verificar o acompanhamento sem passar pelo registro. */
 const demoRecord: TrackingRecord = {
   protocol: "OUV-2026-DEMO01",
-  accessCode: "DEMO-2026-ETICA",
+  accessCode: "DEMO-2026-PTNG",
   status: "em_apuracao",
   createdAt: "2026-07-02T13:20:00.000Z",
   updatedAt: "2026-07-15T18:05:00.000Z",
@@ -111,7 +113,7 @@ export type LookupResult =
 /** Consulta por protocolo + código. Retorna genérico em qualquer falha (RF-011). */
 export function lookup(protocol: string, accessCode: string): LookupResult {
   const record = store.get(keyOf(protocol))
-  if (!record || normalize(record.accessCode) !== normalize(accessCode)) {
+  if (!record || normalizeCode(record.accessCode) !== normalizeCode(accessCode)) {
     return { ok: false }
   }
   return { ok: true, record }

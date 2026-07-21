@@ -31,6 +31,9 @@ export function LegalContent({
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
       <header className="animate-in fade-in slide-in-from-bottom-1.5 fill-mode-both space-y-3 duration-[var(--motion-base)] ease-[var(--ease-enter)]">
+        <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
+          Canal de Ética e Ouvidoria
+        </p>
         <h1 className="font-heading text-3xl font-semibold tracking-tight">{title}</h1>
         {subtitle ? (
           <p className="text-muted-foreground text-lg text-pretty">{subtitle}</p>

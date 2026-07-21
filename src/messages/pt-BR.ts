@@ -87,6 +87,18 @@ export const messages = {
   anonymity:
     "Você pode registrar a manifestação sem informar seu nome. O e-mail será usado somente para confirmação e devolutivas do Comitê de Ética.",
 
+  // Tela de início do registro (padrão trust-first: confiança antes dos dados)
+  registrationStart: {
+    eyebrow: "Registrar manifestação",
+    title: "Antes de começar",
+    subtitle:
+      "O registro leva cerca de cinco minutos. Você pode revisar tudo antes de enviar e nada é enviado sem a sua confirmação.",
+    stepsTitle: "Como será o preenchimento",
+    trustChips: ["Sigilo garantido", "Anonimato possível", "Não retaliação"],
+    cta: "Começar registro",
+    trackHint: "Já registrou? Acompanhe com seu protocolo e código de acesso.",
+  },
+
   faq: {
     title: "Perguntas frequentes",
     subtitle: "Tire suas dúvidas sobre o canal, o sigilo e o acompanhamento.",

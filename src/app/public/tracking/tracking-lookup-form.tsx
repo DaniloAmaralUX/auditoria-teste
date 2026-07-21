@@ -13,6 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { trackingLookupSchema, type TrackingLookupValues } from "@/schemas/tracking"
@@ -73,10 +79,13 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   const submitting = form.formState.isSubmitting
 
   return (
-    <div className="mx-auto w-full max-w-md">
+    <div className="brand-glow relative mx-auto w-full max-w-md">
+      <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
+        Acompanhamento
+      </p>
       <h1
         tabIndex={-1}
-        className="font-heading text-2xl font-semibold tracking-tight outline-none"
+        className="font-heading mt-1 text-2xl font-semibold tracking-tight outline-none"
       >
         Acompanhar manifestação
       </h1>
@@ -127,15 +136,36 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
               <FormItem>
                 <FormLabel>Código de acesso</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="XXXX-XXXX-XXXX"
-                    autoComplete="off"
-                    className="font-mono"
-                    {...field}
-                  />
+                  <InputOTP
+                    maxLength={12}
+                    value={field.value}
+                    onChange={(value) => field.onChange(value.toUpperCase())}
+                    onBlur={field.onBlur}
+                    inputMode="text"
+                    pattern="[A-Za-z0-9]*"
+                    aria-label="Código de acesso, 12 caracteres em três grupos de quatro"
+                  >
+                    <InputOTPGroup>
+                      {[0, 1, 2, 3].map((i) => (
+                        <InputOTPSlot key={i} index={i} />
+                      ))}
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                      {[4, 5, 6, 7].map((i) => (
+                        <InputOTPSlot key={i} index={i} />
+                      ))}
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                      {[8, 9, 10, 11].map((i) => (
+                        <InputOTPSlot key={i} index={i} />
+                      ))}
+                    </InputOTPGroup>
+                  </InputOTP>
                 </FormControl>
                 <FormDescription>
-                  O código de acesso foi exibido na confirmação do registro.
+                  O código foi exibido na confirmação do registro. Colar também funciona.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

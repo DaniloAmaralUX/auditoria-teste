@@ -57,9 +57,9 @@ export function nextRoute(key: StepKey): string {
   return next ? `/registrar/${next.path}` : "/registrar/revisao"
 }
 
-/** Rota da etapa anterior; antes da primeira, volta ao início. */
+/** Rota da etapa anterior; antes da primeira, volta à introdução do fluxo. */
 export function prevRoute(key: StepKey): string {
   const i = stepIndex(key)
   const prev = registrationSteps[i - 1]
-  return prev ? `/registrar/${prev.path}` : "/"
+  return prev ? `/registrar/${prev.path}` : "/registrar"
 }

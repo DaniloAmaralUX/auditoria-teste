@@ -12,7 +12,11 @@ export const trackingLookupSchema = z.object({
   accessCode: z
     .string()
     .trim()
-    .min(1, "Informe o código de acesso."),
+    .min(1, "Informe o código de acesso.")
+    .refine(
+      (v) => v.replace(/[^A-Za-z0-9]/g, "").length === 12,
+      "Informe o código completo (12 caracteres)."
+    ),
   /** Campo-armadilha oculto; se preenchido, trata-se de bot. */
   website: z.string().max(0).optional(),
 })

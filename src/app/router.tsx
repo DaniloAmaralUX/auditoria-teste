@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom"
+import { createBrowserRouter } from "react-router-dom"
 
 import { PublicShell } from "@/components/public/public-shell"
 import { HomePage } from "@/app/public/home-page"
@@ -7,6 +7,7 @@ import { TermosPage } from "@/app/public/termos-page"
 import { FaqPage } from "@/app/public/faq-page"
 import { NotFoundPage } from "@/app/public/not-found-page"
 import { RegistrationLayout } from "@/features/registration/registration-layout"
+import { StartPage } from "@/app/public/registration/start-page"
 import { IdentificationStep } from "@/app/public/registration/identification-step"
 import { AboutStep } from "@/app/public/registration/about-step"
 import { ReportStep } from "@/app/public/registration/report-step"
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
         path: "registrar",
         element: <RegistrationLayout />,
         children: [
-          { index: true, element: <Navigate to="/registrar/identificacao" replace /> },
+          { index: true, element: <StartPage /> },
           { path: "identificacao", element: <IdentificationStep /> },
           { path: "sobre-a-manifestacao", element: <AboutStep /> },
           { path: "relato", element: <ReportStep /> },

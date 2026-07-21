@@ -18,7 +18,7 @@ export function FormStep({ title, description, children }: FormStepProps) {
   }, [])
 
   return (
-    <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1.5 motion-safe:duration-[var(--motion-base)] motion-safe:ease-[var(--ease-enter)]">
+    <div>
       <h1
         ref={headingRef}
         tabIndex={-1}

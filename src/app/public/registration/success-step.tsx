@@ -21,9 +21,11 @@ export function SuccessStep() {
   }
 
   return (
-    <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1.5 motion-safe:duration-[var(--motion-base)] motion-safe:ease-[var(--ease-enter)]">
+    <div className="brand-glow relative">
       <div className="flex items-center gap-3">
-        <CheckCircle2 aria-hidden className="text-status-completed size-8 shrink-0" />
+        <span className="bg-status-completed/12 flex size-12 shrink-0 items-center justify-center rounded-xl">
+          <CheckCircle2 aria-hidden className="text-status-completed size-6" />
+        </span>
         <h1
           ref={headingRef}
           tabIndex={-1}
@@ -37,7 +39,8 @@ export function SuccessStep() {
         abaixo: você precisará deles para acompanhar sua manifestação.
       </p>
 
-      <div className="mt-6">
+      {/* Cerimônia sóbria: o cartão entra num segundo tempo, sem exageros. */}
+      <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:fill-mode-backwards motion-safe:delay-[140ms] mt-6 duration-[var(--motion-slow)] ease-[var(--ease-out-strong)]">
         <ProtocolCard result={result} />
       </div>
 
