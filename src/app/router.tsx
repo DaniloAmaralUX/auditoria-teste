@@ -24,6 +24,7 @@ const DesignIntroPage = lazy(() => import("@/app/design/intro-page"))
 const DesignColorsPage = lazy(() => import("@/app/design/colors-page"))
 const DesignTypographyPage = lazy(() => import("@/app/design/typography-page"))
 const DesignMaterialsPage = lazy(() => import("@/app/design/materials-page"))
+const DesignGridPage = lazy(() => import("@/app/design/grid-page"))
 const DesignBrandPage = lazy(() => import("@/app/design/brand-page"))
 const DesignContentPage = lazy(() => import("@/app/design/content-page"))
 const DesignMotionPage = lazy(() => import("@/app/design/motion-page"))
@@ -42,6 +43,7 @@ export const router = createBrowserRouter([
       { path: "cores", element: <DesignColorsPage /> },
       { path: "tipografia", element: <DesignTypographyPage /> },
       { path: "materiais", element: <DesignMaterialsPage /> },
+      { path: "grid", element: <DesignGridPage /> },
       { path: "marca", element: <DesignBrandPage /> },
       { path: "conteudo", element: <DesignContentPage /> },
       { path: "motion", element: <DesignMotionPage /> },
