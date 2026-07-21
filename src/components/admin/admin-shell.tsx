@@ -58,7 +58,7 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
               cn(
                 "flex items-center gap-3 rounded-md px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 isActive
-                  ? "bg-primary/10 text-primary font-medium"
+                  ? "bg-primary/10 text-primary-text font-medium"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )
             }
@@ -78,7 +78,7 @@ function BrandBlock() {
       to="/admin/dashboard"
       className="flex items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <ShieldCheck aria-hidden className="text-primary size-6 shrink-0" />
+      <ShieldCheck aria-hidden className="text-primary-text size-6 shrink-0" />
       <span className="text-sm leading-tight font-semibold">
         Painel do Comitê
         <span className="text-muted-foreground block text-xs font-normal">Ética e Ouvidoria</span>
@@ -106,7 +106,7 @@ export function AdminShell() {
         {user ? (
           <div className="border-t p-3">
             <div className="flex items-center gap-3 px-1 py-2">
-              <span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
+              <span className="bg-primary/10 text-primary-text flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
                 {user.initials}
               </span>
               <div className="min-w-0">

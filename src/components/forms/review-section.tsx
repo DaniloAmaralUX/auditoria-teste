@@ -21,7 +21,7 @@ export function ReviewSection({ title, editHref, rows }: ReviewSectionProps) {
         <h2 className="font-heading text-base font-semibold">{title}</h2>
         <Link
           to={editHref}
-          className="text-primary hover:bg-muted/60 -m-2 inline-flex items-center gap-1.5 rounded-md p-2 text-sm transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="text-primary-text hover:bg-muted/60 -m-2 inline-flex items-center gap-1.5 rounded-md p-2 text-sm transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <Pencil aria-hidden className="size-3.5" />
           Editar

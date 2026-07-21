@@ -16,12 +16,12 @@ const variantConfig: Record<
   confidential: {
     icon: ShieldCheck,
     className: "border-primary/20 border-l-2 border-l-primary/50 bg-primary/5 text-foreground",
-    iconClassName: "text-primary",
+    iconClassName: "text-primary-text",
   },
   anonymity: {
     icon: Lock,
     className: "border-primary/20 border-l-2 border-l-primary/50 bg-primary/5 text-foreground",
-    iconClassName: "text-primary",
+    iconClassName: "text-primary-text",
   },
   warning: {
     icon: AlertTriangle,

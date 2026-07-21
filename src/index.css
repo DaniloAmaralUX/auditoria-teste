@@ -6,43 +6,50 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Paleta alinhada ao site institucional (www.pitang.com):
+   laranja #ff8000 (ação), grafite #2d2d2d (neutros), azul #0099ff (informacional),
+   vermelho #ed1c24 (apenas destructive). Neutros em cinza puro, sem tom quente. */
 :root {
     --background: oklch(1 0 0);
-    --foreground: oklch(0.147 0.004 49.25);
+    --foreground: oklch(0.3 0 0);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.147 0.004 49.25);
+    --card-foreground: oklch(0.3 0 0);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.147 0.004 49.25);
-    --primary: oklch(0.553 0.195 38.402);
-    --primary-foreground: oklch(0.98 0.016 73.684);
-    --secondary: oklch(0.967 0.001 106.424);
-    --secondary-foreground: oklch(0.216 0.006 56.043);
-    --muted: oklch(0.97 0.001 106.424);
-    --muted-foreground: oklch(0.553 0.013 58.071);
-    --accent: oklch(0.97 0.001 106.424);
-    --accent-foreground: oklch(0.216 0.006 56.043);
+    --popover-foreground: oklch(0.3 0 0);
+    --primary: oklch(0.732 0.185 55);
+    --primary-foreground: oklch(0.24 0 0);
+    /* Laranja aprofundado p/ texto/links sobre branco (contraste AA >= 4.5:1). */
+    --primary-text: oklch(0.55 0.16 50);
+    --secondary: oklch(0.968 0 0);
+    --secondary-foreground: oklch(0.3 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.5 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.3 0 0);
+    /* Azul Pitang — acento informacional. */
+    --info: oklch(0.64 0.17 245);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.923 0.003 48.717);
-    --input: oklch(0.923 0.003 48.717);
-    --ring: oklch(0.709 0.01 56.259);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.66 0.16 55);
     --chart-1: oklch(0.871 0.15 154.449);
     --chart-2: oklch(0.723 0.219 149.579);
     --chart-3: oklch(0.627 0.194 149.214);
     --chart-4: oklch(0.527 0.154 150.069);
     --chart-5: oklch(0.448 0.119 151.328);
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0.001 106.423);
-    --sidebar-foreground: oklch(0.147 0.004 49.25);
-    --sidebar-primary: oklch(0.646 0.222 41.116);
-    --sidebar-primary-foreground: oklch(0.98 0.016 73.684);
-    --sidebar-accent: oklch(0.97 0.001 106.424);
-    --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-    --sidebar-border: oklch(0.923 0.003 48.717);
-    --sidebar-ring: oklch(0.709 0.01 56.259);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.3 0 0);
+    --sidebar-primary: oklch(0.732 0.185 55);
+    --sidebar-primary-foreground: oklch(0.24 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.3 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.66 0.16 55);
 
     /* Tokens semânticos de status — workflow (PRD RF-023: 5 canônicos) + auxiliares.
        Não dependem só de cor: sempre acompanhados de rótulo/ícone (RNF-007). */
-    --status-received: oklch(0.55 0.13 250);        /* Recebida — azul */
+    --status-received: oklch(0.55 0.15 245);        /* Recebida — azul Pitang aprofundado */
     --status-analysis: oklch(0.62 0.14 90);         /* Em análise — âmbar */
     --status-investigation: oklch(0.55 0.16 300);   /* Em apuração — violeta */
     --status-completed: oklch(0.6 0.15 150);        /* Concluída — verde */
@@ -57,39 +64,41 @@
 }
 
 .dark {
-    --background: oklch(0.147 0.004 49.25);
-    --foreground: oklch(0.985 0.001 106.423);
-    --card: oklch(0.216 0.006 56.043);
-    --card-foreground: oklch(0.985 0.001 106.423);
-    --popover: oklch(0.216 0.006 56.043);
-    --popover-foreground: oklch(0.985 0.001 106.423);
-    --primary: oklch(0.47 0.157 37.304);
-    --primary-foreground: oklch(0.98 0.016 73.684);
-    --secondary: oklch(0.268 0.007 34.298);
-    --secondary-foreground: oklch(0.985 0.001 106.423);
-    --muted: oklch(0.268 0.007 34.298);
-    --muted-foreground: oklch(0.709 0.01 56.259);
-    --accent: oklch(0.268 0.007 34.298);
-    --accent-foreground: oklch(0.985 0.001 106.423);
+    --background: oklch(0.205 0 0);
+    --foreground: oklch(0.97 0 0);
+    --card: oklch(0.255 0 0);
+    --card-foreground: oklch(0.97 0 0);
+    --popover: oklch(0.255 0 0);
+    --popover-foreground: oklch(0.97 0 0);
+    --primary: oklch(0.732 0.185 55);
+    --primary-foreground: oklch(0.22 0 0);
+    --primary-text: oklch(0.78 0.16 60);
+    --secondary: oklch(0.29 0 0);
+    --secondary-foreground: oklch(0.97 0 0);
+    --muted: oklch(0.29 0 0);
+    --muted-foreground: oklch(0.72 0 0);
+    --accent: oklch(0.29 0 0);
+    --accent-foreground: oklch(0.97 0 0);
+    --info: oklch(0.7 0.15 240);
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.553 0.013 58.071);
+    --ring: oklch(0.72 0.15 55);
     --chart-1: oklch(0.871 0.15 154.449);
     --chart-2: oklch(0.723 0.219 149.579);
     --chart-3: oklch(0.627 0.194 149.214);
     --chart-4: oklch(0.527 0.154 150.069);
     --chart-5: oklch(0.448 0.119 151.328);
-    --sidebar: oklch(0.216 0.006 56.043);
-    --sidebar-foreground: oklch(0.985 0.001 106.423);
-    --sidebar-primary: oklch(0.705 0.213 47.604);
-    --sidebar-primary-foreground: oklch(0.98 0.016 73.684);
-    --sidebar-accent: oklch(0.268 0.007 34.298);
-    --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
+    --sidebar: oklch(0.255 0 0);
+    --sidebar-foreground: oklch(0.97 0 0);
+    --sidebar-primary: oklch(0.732 0.185 55);
+    --sidebar-primary-foreground: oklch(0.22 0 0);
+    --sidebar-accent: oklch(0.29 0 0);
+    --sidebar-accent-foreground: oklch(0.97 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.553 0.013 58.071);
+    --sidebar-ring: oklch(0.72 0.15 55);
 
-    --status-received: oklch(0.68 0.13 250);
+    --status-received: oklch(0.7 0.15 240);
     --status-analysis: oklch(0.75 0.14 90);
     --status-investigation: oklch(0.7 0.15 300);
     --status-completed: oklch(0.72 0.17 150);
@@ -130,6 +139,8 @@
     --color-secondary: var(--secondary);
     --color-primary-foreground: var(--primary-foreground);
     --color-primary: var(--primary);
+    --color-primary-text: var(--primary-text);
+    --color-info: var(--info);
     --color-popover-foreground: var(--popover-foreground);
     --color-popover: var(--popover);
     --color-card-foreground: var(--card-foreground);
@@ -167,6 +178,9 @@
   --ease-enter: cubic-bezier(0, 0, 0.2, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --ease-emphasis: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Curvas com "punch" (Emil Kowalski) — entradas/hover de UI e Sheet iOS-like. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
   --motion-distance-xs: 2px;
   --motion-distance-sm: 6px;
   --motion-distance-md: 12px;
@@ -223,6 +237,53 @@
   .dark ::selection {
     background: color-mix(in oklch, var(--primary) 30%, transparent);
     }
+}
+
+/* Ornamentos institucionais em CSS puro (sem imagens externas / WebGL).
+   Uso: seções de destaque (hero, chamada final, sucesso, intro do registro). */
+@layer utilities {
+  /* Glow radial da marca atrás do conteúdo — sutil, não interfere na leitura. */
+  .brand-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .brand-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        42rem 22rem at 18% 0%,
+        color-mix(in oklch, var(--primary) 9%, transparent),
+        transparent 68%
+      );
+  }
+  /* Grade de pontos com fade — textura discreta de engenharia. */
+  .brand-dots::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(
+      color-mix(in oklch, var(--foreground) 11%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(38rem 20rem at 78% 12%, black, transparent 70%);
+    mask-image: radial-gradient(38rem 20rem at 78% 12%, black, transparent 70%);
+  }
+  /* Fundo de página com leve temperatura (evita o branco chapado). */
+  .bg-page {
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklch, var(--muted) 55%, var(--background)),
+        var(--background) 24rem
+      );
+  }
 }
 
 /* reduced motion obrigatório (RNF-007 / doc 16): remove deslocamento/escala,

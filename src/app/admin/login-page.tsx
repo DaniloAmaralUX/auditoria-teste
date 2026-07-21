@@ -48,7 +48,7 @@ export function LoginPage() {
     <div className="bg-muted/30 flex min-h-svh items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-6 flex items-center gap-2">
-          <ShieldCheck aria-hidden className="text-primary size-6" />
+          <ShieldCheck aria-hidden className="text-primary-text size-6" />
           <div>
             <p className="font-heading text-sm font-semibold">Canal de Ética e Ouvidoria</p>
             <p className="text-muted-foreground text-xs">Painel do Comitê de Ética</p>
@@ -88,7 +88,7 @@ export function LoginPage() {
                       onClick={() => chooseAccount(user.id)}
                       className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-3 rounded-lg border p-3 text-left outline-none focus-visible:ring-2"
                     >
-                      <span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
+                      <span className="bg-primary/10 text-primary-text flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
                         {user.initials}
                       </span>
                       <span className="min-w-0">

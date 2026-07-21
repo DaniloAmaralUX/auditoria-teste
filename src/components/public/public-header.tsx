@@ -32,7 +32,7 @@ export function PublicHeader() {
           to="/"
           className="flex items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <ShieldCheck aria-hidden className="text-primary size-6 shrink-0" />
+          <ShieldCheck aria-hidden className="text-primary-text size-6 shrink-0" />
           <span className="font-heading text-sm leading-tight font-semibold sm:text-base">
             {siteConfig.shortName}
             <span className="text-muted-foreground block text-xs font-normal">

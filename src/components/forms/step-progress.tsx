@@ -49,7 +49,7 @@ export function StepProgress({ currentIndex }: StepProgressProps) {
                 className={cn(
                   "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium tabular-nums transition-colors duration-[var(--motion-fast)]",
                   done && "bg-primary border-primary text-primary-foreground",
-                  active && "border-primary text-primary",
+                  active && "border-primary text-primary-text",
                   !done && !active && "border-border text-muted-foreground"
                 )}
               >

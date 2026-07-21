@@ -188,7 +188,7 @@ export function ReviewStep() {
                       href="/termos"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary underline underline-offset-2"
+                      className="text-primary-text underline underline-offset-2"
                     >
                       Termos de uso
                     </a>{" "}

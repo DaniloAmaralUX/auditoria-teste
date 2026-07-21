@@ -20,11 +20,11 @@ export function HomePage() {
   return (
     <div>
       {/* 1. Hero + CTAs + aviso de sigilo */}
-      <section aria-labelledby="hero-title">
+      <section aria-labelledby="hero-title" className="brand-glow brand-dots">
         <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <div className="max-w-2xl space-y-6">
             <p
-              className={`text-primary text-sm font-medium tracking-wide uppercase ${enterClass}`}
+              className={`text-primary-text text-sm font-medium tracking-wide uppercase ${enterClass}`}
             >
               {siteConfig.org} · Canal oficial
             </p>
@@ -77,7 +77,7 @@ export function HomePage() {
                   className="border-transparent shadow-[var(--shadow-border)] transition-[box-shadow] duration-[var(--motion-fast)] ease-[var(--ease-standard)] hover:shadow-[var(--shadow-border-hover)]"
                 >
                   <CardHeader>
-                    <div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">
+                    <div className="bg-primary/10 text-primary-text flex size-10 items-center justify-center rounded-lg">
                       <Icon aria-hidden className="size-5" />
                     </div>
                     <CardTitle className="mt-1 text-base">{g.title}</CardTitle>
@@ -174,7 +174,7 @@ export function HomePage() {
               href={`mailto:${siteConfig.contact.email}`}
               className="hover:bg-muted -mx-3 inline-flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <span className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-md">
+              <span className="bg-primary/10 text-primary-text flex size-9 items-center justify-center rounded-md">
                 <Mail aria-hidden className="size-4" />
               </span>
               {siteConfig.contact.email}
@@ -183,7 +183,7 @@ export function HomePage() {
               href={siteConfig.contact.phoneHref}
               className="hover:bg-muted -mx-3 inline-flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors duration-[var(--motion-fast)] outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <span className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-md">
+              <span className="bg-primary/10 text-primary-text flex size-9 items-center justify-center rounded-md">
                 <Phone aria-hidden className="size-4" />
               </span>
               {siteConfig.contact.phone}

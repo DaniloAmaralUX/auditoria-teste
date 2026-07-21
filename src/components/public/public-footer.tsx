@@ -16,7 +16,7 @@ export function PublicFooter() {
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <ShieldCheck aria-hidden className="text-primary size-5 shrink-0" />
+            <ShieldCheck aria-hidden className="text-primary-text size-5 shrink-0" />
             <p className="font-heading text-sm font-semibold">{siteConfig.shortName}</p>
           </div>
           <p className="text-muted-foreground max-w-xs text-sm">{messages.footer.rights}</p>
