@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react"
 import { createBrowserRouter } from "react-router-dom"
 
 import { PublicShell } from "@/components/public/public-shell"
@@ -17,7 +18,34 @@ import { ReviewStep } from "@/app/public/registration/review-step"
 import { SuccessStep } from "@/app/public/registration/success-step"
 import { TrackingPage } from "@/app/public/tracking/tracking-page"
 
+/* Guia de design (branch direcao-visual) — lazy para não pesar no portal. */
+const DesignLayout = lazy(() => import("@/app/design/design-layout"))
+const DesignIntroPage = lazy(() => import("@/app/design/intro-page"))
+const DesignColorsPage = lazy(() => import("@/app/design/colors-page"))
+const DesignTypographyPage = lazy(() => import("@/app/design/typography-page"))
+const DesignMaterialsPage = lazy(() => import("@/app/design/materials-page"))
+const DesignBrandPage = lazy(() => import("@/app/design/brand-page"))
+const DesignMotionPage = lazy(() => import("@/app/design/motion-page"))
+const DesignComponentsPage = lazy(() => import("@/app/design/components-page"))
+
 export const router = createBrowserRouter([
+  {
+    path: "design",
+    element: (
+      <Suspense fallback={null}>
+        <DesignLayout />
+      </Suspense>
+    ),
+    children: [
+      { index: true, element: <DesignIntroPage /> },
+      { path: "cores", element: <DesignColorsPage /> },
+      { path: "tipografia", element: <DesignTypographyPage /> },
+      { path: "materiais", element: <DesignMaterialsPage /> },
+      { path: "marca", element: <DesignBrandPage /> },
+      { path: "motion", element: <DesignMotionPage /> },
+      { path: "componentes", element: <DesignComponentsPage /> },
+    ],
+  },
   {
     element: <PublicShell />,
     children: [
