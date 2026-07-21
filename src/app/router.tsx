@@ -6,7 +6,6 @@ import { LgpdPage } from "@/app/public/lgpd-page"
 import { TermosPage } from "@/app/public/termos-page"
 import { FaqPage } from "@/app/public/faq-page"
 import { NotFoundPage } from "@/app/public/not-found-page"
-import { ComingSoonPage } from "@/app/public/coming-soon-page"
 import { RegistrationLayout } from "@/features/registration/registration-layout"
 import { IdentificationStep } from "@/app/public/registration/identification-step"
 import { AboutStep } from "@/app/public/registration/about-step"
@@ -15,6 +14,7 @@ import { ComplementaryStep } from "@/app/public/registration/complementary-step"
 import { ExpectationStep } from "@/app/public/registration/expectation-step"
 import { ReviewStep } from "@/app/public/registration/review-step"
 import { SuccessStep } from "@/app/public/registration/success-step"
+import { TrackingPage } from "@/app/public/tracking/tracking-page"
 
 export const router = createBrowserRouter([
   {
@@ -38,15 +38,7 @@ export const router = createBrowserRouter([
           { path: "sucesso", element: <SuccessStep /> },
         ],
       },
-      {
-        path: "acompanhar/*",
-        element: (
-          <ComingSoonPage
-            title="Acompanhar manifestação"
-            description="A consulta por protocolo e código de acesso está sendo implementada e ficará disponível em breve."
-          />
-        ),
-      },
+      { path: "acompanhar", element: <TrackingPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

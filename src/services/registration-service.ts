@@ -1,4 +1,5 @@
 import type { RegistrationData, SubmissionResult } from "@/features/registration/registration-context"
+import { addManifestation } from "@/features/tracking/mock-store"
 
 /**
  * Serviço de submissão da manifestação.
@@ -46,9 +47,18 @@ export async function submitRegistration(
   await new Promise((resolve) => setTimeout(resolve, 900))
 
   const now = options?.now ?? new Date()
-  return {
+  const result: SubmissionResult = {
     protocol: generateProtocol(now.getFullYear()),
     accessCode: generateAccessCode(),
     submittedAt: now.toISOString(),
   }
+
+  // Bridge para o acompanhamento (mock): torna a manifestação consultável nesta sessão.
+  addManifestation({
+    protocol: result.protocol,
+    accessCode: result.accessCode,
+    createdAt: result.submittedAt,
+  })
+
+  return result
 }

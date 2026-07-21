@@ -1,0 +1,73 @@
+import { RotateCcw } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { StatusBadge } from "@/components/public/status-badge"
+import { StatusTimeline } from "@/components/public/status-timeline"
+import { TrustNotice } from "@/components/feedback/trust-notice"
+import { statusConfig } from "@/lib/manifestation-status"
+import type { TrackingRecord } from "@/features/tracking/mock-store"
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
+}
+
+type TrackingDetailProps = {
+  record: TrackingRecord
+  onReset: () => void
+}
+
+/**
+ * Detalhe público do acompanhamento (RF-011 / tela PUB-010).
+ * Mostra apenas informação pública: status, datas, timeline e devolutivas.
+ * Nunca exibe relato completo, identidade, responsável, severidade ou notas internas.
+ * A rota permanece neutra (/acompanhar) — o protocolo não vai para a URL (decisão de privacidade).
+ */
+export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
+  const status = statusConfig[record.status]
+
+  return (
+    <div className="mx-auto w-full max-w-2xl">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p className="text-muted-foreground text-sm">Protocolo</p>
+          <p className="font-heading font-mono text-lg font-semibold">{record.protocol}</p>
+        </div>
+        <Button type="button" variant="outline" size="sm" onClick={onReset}>
+          <RotateCcw aria-hidden className="size-4" />
+          Nova consulta
+        </Button>
+      </div>
+
+      <div className="mt-6 rounded-lg border p-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <StatusBadge status={record.status} />
+          <span className="text-muted-foreground text-sm">
+            Registrada em {formatDate(record.createdAt)} · Atualizada em{" "}
+            {formatDate(record.updatedAt)}
+          </span>
+        </div>
+        <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+          {status.publicDescription}
+        </p>
+      </div>
+
+      <section className="mt-8" aria-labelledby="timeline-title">
+        <h2 id="timeline-title" className="font-heading text-lg font-semibold tracking-tight">
+          Andamento
+        </h2>
+        <Separator className="my-4" />
+        <StatusTimeline events={record.timeline} />
+      </section>
+
+      <TrustNotice variant="confidential" className="mt-8">
+        Por segurança, esta página mostra apenas o andamento e as devolutivas. O conteúdo do relato
+        e os dados internos da apuração não são exibidos aqui.
+      </TrustNotice>
+    </div>
+  )
+}
