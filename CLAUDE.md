@@ -14,7 +14,8 @@ Regras inegociáveis (detalhes e demos no guia):
 - **Borda 1px no lugar de sombra** em cards de fluxo; sombra só em overlays (select, sheet, popover).
 - **Radius base 8px** (`rounded-lg` em controles, `rounded-xl` em cards). Pill apenas em badges de status e barras de progresso.
 - **Inter Variable única**; tracking negativo em headings já vem do `@layer base`. Dígitos alinhados usam `tabular-nums`.
-- **Motion**: sem overshoot, feedback no `active` (pointer-down), durações/curvas pelos tokens `--motion-*`/`--ease-*`; `prefers-reduced-motion` sempre respeitado.
+- **Motion**: sem overshoot, feedback no `active` (pointer-down), durações/curvas pelos tokens `--motion-*`/`--ease-*`; `prefers-reduced-motion` sempre respeitado. Regras duras (ver `/design/motion`): UI < 300ms; nunca `ease-in`; nunca entrar de `scale(0)`; só animar `transform`/`opacity`; ação de teclado nunca anima; hover animado atrás de `@media (hover: hover)`; transitions (não keyframes) em UI re-disparável.
+- **Bibliotecas**: uma por tarefa, registradas em `/design/componentes` (Radix/shadcn, motion só p/ spring-gesto — hover/fade é CSS puro, sonner, input-otp, lucide, Animate UI com contenção). Não trocar sem registrar a decisão no guia.
 - **Marca**: logo em `public/pitang-logo.svg`; versão monocromática via CSS mask (ver `/design/marca`). Mono onde houver CTA laranja por perto; vermelha em footer/documentos.
 - **Escrita**: voz ativa, do lado do usuário, mesma palavra na ação inteira; erros orientam sem se desculpar (padrão em `src/messages/pt-BR.ts` e `/design/conteudo`).
 - **A11y piso**: AA de contraste, foco visível, cor nunca comunica sozinha (RNF-007).

@@ -192,6 +192,15 @@ export default function IntroPage() {
             </li>
           ))}
         </ol>
+        <p className="text-muted-foreground text-sm">
+          <span className="text-foreground font-medium">Caixa de ferramentas</span>{" "}
+          (skills versionadas ou de referência): <code className="bg-muted rounded px-1 py-0.5 text-xs">frontend-design</code>{" "}
+          conduz direção e brief; <code className="bg-muted rounded px-1 py-0.5 text-xs">apple-design</code> e{" "}
+          <code className="bg-muted rounded px-1 py-0.5 text-xs">emil-design-eng</code> são
+          a referência de motion e polish; <code className="bg-muted rounded px-1 py-0.5 text-xs">find-animation-opportunities</code>{" "}
+          acha onde motion agrega (e rejeita o resto); <code className="bg-muted rounded px-1 py-0.5 text-xs">review-animations</code>{" "}
+          roda antes de mergear qualquer animação.
+        </p>
       </GuideSection>
 
       <GuideSection title="Como usar">

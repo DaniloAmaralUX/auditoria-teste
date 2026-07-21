@@ -516,6 +516,33 @@ export default function ComponentsPage() {
           </p>
         </div>
       </GuideSection>
+
+      {/* ============ 8. BIBLIOTECAS ============ */}
+      <GuideSection
+        title="Bibliotecas escolhidas"
+        description="Escolhas deliberadas, uma por tarefa — não trocar sem decisão registrada aqui. Alinhadas à lista curada da skill pick-ui-library (Emil Kowalski)."
+      >
+        <div className="overflow-hidden rounded-xl border">
+          <table className="w-full text-sm">
+            <tbody>
+              {[
+                { task: "Primitivos acessíveis (dialog, select, sheet…)", lib: "Radix UI via shadcn/ui" },
+                { task: "Animação com spring, layout e gestos", lib: "motion (Framer Motion)" },
+                { task: "Hover e fades simples", lib: "CSS puro — motion não entra aqui" },
+                { task: "Toasts", lib: "sonner" },
+                { task: "Código de acesso (OTP)", lib: "input-otp" },
+                { task: "Ícones", lib: "lucide-react (strokeWidth 1.75 em tiles)" },
+                { task: "Componentes animados prontos", lib: "Animate UI (registry shadcn) — com contenção" },
+              ].map((row) => (
+                <tr key={row.task} className="border-b last:border-0">
+                  <td className="text-muted-foreground px-4 py-2.5 text-xs">{row.task}</td>
+                  <td className="px-4 py-2.5 text-xs font-medium">{row.lib}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </GuideSection>
     </>
   )
 }
