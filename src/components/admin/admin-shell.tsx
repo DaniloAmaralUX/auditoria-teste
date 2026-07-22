@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
-import { LayoutDashboard, Inbox, Menu, LogOut, ShieldCheck } from "lucide-react"
+import { LayoutDashboard, Inbox, FileText, Menu, LogOut, ShieldCheck } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -24,11 +24,13 @@ type AdminNavItem = {
 const navItems: AdminNavItem[] = [
   { label: "Dashboard", to: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Manifestações", to: "/admin/manifestacoes", icon: Inbox },
+  { label: "Documentos", to: "/admin/documentos", icon: FileText },
 ]
 
 const breadcrumbLabels: Record<string, string> = {
   dashboard: "Dashboard",
   manifestacoes: "Manifestações",
+  documentos: "Documentos",
 }
 
 function useBreadcrumbs() {

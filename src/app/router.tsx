@@ -35,6 +35,8 @@ import { AdminShell } from "@/components/admin/admin-shell"
 import { LoginPage as AdminLoginPage } from "@/app/admin/login-page"
 import { AdminDashboardPage } from "@/app/admin/dashboard-page"
 import { AdminManifestacoesPage } from "@/app/admin/manifestacoes-page"
+import { AdminManifestationDetailPage } from "@/app/admin/manifestation-detail-page"
+import { AdminDocumentosPage } from "@/app/admin/documentos-page"
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +72,8 @@ export const router = createBrowserRouter([
               { index: true, element: <AdminDashboardPage /> },
               { path: "dashboard", element: <AdminDashboardPage /> },
               { path: "manifestacoes", element: <AdminManifestacoesPage /> },
+              { path: "manifestacoes/:protocol", element: <AdminManifestationDetailPage /> },
+              { path: "documentos", element: <AdminDocumentosPage /> },
             ],
           },
         ],

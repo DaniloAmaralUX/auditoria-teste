@@ -209,6 +209,29 @@ export function listAll(): TrackingRecord[] {
   )
 }
 
+/** Busca direta por protocolo, sem código de acesso — uso restrito ao painel. */
+export function getByProtocol(protocol: string): TrackingRecord | undefined {
+  return store.get(keyOf(protocol))
+}
+
+/**
+ * Acrescenta um evento à linha do tempo pública (uso restrito ao painel).
+ * Quando o evento muda o status, atualiza o status corrente do registro.
+ * É por aqui que devolutivas e mudanças de status feitas pelo Comitê
+ * aparecem no acompanhamento do manifestante.
+ */
+export function appendEvent(
+  protocol: string,
+  event: TrackingEvent,
+  newStatus?: ManifestationStatus
+): void {
+  const record = store.get(keyOf(protocol))
+  if (!record) return
+  record.timeline.push(event)
+  if (newStatus) record.status = newStatus
+  record.updatedAt = event.date
+}
+
 /** Registra uma nova manifestação no store (bridge a partir do registro concluído). */
 export function addManifestation(input: {
   protocol: string
