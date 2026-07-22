@@ -47,7 +47,7 @@ function CopyField({ label, value }: CopyFieldProps) {
     <div className="bg-background rounded-lg border p-4">
       <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{label}</p>
       <div className="mt-1 flex items-center justify-between gap-3">
-        <p ref={valueRef} className="font-mono text-lg font-semibold break-all tabular-nums">
+        <p ref={valueRef} className="font-mono text-lg break-all tabular-nums">
           {value}
         </p>
         <Button

@@ -11,8 +11,8 @@ export type ManifestationStatus =
   | "concluida"
   | "arquivada"
 
-/** Flag auxiliar (não é status oficial do workflow). */
-export type ManifestationFlag = "aguardando_informacoes"
+/** Flags auxiliares (não são status oficiais do workflow — sinalizam sobre ele). */
+export type ManifestationFlag = "aguardando_informacoes" | "atrasada"
 
 export type StatusConfig = {
   label: string
@@ -56,6 +56,12 @@ export const flagConfig: Record<ManifestationFlag, StatusConfig> = {
     publicDescription:
       "O Comitê solicitou informações complementares. Verifique as devolutivas.",
     token: "status-waiting",
+  },
+  atrasada: {
+    label: "Atrasada",
+    publicDescription:
+      "O prazo interno de resposta a esta manifestação foi ultrapassado.",
+    token: "status-overdue",
   },
 }
 

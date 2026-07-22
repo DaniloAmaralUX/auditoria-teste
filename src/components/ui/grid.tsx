@@ -2,8 +2,8 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-/* Réplica do Grid do Geist (vercel.com/geist/grid) sobre os tokens do projeto.
-   Formaliza a assinatura do sistema: esqueleto hairline com crosshairs. */
+/* Réplica do Grid do Geist (vercel.com/geist/grid) sobre os tokens do projeto:
+   primitiva de layout hairline para quadros editoriais. */
 
 type Responsive<T> = T | { sm?: T; md?: T; lg?: T }
 
@@ -41,9 +41,6 @@ function useResponsiveValue<T>(value: Responsive<T>, fallback: T): T {
   return React.useSyncExternalStore(subscribe, snapshot)
 }
 
-type GridContextValue = { columns: number; rows: number }
-const GridContext = React.createContext<GridContextValue>({ columns: 1, rows: 1 })
-
 type GridProps = React.HTMLAttributes<HTMLDivElement> & {
   columns: Responsive<number>
   rows: Responsive<number>
@@ -69,50 +66,48 @@ function Grid({
   const horizontals = hideGuides === "row" ? [] : Array.from({ length: rws - 1 }, (_, i) => i + 1)
 
   return (
-    <GridContext.Provider value={{ columns: cols, rows: rws }}>
-      <div
-        data-slot="grid"
-        className={cn("bg-background relative grid border", className)}
-        style={{
-          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-          gridTemplateRows: `repeat(${rws}, minmax(2.5rem, auto))`,
-        }}
-        {...props}
+    <div
+      data-slot="grid"
+      className={cn("bg-background relative grid border", className)}
+      style={{
+        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${rws}, minmax(2.5rem, auto))`,
+      }}
+      {...props}
+    >
+      {/* Guias — decorativas (aria-hidden), abaixo das células. */}
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 size-full"
+        shapeRendering="crispEdges"
       >
-        {/* Guias — decorativas (aria-hidden), abaixo das células. */}
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 size-full"
-          shapeRendering="crispEdges"
-        >
-          {verticals.map((i) => (
-            <line
-              key={`v${i}`}
-              x1={`${(100 / cols) * i}%`}
-              y1="0"
-              x2={`${(100 / cols) * i}%`}
-              y2="100%"
-              stroke="var(--border)"
-              strokeWidth="1"
-              strokeDasharray={dashedGuides ? "4 4" : undefined}
-            />
-          ))}
-          {horizontals.map((i) => (
-            <line
-              key={`h${i}`}
-              x1="0"
-              y1={`${(100 / rws) * i}%`}
-              x2="100%"
-              y2={`${(100 / rws) * i}%`}
-              stroke="var(--border)"
-              strokeWidth="1"
-              strokeDasharray={dashedGuides ? "4 4" : undefined}
-            />
-          ))}
-        </svg>
-        {children}
-      </div>
-    </GridContext.Provider>
+        {verticals.map((i) => (
+          <line
+            key={`v${i}`}
+            x1={`${(100 / cols) * i}%`}
+            y1="0"
+            x2={`${(100 / cols) * i}%`}
+            y2="100%"
+            stroke="var(--border)"
+            strokeWidth="1"
+            strokeDasharray={dashedGuides ? "4 4" : undefined}
+          />
+        ))}
+        {horizontals.map((i) => (
+          <line
+            key={`h${i}`}
+            x1="0"
+            y1={`${(100 / rws) * i}%`}
+            x2="100%"
+            y2={`${(100 / rws) * i}%`}
+            stroke="var(--border)"
+            strokeWidth="1"
+            strokeDasharray={dashedGuides ? "4 4" : undefined}
+          />
+        ))}
+      </svg>
+      {children}
+    </div>
   )
 }
 
@@ -143,55 +138,4 @@ function GridCell({ column, row, solid = false, className, style, ...props }: Gr
   )
 }
 
-type GridCrossProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** Coluna do cruzamento (o "+" fica no canto superior esquerdo da célula [column, row]). */
-  column: number
-  row: number
-}
-
-function GridCross({ column, row, className, ...props }: GridCrossProps) {
-  const { columns, rows } = React.use(GridContext)
-  return (
-    <div
-      aria-hidden
-      data-slot="grid-cross"
-      className={cn(
-        "pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2",
-        className
-      )}
-      style={{
-        left: `${(100 / columns) * (column - 1)}%`,
-        top: `${(100 / rows) * (row - 1)}%`,
-      }}
-      {...props}
-    >
-      <svg
-        width="15"
-        height="15"
-        viewBox="0 0 15 15"
-        fill="none"
-        shapeRendering="crispEdges"
-        className="bg-background"
-      >
-        <line
-          x1="7.5"
-          y1="1.5"
-          x2="7.5"
-          y2="13.5"
-          stroke="color-mix(in oklch, var(--foreground) 32%, var(--background))"
-          strokeWidth="1"
-        />
-        <line
-          x1="1.5"
-          y1="7.5"
-          x2="13.5"
-          y2="7.5"
-          stroke="color-mix(in oklch, var(--foreground) 32%, var(--background))"
-          strokeWidth="1"
-        />
-      </svg>
-    </div>
-  )
-}
-
-export { Grid, GridCell, GridCross }
+export { Grid, GridCell }

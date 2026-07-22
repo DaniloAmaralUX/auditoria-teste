@@ -55,7 +55,7 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
           <Eyebrow>Acompanhamento</Eyebrow>
           <h1
             tabIndex={-1}
-            className="font-heading mt-1 font-mono text-2xl font-semibold tracking-tight outline-none"
+            className="mt-1 font-mono text-2xl tracking-tight outline-none"
           >
             {record.protocol}
           </h1>
@@ -69,14 +69,8 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
       {/* Card-herói do estado atual (padrão order-tracking) */}
       <div className="bg-card mt-6 rounded-xl border p-5 sm:p-6">
         <div className="flex items-start gap-4">
-          <span
-            className="flex size-12 shrink-0 items-center justify-center rounded-xl"
-            style={{
-              backgroundColor: `color-mix(in oklch, var(--${status.token}) 13%, transparent)`,
-              color: `var(--${status.token})`,
-            }}
-          >
-            <StatusIcon aria-hidden className="size-6" />
+          <span className="bg-muted text-foreground flex size-12 shrink-0 items-center justify-center rounded-xl border">
+            <StatusIcon aria-hidden className="size-6" strokeWidth={1.75} />
           </span>
           <div className="min-w-0">
             <StatusBadge status={record.status} />

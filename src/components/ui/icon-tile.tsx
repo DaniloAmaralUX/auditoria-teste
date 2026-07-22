@@ -9,7 +9,7 @@ type IconTileProps = React.HTMLAttributes<HTMLSpanElement> & {
 /**
  * Tile neutro de ícone (garantias, contatos, cabeçalhos de seção).
  * Sempre neutro — bg-muted + borda; ícones lucide com strokeWidth 1.75.
- * O laranja não decora ícones (regra do guia /design/cores).
+ * O vermelho não decora ícones (regra do guia /design/cores).
  */
 export function IconTile({ size = "default", className, ...props }: IconTileProps) {
   return (

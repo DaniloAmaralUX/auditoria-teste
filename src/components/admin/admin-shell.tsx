@@ -1,10 +1,12 @@
 import * as React from "react"
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
-import { LayoutDashboard, Inbox, FileText, Menu, LogOut, ShieldCheck } from "lucide-react"
+import { LayoutDashboard, Inbox, FileText, Menu } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { PitangLogo } from "@/components/ui/pitang-logo"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { ProfileMenu } from "@/components/admin/profile-menu"
 import {
   Sheet,
   SheetContent,
@@ -12,8 +14,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useAuth } from "@/features/auth/auth-context"
-import { roleLabels } from "@/features/auth/users"
 
 type AdminNavItem = {
   label: string
@@ -105,7 +105,7 @@ function BrandBlock({ expanded = false }: { expanded?: boolean }) {
       to="/admin/dashboard"
       className="flex items-center gap-3 rounded-lg px-1 outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <ShieldCheck aria-hidden className="text-primary size-6 shrink-0" />
+      <PitangLogo variant="symbol" label={null} className="size-7 shrink-0" />
       <span
         className={cn(
           "leading-tight whitespace-nowrap",
@@ -118,49 +118,6 @@ function BrandBlock({ expanded = false }: { expanded?: boolean }) {
         <span className="text-muted-foreground block text-xs">Ética e Ouvidoria</span>
       </span>
     </Link>
-  )
-}
-
-function UserFooter({ expanded = false }: { expanded?: boolean }) {
-  const { user, logout } = useAuth()
-  if (!user) return null
-  return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center gap-3 px-1 py-1.5">
-        <span className="bg-accent text-foreground flex size-8 shrink-0 items-center justify-center rounded-full text-xs">
-          {user.initials}
-        </span>
-        <div
-          className={cn(
-            "min-w-0",
-            expanded
-              ? ""
-              : "opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
-          )}
-        >
-          <p className="truncate text-sm">{user.name}</p>
-          <p className="text-muted-foreground truncate text-xs">{roleLabels[user.role]}</p>
-        </div>
-      </div>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="justify-start"
-        onClick={logout}
-        title={expanded ? undefined : "Sair"}
-      >
-        <LogOut aria-hidden className="size-4 shrink-0" />
-        <span
-          className={cn(
-            expanded
-              ? ""
-              : "opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
-          )}
-        >
-          Sair
-        </span>
-      </Button>
-    </div>
   )
 }
 
@@ -178,9 +135,6 @@ export function AdminShell() {
         </div>
         <div className="flex-1 overflow-x-hidden overflow-y-auto px-3 py-2">
           <SidebarNav />
-        </div>
-        <div className="overflow-hidden border-t px-3 py-2">
-          <UserFooter />
         </div>
       </aside>
 
@@ -200,11 +154,8 @@ export function AdminShell() {
                   <BrandBlock expanded />
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-1 flex-col justify-between p-3">
+              <div className="flex flex-1 flex-col p-3">
                 <SidebarNav expanded onNavigate={() => setMobileOpen(false)} />
-                <div className="border-t pt-3">
-                  <UserFooter expanded />
-                </div>
               </div>
             </SheetContent>
           </Sheet>
@@ -231,7 +182,10 @@ export function AdminShell() {
             </ol>
           </nav>
 
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <ProfileMenu />
+          </div>
         </header>
 
         <main className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">

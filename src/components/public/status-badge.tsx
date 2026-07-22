@@ -14,6 +14,20 @@ type StatusBadgeProps = {
 }
 
 /**
+ * Ponto de cor do status (token `--status-*`). Fonte única do dot reusada pelo
+ * StatusBadge e pelos cards de contagem — a cor nunca comunica sozinha (RNF-007).
+ */
+export function StatusDot({ token, className }: { token: string; className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn("size-2 shrink-0 rounded-full", className)}
+      style={{ backgroundColor: `var(--${token})` }}
+    />
+  )
+}
+
+/**
  * Selo de status (Midday: dot colorido + rótulo). O rótulo fica em foreground e
  * a cor mora só no ponto — o status nunca é comunicado só por cor (RNF-007).
  */
@@ -28,11 +42,7 @@ export function StatusBadge({ status, flag, className }: StatusBadgeProps) {
         className
       )}
     >
-      <span
-        aria-hidden
-        className="size-2 shrink-0 rounded-full"
-        style={{ backgroundColor: `var(--${config.token})` }}
-      />
+      <StatusDot token={config.token} />
       {config.label}
     </span>
   )

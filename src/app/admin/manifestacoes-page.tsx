@@ -2,7 +2,6 @@ import * as React from "react"
 import { Link } from "react-router-dom"
 import { Search, Download, Inbox } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { EmptyState } from "@/components/ui/empty-state"
@@ -13,6 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { StatusBadge } from "@/components/public/status-badge"
 import { useAuth } from "@/features/auth/auth-context"
 import {
@@ -96,35 +104,25 @@ export function AdminManifestacoesPage() {
         </p>
       </header>
 
-      {/* Abas de status */}
-      <div className="overflow-x-auto">
-        <div
-          role="tablist"
-          aria-label="Filtrar por status"
-          className="flex min-w-max gap-1 border-b"
-        >
-          {STATUS_TABS.map((tab) => {
-            const active = status === tab.value
-            return (
-              <button
+      {/* Abas de status (Midday: sublinhado, navegação por seta via Radix Tabs) */}
+      <Tabs
+        value={status}
+        onValueChange={(v) => setStatus(v as (typeof STATUS_TABS)[number]["value"])}
+      >
+        <div className="overflow-x-auto">
+          <TabsList className="h-auto min-w-max justify-start gap-1 rounded-none border-b bg-transparent p-0">
+            {STATUS_TABS.map((tab) => (
+              <TabsTrigger
                 key={tab.value}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => setStatus(tab.value)}
-                className={cn(
-                  "-mb-px border-b-2 px-3 py-2 text-sm whitespace-nowrap outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
-                  active
-                    ? "border-primary text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-                )}
+                value={tab.value}
+                className="flex-none -mb-px rounded-none border-b-2 border-transparent px-3 py-2 text-muted-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground"
               >
                 {tab.label}
-              </button>
-            )
-          })}
+              </TabsTrigger>
+            ))}
+          </TabsList>
         </div>
-      </div>
+      </Tabs>
 
       {/* Busca + ordenação + exportação */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -177,58 +175,55 @@ export function AdminManifestacoesPage() {
           />
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border">
-          <table className="w-full min-w-[720px] text-sm">
-            <thead>
-              <tr className="text-muted-foreground border-b text-left">
-                <th className="px-4 py-2.5 text-xs font-normal">Protocolo</th>
-                <th className="px-4 py-2.5 text-xs font-normal">Título</th>
-                <th className="px-4 py-2.5 text-xs font-normal">Tipo</th>
-                <th className="px-4 py-2.5 text-xs font-normal">Categoria</th>
-                <th className="px-4 py-2.5 text-xs font-normal">Status</th>
-                <th className="px-4 py-2.5 text-xs font-normal">Atualizada</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="overflow-hidden rounded-xl border">
+          <Table className="min-w-[720px]">
+            <TableHeader>
+              <TableRow className="hover:bg-transparent">
+                <TableHead>Protocolo</TableHead>
+                <TableHead>Título</TableHead>
+                <TableHead>Tipo</TableHead>
+                <TableHead>Categoria</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Atualizada</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {filtered.map(({ tracking, detail }) => (
-                <tr
-                  key={tracking.protocol}
-                  className="hover:bg-muted/40 border-b transition-colors last:border-0"
-                >
-                  <td className="px-4 py-3">
+                <TableRow key={tracking.protocol}>
+                  <TableCell>
                     <Link
                       to={`/admin/manifestacoes/${tracking.protocol}`}
                       className="link-underline font-mono text-xs"
                     >
                       {tracking.protocol}
                     </Link>
-                  </td>
-                  <td className="max-w-64 px-4 py-3">
+                  </TableCell>
+                  <TableCell className="max-w-64">
                     <span className="block truncate">{detail.report?.title ?? "—"}</span>
-                  </td>
-                  <td className="text-muted-foreground px-4 py-3 text-xs">
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs">
                     {detail.about ? labelFor(manifestationTypes, detail.about.type) : "—"}
-                  </td>
-                  <td className="text-muted-foreground px-4 py-3 text-xs">
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs">
                     {detail.about
                       ? labelFor(manifestationCategories, detail.about.category)
                       : "—"}
-                  </td>
-                  <td className="px-4 py-3">
+                  </TableCell>
+                  <TableCell>
                     <div className="flex flex-col gap-1">
                       <StatusBadge status={tracking.status} className="text-xs" />
                       {detail.waitingInfo ? (
                         <StatusBadge flag="aguardando_informacoes" className="text-xs" />
                       ) : null}
                     </div>
-                  </td>
-                  <td className="text-muted-foreground px-4 py-3 text-xs whitespace-nowrap tabular-nums">
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs whitespace-nowrap tabular-nums">
                     {formatDate(tracking.updatedAt)}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       )}
     </div>

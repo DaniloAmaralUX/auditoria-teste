@@ -79,7 +79,7 @@ export function RuleList({ items }: { items: { do: boolean; text: string }[] }) 
           <span
             aria-hidden
             className={cn(
-              "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full text-[10px] font-bold",
+              "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full text-[10px]",
               item.do
                 ? "bg-status-completed/15 text-status-completed"
                 : "bg-destructive/10 text-destructive"

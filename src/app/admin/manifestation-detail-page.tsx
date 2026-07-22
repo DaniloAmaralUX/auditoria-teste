@@ -15,6 +15,7 @@ import {
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { EmptyState } from "@/components/ui/empty-state"
 import { Label } from "@/components/ui/label"
@@ -72,7 +73,7 @@ function Field({ label, value }: { label: string; value?: string | null }) {
   )
 }
 
-function CardTitle({
+function SectionTitle({
   icon: Icon,
   children,
 }: {
@@ -212,8 +213,8 @@ export function AdminManifestationDetailPage() {
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         {/* ---------------- Coluna principal ---------------- */}
         <div className="min-w-0 space-y-6">
-          <section className="bg-card space-y-4 rounded-xl border p-5">
-            <CardTitle icon={ScrollText}>Relato</CardTitle>
+          <Card className="gap-4 p-5">
+            <SectionTitle icon={ScrollText}>Relato</SectionTitle>
             {detail.report ? (
               <dl className="space-y-4">
                 <Field label="O que aconteceu" value={detail.report.description} />
@@ -249,11 +250,11 @@ export function AdminManifestationDetailPage() {
                 </dl>
               </>
             ) : null}
-          </section>
+          </Card>
 
-          <section className="bg-card space-y-4 rounded-xl border p-5">
+          <Card className="gap-4 p-5">
             <div className="flex items-baseline justify-between gap-3">
-              <CardTitle icon={MessageSquareReply}>Devolutivas ao manifestante</CardTitle>
+              <SectionTitle icon={MessageSquareReply}>Devolutivas ao manifestante</SectionTitle>
               <span className="text-muted-foreground text-xs">
                 Visíveis no acompanhamento público
               </span>
@@ -295,18 +296,18 @@ export function AdminManifestationDetailPage() {
                 Seu papel não envia devolutivas — ação reservada ao Comitê de Ética.
               </p>
             )}
-          </section>
+          </Card>
 
-          <section className="bg-card space-y-4 rounded-xl border p-5">
-            <CardTitle icon={ScrollText}>Linha do tempo pública</CardTitle>
+          <Card className="gap-4 p-5">
+            <SectionTitle icon={ScrollText}>Linha do tempo pública</SectionTitle>
             <StatusTimeline events={tracking.timeline} />
-          </section>
+          </Card>
         </div>
 
         {/* ---------------- Coluna lateral ---------------- */}
         <div className="space-y-6">
-          <section className="bg-card space-y-4 rounded-xl border p-5">
-            <CardTitle icon={Workflow}>Workflow</CardTitle>
+          <Card className="gap-4 p-5">
+            <SectionTitle icon={Workflow}>Workflow</SectionTitle>
             {can("changeStatus") ? (
               isTerminal(tracking.status) ? (
                 <p className="text-muted-foreground text-sm">
@@ -365,10 +366,10 @@ export function AdminManifestationDetailPage() {
                 Seu papel não altera o workflow — ação reservada ao Comitê de Ética.
               </p>
             )}
-          </section>
+          </Card>
 
-          <section className="bg-surface-sensitive border-surface-sensitive-border text-surface-sensitive-foreground space-y-4 rounded-xl border p-5">
-            <CardTitle icon={UserRound}>Identificação</CardTitle>
+          <Card className="bg-surface-sensitive border-surface-sensitive-border text-surface-sensitive-foreground gap-4 p-5">
+            <SectionTitle icon={UserRound}>Identificação</SectionTitle>
             {can("viewRestrictedIdentity") ? (
               detail.identification ? (
                 <dl className="space-y-3">
@@ -396,10 +397,10 @@ export function AdminManifestationDetailPage() {
                 identidade do manifestante.
               </p>
             )}
-          </section>
+          </Card>
 
-          <section className="bg-card space-y-4 rounded-xl border p-5">
-            <CardTitle icon={Tags}>Classificação</CardTitle>
+          <Card className="gap-4 p-5">
+            <SectionTitle icon={Tags}>Classificação</SectionTitle>
             {detail.about ? (
               <dl className="space-y-3">
                 <Field
@@ -435,11 +436,11 @@ export function AdminManifestationDetailPage() {
                 Classificação não disponível no mock para registros desta sessão.
               </p>
             )}
-          </section>
+          </Card>
 
-          <section className="bg-card space-y-4 rounded-xl border p-5">
+          <Card className="gap-4 p-5">
             <div className="space-y-1">
-              <CardTitle icon={StickyNote}>Notas internas</CardTitle>
+              <SectionTitle icon={StickyNote}>Notas internas</SectionTitle>
               <p className="text-muted-foreground text-xs">Nunca visíveis ao manifestante.</p>
             </div>
             {detail.notes.length === 0 ? (
@@ -481,11 +482,11 @@ export function AdminManifestationDetailPage() {
                 </div>
               </div>
             ) : null}
-          </section>
+          </Card>
 
-          <section className="bg-card space-y-4 rounded-xl border p-5">
+          <Card className="gap-4 p-5">
             <div className="space-y-1">
-              <CardTitle icon={History}>Trilha de auditoria</CardTitle>
+              <SectionTitle icon={History}>Trilha de auditoria</SectionTitle>
               <p className="text-muted-foreground text-xs">
                 Toda ação do painel fica registrada (RF-026).
               </p>
@@ -507,7 +508,7 @@ export function AdminManifestationDetailPage() {
                 ))}
               </ol>
             )}
-          </section>
+          </Card>
         </div>
       </div>
     </div>

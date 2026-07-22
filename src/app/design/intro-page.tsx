@@ -28,9 +28,9 @@ const foundationCards = [
   {
     to: "/design/materiais",
     title: "Materiais",
-    description: "Bordas 1px, radius contido, ornamentos geométricos flat.",
+    description: "Bordas 1px, radius contido, superfícies planas.",
     art: (
-      <div className="dot-grid bg-background flex size-14 items-center justify-center rounded-lg border">
+      <div className="bg-background flex size-14 items-center justify-center rounded-lg border">
         <span className="bg-card size-6 rounded-md border" />
       </div>
     ),
@@ -123,17 +123,17 @@ export default function IntroPage() {
 
       <GuideSection
         title="Assinatura"
-        description="Todo sistema memorável tem um elemento que é só dele. O nosso: o esqueleto hairline com crosshairs — a coluna central emoldurada por bordas de 1px, com marcas “+” nos encontros. A página se lê como um documento técnico de engenharia: preciso, auditável, confiável."
+        description="Todo sistema memorável tem um elemento que é só dele. O nosso é editorial: serif de display sobre muito whitespace, ancorada por bordas de 1px e tabelas hairline. A página se lê como um documento — sóbria, precisa, confiável."
       >
-        <div className="corner-marks border-y">
-          <div className="mx-6 border-x px-6 py-8">
-            <p className="font-heading text-sm font-semibold">A estrutura é visível</p>
-            <p className="text-muted-foreground mt-1 max-w-prose text-sm">
-              O branco deixa de ser vazio quando o esqueleto aparece. Este é o único
-              ornamento que se repete em todas as páginas — todo o resto fica quieto
-              ao redor dele.
-            </p>
-          </div>
+        <div className="rounded-xl border p-8 sm:p-10">
+          <p className="font-heading text-2xl tracking-tight sm:text-3xl">
+            A tipografia carrega a hierarquia
+          </p>
+          <p className="text-muted-foreground mt-2 max-w-prose text-sm">
+            O branco deixa de ser vazio quando a serif entra — e o resto fica quieto ao
+            redor dela. Sem cor, sem peso, sem ornamento: só tamanho, serifa e a borda
+            de 1px que emoldura o conteúdo.
+          </p>
         </div>
       </GuideSection>
 

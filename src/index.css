@@ -278,14 +278,14 @@
     text-wrap: balance;
     }
   /* Tracking suave nos títulos serif (Hedvig Serif já é bem espaçada — só um
-     leve aperto no display; nada do tracking negativo forte calibrado p/ Inter). */
+     leve aperto no display; sem o tracking negativo forte de antes). */
   h1 { letter-spacing: -0.01em; }
   h2 { letter-spacing: -0.008em; }
   h3, h4 { letter-spacing: -0.005em; }
   p {
     text-wrap: pretty;
     }
-  /* Seleção de texto na identidade terracota (frequente nas páginas de leitura longa). */
+  /* Seleção de texto na identidade (vermelho Pitang), frequente em leitura longa. */
   ::selection {
     background: color-mix(in oklch, var(--primary) 18%, transparent);
     color: var(--foreground);
@@ -295,30 +295,8 @@
     }
 }
 
-/* Ornamentos geométricos flat (zero gradientes visuais — direção Vercel/Geist).
-   Uso: seções-quadro da home, painéis do hero e do guia de design. */
+/* Utilitários de interação. */
 @layer utilities {
-  /* Crosshair "+" nos cantos superiores de uma seção-quadro. */
-  .corner-marks {
-    position: relative;
-  }
-  .corner-marks::before,
-  .corner-marks::after {
-    content: "+";
-    position: absolute;
-    top: -0.72em;
-    z-index: 1;
-    font-size: 1rem;
-    line-height: 1;
-    font-weight: 300;
-    color: color-mix(in oklch, var(--foreground) 24%, var(--background));
-    background: var(--background);
-    padding: 0 2px;
-    pointer-events: none;
-  }
-  .corner-marks::before { left: -0.42em; }
-  .corner-marks::after { right: -0.42em; }
-
   /* Sublinhado que cresce do centro no hover/focus (adaptado de Fancy
      Components, MIT — reescrito em CSS puro com transform, sem JS).
      Frequência "dezenas de vezes/dia" → quase imperceptível: 120ms. */
@@ -347,37 +325,6 @@
     .link-underline:hover::after {
       transform: scaleX(1);
     }
-  }
-
-  /* Draw-on de ícone (Animate UI, com contenção — ver /design/motion).
-     Base = traço cheio e visível: se a animação não rodar (aba em segundo
-     plano, motion indisponível), o ícone continua visível. Requer pathLength=1
-     no <path>. O stagger vem de animation-delay inline por segmento. */
-  .icon-draw {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 0;
-    animation: icon-draw var(--motion-emphasis) var(--ease-out-strong) both;
-  }
-  @keyframes icon-draw {
-    from {
-      stroke-dashoffset: 1;
-      opacity: 0;
-    }
-    to {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-  }
-
-  /* Grade de pontos flat, SEM mask de fade — usar dentro de painel com
-     border + overflow-hidden (recorte duro, à la Vercel). */
-  .dot-grid {
-    background-image: radial-gradient(
-      circle at 1px 1px,
-      var(--border) 1px,
-      transparent 1.5px
-    );
-    background-size: 22px 22px;
   }
 }
 

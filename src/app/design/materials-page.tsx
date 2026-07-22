@@ -1,13 +1,6 @@
 import { Lock } from "lucide-react"
 
-import { Spot } from "@/components/ui/spot"
 import { PageHeader, GuideSection, DemoPanel, RuleList } from "./design-ui"
-
-const spots = [
-  { name: "empty" as const, label: "Nada encontrado", use: "404, resultados vazios" },
-  { name: "sealed" as const, label: "Registrado e selado", use: "sucesso do protocolo" },
-  { name: "track" as const, label: "Acompanhamento", use: "estado inicial de /acompanhar" },
-]
 
 const radii = [
   { name: "sm", px: "~5px", className: "rounded-sm", use: "chips pequenos" },
@@ -53,7 +46,7 @@ export default function MaterialsPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Materiais"
-        lede="Superfícies planas separadas por hairlines de 1px. Sombra só onde há elevação real (overlays). Os ornamentos são geométricos e flat — dão personalidade ao espaço em branco sem cor nem gradiente."
+        lede="Superfícies planas separadas por hairlines de 1px. Sombra só onde há elevação real (overlays). A personalidade do espaço em branco vem da serif editorial e dos numerais fantasma — sem cor nem gradiente."
       />
 
       <GuideSection title="Radius" description="Base 8px (--radius: 0.5rem). Cantos contidos: sério sem ser rígido.">
@@ -170,78 +163,35 @@ export default function MaterialsPage() {
       </GuideSection>
 
       <GuideSection
-        title="Ornamentos flat"
-        description="O vocabulário de personalidade: crosshairs nos cantos de seções-quadro, dot-grid recortado em painéis com borda, numerais fantasma em sequências."
+        title="Numerais fantasma"
+        description="O ornamento editorial que sobrevive depois de aposentar o vocabulário blueprint: numeral gigante em cinza-borda que marca uma sequência real — personalidade sem cor nem gradiente."
       >
-        <div className="space-y-8">
-          <div className="corner-marks border-y">
-            <div className="p-6">
-              <p className="font-mono text-xs font-semibold">.corner-marks</p>
-              <p className="text-muted-foreground mt-1 text-sm">
-                Seção-quadro com “+” nos cantos — o detalhe de engenharia, em cor de borda.
-              </p>
-            </div>
-          </div>
-          <DemoPanel className="dot-grid overflow-hidden">
-            <p className="font-mono text-xs font-semibold">.dot-grid</p>
-            <p className="text-muted-foreground mt-1 max-w-sm text-sm">
-              Grade de pontos flat, sem mask de fade — sempre recortada por um painel
-              com borda (hard edges).
-            </p>
-          </DemoPanel>
-          <DemoPanel>
-            <span
-              aria-hidden
-              className="font-heading text-6xl leading-none font-semibold tabular-nums"
-              style={{ color: "color-mix(in oklch, var(--foreground) 18%, var(--background))" }}
-            >
-              2
-            </span>
-            <p className="font-heading mt-2 text-sm font-semibold">Numeral fantasma</p>
-            <p className="text-muted-foreground mt-1 text-sm">
-              Passos de sequência em cinza-borda gigante — personalidade editorial sem
-              cor. <span className="text-foreground font-medium">Só onde há sequência
-              real</span> (o “Como funciona” é um processo de 4 passos); numerar lista
-              sem ordem é decoração, não informação.
-            </p>
-          </DemoPanel>
-        </div>
-      </GuideSection>
-
-      <GuideSection
-        title="Spot illustrations — blueprint hairline"
-        description="A assinatura estendida à ilustração: cada spot é um diagrama de registro de engenharia — painel com dot-grid recortado por borda, marca “+” de registro no canto e o assunto em contorno de 1,5px. Monocromáticos (herdam currentColor); o vermelho só entra onde marca um estado ativo, como o nó atual da linha do tempo. Estáticos por design — a personalidade está no diagrama, não em animá-lo. Vivem em ui/spot.tsx."
-      >
-        <div className="grid gap-4 sm:grid-cols-3">
-          {spots.map((s) => (
-            <DemoPanel key={s.name} className="space-y-3">
-              <div className="bg-muted/30 flex items-center justify-center rounded-lg border p-2">
-                <Spot name={s.name} className="w-44" />
-              </div>
-              <div className="space-y-0.5">
-                <p className="font-heading text-sm font-semibold">{s.label}</p>
-                <p className="text-muted-foreground text-xs">{s.use}</p>
-              </div>
-            </DemoPanel>
-          ))}
-        </div>
-        <p className="text-muted-foreground text-sm">
-          <span className="text-foreground font-medium">empty</span> e{" "}
-          <span className="text-foreground font-medium">sealed</span> são um par: o
-          retículo vazio (não encontrado) e o documento selado (registrado). Colocação
-          restrita aos momentos raros / primeira vez — o mesmo orçamento do deleite do{" "}
-          <span className="text-foreground font-medium">/design/motion</span>.
-        </p>
+        <DemoPanel>
+          <span
+            aria-hidden
+            className="font-heading text-6xl leading-none tabular-nums"
+            style={{ color: "color-mix(in oklch, var(--foreground) 18%, var(--background))" }}
+          >
+            2
+          </span>
+          <p className="font-heading mt-2 text-sm">Numeral fantasma</p>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Passos de sequência em cinza-borda gigante — personalidade editorial sem
+            cor. <span className="text-foreground">Só onde há sequência real</span> (o
+            “Como funciona” é um processo de 4 passos); numerar lista sem ordem é
+            decoração, não informação.
+          </p>
+        </DemoPanel>
       </GuideSection>
 
       <GuideSection title="Regras">
         <RuleList
           items={[
             { do: true, text: "hairline border-y/border-x para estruturar seções e colunas — o esqueleto visível da página." },
-            { do: true, text: "spot illustration só em momento raro (404, sucesso, estado inicial); monocromática, vermelho apenas para estado." },
             { do: true, text: "escolher o material do overlay pelo papel: tooltip → menu → modal → fullscreen; nunca inventar sombra fora dos 4 tokens." },
+            { do: true, text: "estados vazios com EmptyState (ícone + texto + ação), não ilustração." },
             { do: false, text: "sombras em cards de conteúdo — borda 1px resolve em qualquer fundo." },
-            { do: false, text: "dot-grid solto no fundo da página ou com fade — sempre dentro de painel com borda." },
+            { do: false, text: "gradiente ou cor para criar profundidade — a separação é sempre por borda." },
           ]}
         />
       </GuideSection>

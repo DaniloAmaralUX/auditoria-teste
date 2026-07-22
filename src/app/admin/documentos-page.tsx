@@ -3,6 +3,7 @@ import { FileText, Lock, Upload } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { Separator } from "@/components/ui/separator"
 import { useAuth } from "@/features/auth/auth-context"
@@ -44,7 +45,7 @@ function DocumentCard({ doc }: { doc: AdminDocument }) {
   }
 
   return (
-    <section className="bg-card space-y-4 rounded-xl border p-5">
+    <Card className="gap-4 p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
           <span className="bg-muted flex size-10 shrink-0 items-center justify-center rounded-lg border">
@@ -60,7 +61,7 @@ function DocumentCard({ doc }: { doc: AdminDocument }) {
 
       <div className="bg-muted/30 flex flex-col gap-2 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <p className="truncate font-mono text-xs font-medium">{doc.fileName}</p>
+          <p className="truncate font-mono text-xs">{doc.fileName}</p>
           <p className="text-muted-foreground text-xs">
             Versão {doc.version} · publicada em {formatDate(doc.updatedAt)} por {doc.updatedBy}
           </p>
@@ -95,7 +96,7 @@ function DocumentCard({ doc }: { doc: AdminDocument }) {
         <ol className="mt-3 space-y-2">
           {doc.history.map((v) => (
             <li key={v.version} className="text-muted-foreground flex flex-wrap gap-x-2 text-xs">
-              <span className="text-foreground font-mono font-medium">v{v.version}</span>
+              <span className="text-foreground font-mono">v{v.version}</span>
               <span className="font-mono">{v.fileName}</span>
               <span>
                 · {formatDate(v.at)} · {v.by}
@@ -104,7 +105,7 @@ function DocumentCard({ doc }: { doc: AdminDocument }) {
           ))}
         </ol>
       </details>
-    </section>
+    </Card>
   )
 }
 

@@ -1,23 +1,40 @@
 import { cn } from "@/lib/utils"
 
 type PitangLogoProps = {
-  /** brand = vermelha institucional (footer, documentos); mono = via CSS mask (header, perto de CTA laranja). */
-  variant?: "brand" | "mono"
+  /**
+   * brand = wordmark vermelho institucional (footer, documentos);
+   * mono = wordmark via CSS mask (herda currentColor, p/ fundos escuros);
+   * symbol = símbolo isolado quadrado (public/favicon.svg) p/ espaços estreitos (rail do painel).
+   */
+  variant?: "brand" | "mono" | "symbol"
   className?: string
   /** Nome acessível; passe null quando a logo for decorativa ao lado de texto visível. */
   label?: string | null
 }
 
 /**
- * Logo Pitang sobre o único asset oficial (public/pitang-logo.svg).
- * Regra do guia /design/marca: mono onde houver CTA laranja no mesmo campo
- * visual; vermelha em footer e documentos. A mono herda currentColor.
+ * Logo Pitang sobre os assets oficiais (public/pitang-logo.svg = wordmark;
+ * public/favicon.svg = símbolo isolado). Regra do guia /design/marca: mono
+ * onde o wordmark precisa herdar a cor; vermelha em footer e documentos.
  */
 export function PitangLogo({
   variant = "brand",
   className,
   label = "Pitang",
 }: PitangLogoProps) {
+  if (variant === "symbol") {
+    return (
+      <img
+        src="/favicon.svg"
+        alt={label ?? ""}
+        aria-hidden={label ? undefined : true}
+        width={40}
+        height={40}
+        className={cn("h-auto", className)}
+      />
+    )
+  }
+
   if (variant === "mono") {
     return (
       <span

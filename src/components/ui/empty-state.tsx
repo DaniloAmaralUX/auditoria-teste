@@ -13,7 +13,7 @@ type EmptyStateProps = {
 
 /**
  * Estado vazio no padrão Midday: centrado, título curto, uma ou duas linhas
- * muted e uma ação opcional. Substitui as ilustrações "blueprint" (Spot).
+ * muted e uma ação opcional. Substitui as antigas ilustrações "blueprint".
  */
 export function EmptyState({ icon: Icon, title, description, action, className }: EmptyStateProps) {
   return (

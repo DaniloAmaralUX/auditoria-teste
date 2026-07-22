@@ -1,4 +1,4 @@
-import { Grid, GridCell, GridCross } from "@/components/ui/grid"
+import { Grid, GridCell } from "@/components/ui/grid"
 import { PageHeader, GuideSection, RuleList } from "./design-ui"
 
 /** Célula numerada dos exemplos (padrão da página do Geist). */
@@ -12,7 +12,7 @@ export default function GridPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Grid"
-        lede="Exiba elementos em um layout de grade. Réplica do Grid do Geist (vercel.com/geist/grid) sobre os nossos tokens — é a formalização da assinatura do sistema: o esqueleto hairline com crosshairs."
+        lede="Exiba elementos em um layout de grade. Réplica do Grid do Geist (vercel.com/geist/grid) sobre os nossos tokens — uma primitiva de layout hairline para quadros editoriais (home, quadros do guia)."
       />
 
       <GuideSection
@@ -131,25 +131,10 @@ export default function GridPage() {
       </GuideSection>
 
       <GuideSection
-        title="Cruzes"
-        description="GridCross marca interseções específicas — o “+” fica no cruzamento superior-esquerdo da célula [column, row] indicada."
-      >
-        <Grid columns={3} rows={2} className="h-40">
-          <GridCross column={2} row={1} />
-          <GridCross column={3} row={2} />
-          <GridCross column={2} row={2} />
-        </Grid>
-      </GuideSection>
-
-      <GuideSection
         title="Guias tracejadas"
-        description="dashedGuides troca as guias internas por tracejado — a moldura externa permanece sólida. Combina com cruzes."
+        description="dashedGuides troca as guias internas por tracejado — a moldura externa permanece sólida."
       >
-        <Grid columns={4} rows={2} dashedGuides className="h-40">
-          <GridCross column={2} row={1} />
-          <GridCross column={3} row={2} />
-          <GridCross column={4} row={2} />
-        </Grid>
+        <Grid columns={4} rows={2} dashedGuides className="h-40" />
       </GuideSection>
 
       <GuideSection title="Propriedades">
@@ -170,7 +155,6 @@ export default function GridPage() {
                 ["Grid", "hideGuides", '"row" | "column"', "oculta as guias de uma direção"],
                 ["GridCell", "column / row", "grid-column / grid-row | { sm, md, lg }", 'posição/span (ex.: "1 / 3") ou responsivo'],
                 ["GridCell", "solid", "boolean", "fundo sólido que oculta as guias por baixo"],
-                ["GridCross", "column / row", "number", "interseção a marcar com o “+”"],
               ].map(([comp, prop, type, desc]) => (
                 <tr key={`${comp}-${prop}`} className="border-b last:border-0">
                   <td className="px-4 py-2 font-mono text-xs">{comp}</td>
@@ -190,7 +174,6 @@ export default function GridPage() {
             { do: true, text: "usar em seções-quadro editoriais: home, quadros do guia, momentos de destaque — onde a estrutura visível é a assinatura." },
             { do: true, text: "guias sempre decorativas (aria-hidden); o conteúdo das células segue a ordem natural de foco." },
             { do: false, text: "usar como grid de conteúdo comum (listas de cards, formulários) — para isso, grid/flex do Tailwind, sem guias." },
-            { do: false, text: "cruzes em toda interseção — marque poucas; é ponto de craft, não textura." },
           ]}
         />
       </GuideSection>

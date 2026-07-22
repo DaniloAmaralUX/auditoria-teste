@@ -2,8 +2,6 @@ import * as React from "react"
 import { RotateCcw } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { IconTile } from "@/components/ui/icon-tile"
-import { AnimatedIcon } from "@/components/ui/animated-icon"
 import {
   Accordion,
   AccordionContent,
@@ -42,7 +40,7 @@ const purposes = [
   { name: "Consistência espacial", example: "o sheet do menu entra e sai pela mesma borda." },
   { name: "Indicação de estado", example: "barra do StepProgress avança; colapso abre campo condicional." },
   { name: "Evitar corte brusco", example: "conteúdo que aparece/some ganha uma ponte de opacidade." },
-  { name: "Deleite", example: "só no raro: o check do sucesso do protocolo pode ter draw-on." },
+  { name: "Deleite", example: "só no raro: a revelação escalonada do sucesso do protocolo." },
 ]
 
 const durations = [
@@ -103,44 +101,6 @@ function EnterDemo() {
       <p className="text-muted-foreground text-xs">
         Stagger de 60ms (faixa 30–80ms), deslocamento de 6px, sem overshoot — nível
         permitido só em heros e primeiras impressões.
-      </p>
-    </DemoPanel>
-  )
-}
-
-/* --- Demo: Animate UI com contenção — ícones draw-on + reveal do accordion --- */
-
-const iconDemo = [
-  { name: "lock" as const, label: "Sigilo" },
-  { name: "anonymity" as const, label: "Anonimato" },
-  { name: "shield" as const, label: "Não retaliação" },
-]
-
-function AnimateUiDemo() {
-  const [key, setKey] = React.useState(0)
-  return (
-    <DemoPanel className="space-y-4">
-      <div className="flex items-center justify-between">
-        <p className="font-heading text-sm font-semibold">Ícones draw-on</p>
-        <Button variant="outline" size="sm" onClick={() => setKey((k) => k + 1)}>
-          <RotateCcw aria-hidden className="size-3.5" />
-          Repetir
-        </Button>
-      </div>
-      <div key={key} className="flex gap-6">
-        {iconDemo.map((icon, i) => (
-          <div key={icon.name} className="flex flex-col items-center gap-2">
-            <IconTile>
-              <AnimatedIcon name={icon.name} delay={i * 0.12} />
-            </IconTile>
-            <span className="text-muted-foreground text-xs">{icon.label}</span>
-          </div>
-        ))}
-      </div>
-      <p className="text-muted-foreground text-xs">
-        Traço desenhado (pathLength) uma vez ao entrar na viewport, stagger de 120ms,
-        ease-out forte. Usado só nas garantias da home (primeira impressão) — sob
-        reduced-motion vira contorno estático. Vive em ui/animated-icon.tsx.
       </p>
     </DemoPanel>
   )
@@ -244,10 +204,9 @@ export default function MotionPage() {
 
       <GuideSection
         title="Animate UI, com contenção"
-        description="Em vez de importar o registry inteiro, adaptamos dois efeitos sobre o motion (a lib de spring/gesto já escolhida) e os submetemos ao filtro acima. Mesma disciplina das outras libs da comunidade: adotar pouco, registrar a decisão."
+        description="Em vez de importar o registry inteiro, adaptamos um efeito pontual e o submetemos ao filtro acima. Mesma disciplina das outras libs da comunidade: adotar pouco, registrar a decisão."
       >
         <div className="space-y-4">
-          <AnimateUiDemo />
           <DemoPanel className="space-y-3">
             <p className="font-heading text-sm font-semibold">Reveal do accordion (FAQ)</p>
             <Accordion type="single" collapsible className="w-full">

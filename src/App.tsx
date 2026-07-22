@@ -12,13 +12,12 @@ export function App() {
         position="bottom-right"
         gap={8}
         toastOptions={{
-          /* Toast é overlay: elevação real — sombra profunda + hairline (guia /design/materiais). */
+          /* Toast é overlay: elevação real via a escala de materiais (guia /design/materiais). */
           style: {
             background: "var(--popover)",
             color: "var(--popover-foreground)",
             border: "1px solid var(--border)",
-            boxShadow:
-              "0 8px 24px -8px color-mix(in oklch, var(--foreground) 25%, transparent)",
+            boxShadow: "var(--shadow-material-menu)",
           },
         }}
       />

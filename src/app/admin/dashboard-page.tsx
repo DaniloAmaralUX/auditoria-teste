@@ -1,10 +1,19 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-import { ArrowRight, Clock, Inbox, FileText } from "lucide-react"
+import { ArrowRight, Inbox, FileText } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { PageGreeting } from "@/components/ui/page-greeting"
-import { StatusBadge } from "@/components/public/status-badge"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { StatusBadge, StatusDot } from "@/components/public/status-badge"
 import { useAuth } from "@/features/auth/auth-context"
 import { listAll } from "@/features/tracking/mock-store"
 import {
@@ -96,19 +105,15 @@ export function AdminDashboardPage() {
           {STATUS_ORDER.map((status) => {
             const cfg = statusConfig[status]
             return (
-              <div key={status} className="bg-card rounded-xl border p-4">
+              <Card key={status} className="gap-0 p-4">
                 <div className="flex items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="size-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: `var(--${cfg.token})` }}
-                  />
+                  <StatusDot token={cfg.token} />
                   <p className="text-muted-foreground text-xs tracking-wide uppercase">
                     {cfg.label}
                   </p>
                 </div>
                 <p className="font-heading mt-2 text-3xl tabular-nums">{counts[status]}</p>
-              </div>
+              </Card>
             )
           })}
         </div>
@@ -128,25 +133,35 @@ export function AdminDashboardPage() {
           </Link>
         </div>
         <div className="overflow-hidden rounded-xl border">
-          <ul className="divide-y">
-            {recent.map((record) => (
-              <li key={record.protocol}>
-                <Link
-                  to="/admin/manifestacoes"
-                  className="hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:ring-ring flex flex-col gap-2 px-4 py-3.5 outline-none focus-visible:ring-2 focus-visible:ring-inset sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div className="min-w-0 space-y-1">
-                    <p className="font-mono text-sm">{record.protocol}</p>
-                    <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-                      <Clock aria-hidden className="size-3" />
-                      Atualizada {formatRelativeDate(record.updatedAt)}
-                    </p>
-                  </div>
-                  <StatusBadge status={record.status} />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Table>
+            <TableHeader>
+              <TableRow className="hover:bg-transparent">
+                <TableHead>Protocolo</TableHead>
+                <TableHead>Atualizada</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {recent.map((record) => (
+                <TableRow key={record.protocol}>
+                  <TableCell>
+                    <Link
+                      to={`/admin/manifestacoes/${record.protocol}`}
+                      className="link-underline font-mono text-xs"
+                    >
+                      {record.protocol}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
+                    {formatRelativeDate(record.updatedAt)}
+                  </TableCell>
+                  <TableCell>
+                    <StatusBadge status={record.status} className="text-xs" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </section>
     </div>
