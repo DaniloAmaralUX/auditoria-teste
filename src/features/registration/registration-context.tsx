@@ -2,11 +2,14 @@
 import * as React from "react"
 
 import type {
-  IdentificationValues,
-  AboutValues,
-  ReportValues,
-  ComplementaryValues,
-  ExpectationValues,
+  RelatoValues,
+  QuandoOndeValues,
+  PessoasValues,
+  MaisValues,
+  ModoValues,
+  DadosValues,
+  RelacaoValues,
+  ContatoValues,
 } from "@/schemas/registration"
 
 /**
@@ -30,11 +33,14 @@ export type AttachmentItem = {
 }
 
 export type RegistrationData = {
-  identification?: IdentificationValues
-  about?: AboutValues
-  report?: ReportValues
-  complementary?: ComplementaryValues
-  expectation?: ExpectationValues
+  relato?: RelatoValues
+  quandoOnde?: QuandoOndeValues
+  pessoas?: PessoasValues
+  mais?: MaisValues
+  modo?: ModoValues
+  dados?: DadosValues
+  relacao?: RelacaoValues
+  contato?: ContatoValues
 }
 
 export type SubmissionResult = {

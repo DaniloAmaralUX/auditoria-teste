@@ -17,7 +17,7 @@ export function SuccessStep() {
 
   // Sem resultado (acesso direto ou refresh), não há o que confirmar.
   if (!result) {
-    return <Navigate to="/registrar/identificacao" replace />
+    return <Navigate to="/registrar/relato" replace />
   }
 
   return (
@@ -31,8 +31,8 @@ export function SuccessStep() {
         Manifestação registrada
       </h1>
       <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-        Enviamos uma confirmação para o e-mail informado. Guarde o protocolo e o código de acesso
-        abaixo: você precisará deles para acompanhar sua manifestação.
+        Enviamos uma confirmação para o e-mail informado. O protocolo e o código de acesso
+        abaixo são a sua chave para acompanhar a manifestação.
       </p>
 
       {/* Cerimônia sóbria: o cartão entra num segundo tempo, sem exageros. */}
@@ -41,8 +41,8 @@ export function SuccessStep() {
       </div>
 
       <TrustNotice variant="warning" className="mt-6" title="Guarde o código de acesso">
-        O código de acesso não pode ser recuperado. Sem ele, não é possível acompanhar a
-        manifestação — isso protege a confidencialidade do seu relato.
+        Copie ou baixe o comprovante agora: por sigilo do seu relato, não emitimos segunda
+        via do código.
       </TrustNotice>
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">

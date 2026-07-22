@@ -40,7 +40,7 @@ export const messages = {
       {
         title: "Sigilo",
         description:
-          "O conteúdo da manifestação é acessado somente pelo Comitê de Ética, sob dever de confidencialidade.",
+          "Somente o Comitê de Ética acessa o conteúdo da manifestação, sob dever de confidencialidade.",
       },
       {
         title: "Possibilidade de anonimato",
@@ -59,7 +59,8 @@ export const messages = {
       {
         step: 1,
         title: "Registre sua manifestação",
-        description: "Preencha o formulário em cinco etapas, de forma anônima ou identificada.",
+        description:
+          "Responda uma pergunta de cada vez, de forma anônima ou identificada. Só o relato é obrigatório.",
       },
       {
         step: 2,
@@ -79,23 +80,27 @@ export const messages = {
     ],
 
     contactTitle: "Fale com a Ouvidoria",
-    contactDescription:
-      "Prefere outro caminho? Você também pode entrar em contato diretamente:",
+    contactDescription: "Se preferir outro caminho, fale diretamente com a Ouvidoria:",
   },
 
   // Microtexto de anonimato (PRD §17.1) — reutilizável no formulário
   anonymity:
-    "Você pode registrar a manifestação sem informar seu nome. O e-mail será usado somente para confirmação e devolutivas do Comitê de Ética.",
+    "Você pode registrar a manifestação sem informar seu nome. Usamos o e-mail somente para confirmação e devolutivas do Comitê de Ética.",
 
   // Tela de início do registro (padrão trust-first: confiança antes dos dados)
   registrationStart: {
     eyebrow: "Registrar manifestação",
     title: "Antes de começar",
     subtitle:
-      "O registro leva cerca de cinco minutos. Você pode revisar tudo antes de enviar e nada é enviado sem a sua confirmação.",
-    stepsTitle: "Como será o preenchimento",
+      "Uma pergunta de cada vez, no seu ritmo. Só uma resposta é obrigatória — o que aconteceu. O resto, você decide se conta.",
+    stepsTitle: "Como vai ser",
+    moments: [
+      "Conte o que aconteceu, do seu jeito",
+      "Diga como quer se identificar",
+      "Revise tudo e envie quando estiver pronto",
+    ],
     trustChips: ["Sigilo garantido", "Anonimato possível", "Não retaliação"],
-    cta: "Começar registro",
+    cta: "Começar",
     trackHint: "Já registrou? Acompanhe com seu protocolo e código de acesso.",
   },
 
@@ -118,7 +123,7 @@ export const messages = {
   notFound: {
     title: "Página não encontrada",
     description:
-      "O endereço que você tentou acessar não existe ou foi movido. Você pode voltar ao início ou registrar uma manifestação.",
+      "O endereço que você tentou acessar não existe ou mudou de lugar. Você pode voltar ao início ou registrar uma manifestação.",
     back: "Voltar ao início",
   },
 

@@ -381,10 +381,10 @@ export default function ComponentsPage() {
 
       {/* ============ 3. FLUXO DE REGISTRO ============ */}
       <GuideSection
-        title="Fluxo de registro"
-        description="Os singletons críticos: cada um cobre um requisito (RF-006, RF-010, RF-013). O progresso oficial de formulário é o StepProgress — ui/progress fica reservado."
+        title="Fluxo de registro — conversacional"
+        description="O registro segue o padrão uma-pergunta-por-tela (GOV.UK one-thing-per-page; ADR fluxo-conversacional): QuestionScreen é a moldura de cada pergunta — h1 literal, resposta única, Pular nas opcionais, Voltar nunca apaga. FormStep permanece para formulários densos (admin). O progresso é dinâmico: o total muda com as respostas."
       >
-        <UsageMeta files="StepProgress, FormStep (6), FormNavigation (5), ReviewSection, ProtocolCard" where="/registrar" />
+        <UsageMeta files="QuestionScreen (8), StepProgress, ReviewSection, ProtocolCard" where="/registrar" />
         <div className="space-y-4">
           <DemoPanel className="space-y-4">
             <div className="flex items-center justify-between gap-3">
@@ -408,7 +408,11 @@ export default function ComponentsPage() {
                 </Button>
               </div>
             </div>
-            <StepProgress currentIndex={stepIndex} />
+            <StepProgress
+              current={stepIndex + 1}
+              total={5}
+              label={["Relato", "Quando e onde", "Pessoas", "Contato", "Revisão"][stepIndex]}
+            />
           </DemoPanel>
 
           <FormStepDemo />

@@ -27,7 +27,13 @@ const faqItems = [
     id: "sigilo",
     question: "Quem tem acesso ao que eu escrever?",
     answer:
-      "O conteúdo da manifestação é acessado somente pelo Comitê de Ética, sob dever de confidencialidade.",
+      "Somente o Comitê de Ética acessa o conteúdo da manifestação, sob dever de confidencialidade.",
+  },
+  {
+    id: "codigo-perdido",
+    question: "Perdi meu código de acesso. E agora?",
+    answer:
+      "Por sigilo do relato, o código não tem segunda via. Se você baixou o comprovante ou guardou o e-mail de confirmação, o código está neles. Sem o código, registre uma nova manifestação citando o protocolo anterior, ou fale com a Ouvidoria pelos contatos do rodapé.",
   },
   {
     id: "retaliacao",

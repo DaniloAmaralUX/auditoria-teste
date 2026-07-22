@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { RegistrationProvider, useRegistration } from "./registration-context"
 import { StepProgress } from "@/components/forms/step-progress"
 import { TrustNotice } from "@/components/feedback/trust-notice"
-import { stepByPath, stepIndex } from "./steps"
+import { registrationSteps, stepByPath, visibleSteps } from "./steps"
 
 /** Aviso do navegador ao sair com dados não enviados (RF-006). */
 function useUnsavedChangesGuard(active: boolean) {
@@ -23,22 +23,22 @@ function useUnsavedChangesGuard(active: boolean) {
 /** Ordem das rotas do fluxo para derivar a direção da transição. */
 function orderOf(segment: string | undefined): number {
   if (!segment) return -1 // intro
-  if (segment === "revisao") return 5
-  if (segment === "sucesso") return 6
-  const step = stepByPath(segment)
-  return step ? stepIndex(step.key) : -1
+  if (segment === "sucesso") return registrationSteps.length
+  const i = registrationSteps.findIndex((s) => s.path === segment)
+  return i
 }
 
 function RegistrationInner() {
   const location = useLocation()
   const outlet = useOutlet()
   const reduced = useReducedMotion()
-  const { isDirty } = useRegistration()
+  const { data, isDirty } = useRegistration()
   useUnsavedChangesGuard(isDirty)
 
   const segment = location.pathname.split("/").filter(Boolean)[1]
   const step = stepByPath(segment)
-  const currentIndex = step ? stepIndex(step.key) : -1
+  const steps = visibleSteps(data)
+  const currentIndex = step ? steps.findIndex((s) => s.key === step.key) : -1
 
   // Direção: avançar entra da direita, voltar entra da esquerda (continuidade espacial).
   // Estado ajustado durante o render (padrão React p/ estado derivado de navegação).
@@ -55,7 +55,11 @@ function RegistrationInner() {
     <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
       {currentIndex >= 0 ? (
         <div className="mb-8">
-          <StepProgress currentIndex={currentIndex} />
+          <StepProgress
+            current={currentIndex + 1}
+            total={steps.length}
+            label={steps[currentIndex]?.label}
+          />
         </div>
       ) : null}
 
@@ -84,10 +88,10 @@ function RegistrationInner() {
         </motion.div>
       </AnimatePresence>
 
-      {currentIndex >= 0 ? (
+      {currentIndex >= 0 && step?.key !== "revisao" ? (
         <div className="mt-10">
           <TrustNotice variant="confidential">
-            O conteúdo é acessado somente pelo Comitê de Ética. A Pitang não tolera retaliação
+            Somente o Comitê de Ética acessa o conteúdo. A Pitang não tolera retaliação
             contra quem utiliza este canal de boa-fé.
           </TrustNotice>
         </div>

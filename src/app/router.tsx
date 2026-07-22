@@ -1,6 +1,18 @@
-import { Suspense, lazy } from "react"
+import { Suspense } from "react"
 import { createBrowserRouter } from "react-router-dom"
 
+import {
+  DesignLayout,
+  DesignIntroPage,
+  DesignColorsPage,
+  DesignTypographyPage,
+  DesignMaterialsPage,
+  DesignGridPage,
+  DesignBrandPage,
+  DesignContentPage,
+  DesignMotionPage,
+  DesignComponentsPage,
+} from "@/app/design/lazy-pages"
 import { PublicShell } from "@/components/public/public-shell"
 import { HomePage } from "@/app/public/home-page"
 import { LgpdPage } from "@/app/public/lgpd-page"
@@ -9,26 +21,17 @@ import { FaqPage } from "@/app/public/faq-page"
 import { NotFoundPage } from "@/app/public/not-found-page"
 import { RegistrationLayout } from "@/features/registration/registration-layout"
 import { StartPage } from "@/app/public/registration/start-page"
-import { IdentificationStep } from "@/app/public/registration/identification-step"
-import { AboutStep } from "@/app/public/registration/about-step"
-import { ReportStep } from "@/app/public/registration/report-step"
-import { ComplementaryStep } from "@/app/public/registration/complementary-step"
-import { ExpectationStep } from "@/app/public/registration/expectation-step"
+import { RelatoStep } from "@/app/public/registration/relato-step"
+import { QuandoOndeStep } from "@/app/public/registration/quando-onde-step"
+import { PessoasStep } from "@/app/public/registration/pessoas-step"
+import { MaisStep } from "@/app/public/registration/mais-step"
+import { ModoStep } from "@/app/public/registration/modo-step"
+import { DadosStep } from "@/app/public/registration/dados-step"
+import { RelacaoStep } from "@/app/public/registration/relacao-step"
+import { ContatoStep } from "@/app/public/registration/contato-step"
 import { ReviewStep } from "@/app/public/registration/review-step"
 import { SuccessStep } from "@/app/public/registration/success-step"
 import { TrackingPage } from "@/app/public/tracking/tracking-page"
-
-/* Guia de design (branch direcao-visual) — lazy para não pesar no portal. */
-const DesignLayout = lazy(() => import("@/app/design/design-layout"))
-const DesignIntroPage = lazy(() => import("@/app/design/intro-page"))
-const DesignColorsPage = lazy(() => import("@/app/design/colors-page"))
-const DesignTypographyPage = lazy(() => import("@/app/design/typography-page"))
-const DesignMaterialsPage = lazy(() => import("@/app/design/materials-page"))
-const DesignGridPage = lazy(() => import("@/app/design/grid-page"))
-const DesignBrandPage = lazy(() => import("@/app/design/brand-page"))
-const DesignContentPage = lazy(() => import("@/app/design/content-page"))
-const DesignMotionPage = lazy(() => import("@/app/design/motion-page"))
-const DesignComponentsPage = lazy(() => import("@/app/design/components-page"))
 
 export const router = createBrowserRouter([
   {
@@ -62,11 +65,14 @@ export const router = createBrowserRouter([
         element: <RegistrationLayout />,
         children: [
           { index: true, element: <StartPage /> },
-          { path: "identificacao", element: <IdentificationStep /> },
-          { path: "sobre-a-manifestacao", element: <AboutStep /> },
-          { path: "relato", element: <ReportStep /> },
-          { path: "complementares", element: <ComplementaryStep /> },
-          { path: "expectativa", element: <ExpectationStep /> },
+          { path: "relato", element: <RelatoStep /> },
+          { path: "quando-onde", element: <QuandoOndeStep /> },
+          { path: "pessoas", element: <PessoasStep /> },
+          { path: "mais", element: <MaisStep /> },
+          { path: "modo", element: <ModoStep /> },
+          { path: "dados", element: <DadosStep /> },
+          { path: "relacao", element: <RelacaoStep /> },
+          { path: "contato", element: <ContatoStep /> },
           { path: "revisao", element: <ReviewStep /> },
           { path: "sucesso", element: <SuccessStep /> },
         ],

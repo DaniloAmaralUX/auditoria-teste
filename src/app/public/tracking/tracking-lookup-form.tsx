@@ -79,9 +79,32 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   }
 
   const submitting = form.formState.isSubmitting
+  const [pasted, setPasted] = React.useState(false)
+
+  /**
+   * Colar o comprovante inteiro preenche os dois campos — zero transcrição
+   * (ADR fluxo-conversacional; "nunca bloquear paste" segue valendo: só
+   * interceptamos quando o texto contém protocolo E código).
+   */
+  const onPasteReceipt = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    const text = e.clipboardData.getData("text")
+    const protocol = text.match(/OUV-\d{4}-[A-Z0-9]{4,8}/i)?.[0]
+    // Liberal no que aceita (inclui 0/1, ausentes do alfabeto do gerador):
+    // colar deve funcionar até com comprovante transcrito à mão.
+    const code = text
+      .replace(protocol, "")
+      .match(/\b[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\b/i)?.[0]
+    if (!protocol || !code) return
+    e.preventDefault()
+    form.setValue("protocol", protocol.toUpperCase(), { shouldValidate: true })
+    form.setValue("accessCode", code.replaceAll("-", "").toUpperCase(), {
+      shouldValidate: true,
+    })
+    setPasted(true)
+  }
 
   return (
-    <div className="mx-auto w-full max-w-md">
+    <div className="mx-auto w-full max-w-md" onPaste={onPasteReceipt}>
       <Spot name="track" className="w-32" />
       <Eyebrow className="mt-4">Acompanhamento</Eyebrow>
       <h1
@@ -91,9 +114,13 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
         Acompanhar manifestação
       </h1>
       <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-        Informe o protocolo e o código de acesso que você recebeu ao registrar. Não é preciso criar
-        conta.
+        Informe o protocolo e o código de acesso que você recebeu ao registrar — ou cole o
+        comprovante inteiro em qualquer campo, que preenchemos os dois. Você não precisa
+        criar conta.
       </p>
+      <span aria-live="polite" className="sr-only">
+        {pasted ? "Protocolo e código preenchidos a partir do comprovante colado." : ""}
+      </span>
 
       <div className="bg-card mt-6 rounded-xl border p-6 sm:p-8">
         <Form {...form}>

@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { Chip } from "@/components/ui/chip"
 import { TrustNotice } from "@/components/feedback/trust-notice"
-import { registrationSteps } from "@/features/registration/steps"
 import { messages } from "@/messages/pt-BR"
 
 /**
- * Início do fluxo de registro (padrão trust-first — Mobbin/fintech):
- * estabelece confiança e expectativa ANTES de pedir qualquer dado.
+ * Início do fluxo de registro (padrão trust-first — confiança antes dos dados).
+ * ADR fluxo-conversacional: a promessa honesta abre a jornada — uma pergunta
+ * por tela e só o relato obrigatório.
  */
 export function StartPage() {
   const t = messages.registrationStart
@@ -24,7 +24,7 @@ export function StartPage() {
       >
         {t.title}
       </h1>
-      <p className="text-muted-foreground mt-3 max-w-prose text-base leading-relaxed">
+      <p className="text-muted-foreground mt-3 max-w-prose text-base leading-relaxed text-pretty">
         {t.subtitle}
       </p>
 
@@ -44,19 +44,17 @@ export function StartPage() {
           {t.stepsTitle}
         </h2>
         <ol className="mt-4 space-y-0">
-          {registrationSteps.map((step, i) => {
-            const isLast = i === registrationSteps.length - 1
+          {t.moments.map((moment, i) => {
+            const isLast = i === t.moments.length - 1
             return (
-              <li key={step.key} className="flex gap-3">
+              <li key={moment} className="flex gap-3">
                 <div className="flex flex-col items-center">
                   <span className="border-border bg-card text-muted-foreground flex size-8 shrink-0 items-center justify-center rounded-full border text-sm font-medium tabular-nums">
                     {i + 1}
                   </span>
                   {!isLast ? <span className="bg-border w-px flex-1" /> : null}
                 </div>
-                <p className={`text-sm font-medium ${isLast ? "" : "pb-5"} pt-1.5`}>
-                  {step.title}
-                </p>
+                <p className={`text-sm font-medium ${isLast ? "" : "pb-5"} pt-1.5`}>{moment}</p>
               </li>
             )
           })}
@@ -71,7 +69,7 @@ export function StartPage() {
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button asChild size="lg">
-          <Link to="/registrar/identificacao">
+          <Link to="/registrar/relato">
             {t.cta}
             <ArrowRight aria-hidden className="size-4" />
           </Link>
