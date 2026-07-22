@@ -2,18 +2,21 @@ import * as React from "react"
 import { Link, useParams } from "react-router-dom"
 import {
   ArrowLeft,
+  FileQuestion,
+  History,
   Lock,
-  MessageCircleQuestion,
   MessageSquareReply,
   ScrollText,
   StickyNote,
+  Tags,
   UserRound,
+  Workflow,
 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Chip } from "@/components/ui/chip"
+import { EmptyState } from "@/components/ui/empty-state"
 import { Label } from "@/components/ui/label"
 import {
   Select,
@@ -23,7 +26,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { Spot } from "@/components/ui/spot"
 import { Textarea } from "@/components/ui/textarea"
 import { StatusBadge } from "@/components/public/status-badge"
 import { StatusTimeline } from "@/components/public/status-timeline"
@@ -78,8 +80,8 @@ function CardTitle({
   children: React.ReactNode
 }) {
   return (
-    <h2 className="font-heading flex items-center gap-2 text-sm font-semibold">
-      <Icon aria-hidden className="text-muted-foreground size-4" />
+    <h2 className="text-muted-foreground flex items-center gap-2 text-xs font-medium tracking-wide uppercase">
+      <Icon aria-hidden className="size-3.5" />
       {children}
     </h2>
   )
@@ -109,20 +111,24 @@ export function AdminManifestationDetailPage() {
 
   if (!record) {
     return (
-      <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-4 py-16 text-center">
-        <Spot name="empty" className="w-36" />
-        <h1 className="font-heading text-xl font-semibold">Manifestação não encontrada</h1>
-        <p className="text-muted-foreground text-sm">
-          O protocolo <span className="font-mono">{protocol}</span> não existe nesta sessão de
-          demonstração.
-        </p>
-        <Button asChild variant="outline">
-          <Link to="/admin/manifestacoes">
-            <ArrowLeft aria-hidden className="size-4" />
-            Voltar à fila
-          </Link>
-        </Button>
-      </div>
+      <EmptyState
+        icon={FileQuestion}
+        title="Manifestação não encontrada"
+        description={
+          <>
+            O protocolo <span className="font-mono">{protocol}</span> não existe nesta sessão de
+            demonstração.
+          </>
+        }
+        action={
+          <Button asChild variant="outline">
+            <Link to="/admin/manifestacoes">
+              <ArrowLeft aria-hidden />
+              Voltar à fila
+            </Link>
+          </Button>
+        }
+      />
     )
   }
 
@@ -192,14 +198,9 @@ export function AdminManifestationDetailPage() {
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
             {detail.report?.title ?? "Manifestação registrada no portal"}
           </h1>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <StatusBadge status={tracking.status} />
-            {detail.waitingInfo ? (
-              <Chip>
-                <MessageCircleQuestion aria-hidden className="size-3.5" />
-                Aguardando informações
-              </Chip>
-            ) : null}
+            {detail.waitingInfo ? <StatusBadge flag="aguardando_informacoes" /> : null}
             <span className="text-muted-foreground text-xs">
               Registrada em {formatDateTime(tracking.createdAt)} · atualizada em{" "}
               {formatDateTime(tracking.updatedAt)}
@@ -305,7 +306,7 @@ export function AdminManifestationDetailPage() {
         {/* ---------------- Coluna lateral ---------------- */}
         <div className="space-y-6">
           <section className="bg-card space-y-4 rounded-xl border p-5">
-            <h2 className="font-heading text-sm font-semibold">Workflow</h2>
+            <CardTitle icon={Workflow}>Workflow</CardTitle>
             {can("changeStatus") ? (
               isTerminal(tracking.status) ? (
                 <p className="text-muted-foreground text-sm">
@@ -366,7 +367,7 @@ export function AdminManifestationDetailPage() {
             )}
           </section>
 
-          <section className="bg-card space-y-4 rounded-xl border p-5">
+          <section className="bg-surface-sensitive border-surface-sensitive-border text-surface-sensitive-foreground space-y-4 rounded-xl border p-5">
             <CardTitle icon={UserRound}>Identificação</CardTitle>
             {can("viewRestrictedIdentity") ? (
               detail.identification ? (
@@ -398,7 +399,7 @@ export function AdminManifestationDetailPage() {
           </section>
 
           <section className="bg-card space-y-4 rounded-xl border p-5">
-            <h2 className="font-heading text-sm font-semibold">Classificação</h2>
+            <CardTitle icon={Tags}>Classificação</CardTitle>
             {detail.about ? (
               <dl className="space-y-3">
                 <Field
@@ -484,7 +485,7 @@ export function AdminManifestationDetailPage() {
 
           <section className="bg-card space-y-4 rounded-xl border p-5">
             <div className="space-y-1">
-              <h2 className="font-heading text-sm font-semibold">Trilha de auditoria</h2>
+              <CardTitle icon={History}>Trilha de auditoria</CardTitle>
               <p className="text-muted-foreground text-xs">
                 Toda ação do painel fica registrada (RF-026).
               </p>

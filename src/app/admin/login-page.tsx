@@ -45,19 +45,43 @@ export function LoginPage() {
   }
 
   return (
-    <div className="bg-muted/30 flex min-h-svh items-center justify-center px-4 py-12">
-      <div className="w-full max-w-sm">
-        <div className="mb-6 flex items-center gap-2">
-          <ShieldCheck aria-hidden className="text-primary-text size-6" />
-          <div>
-            <p className="font-heading text-sm font-semibold">Canal de Ética e Ouvidoria</p>
+    <div className="grid min-h-svh lg:grid-cols-2">
+      {/* Painel institucional dark (sempre escuro, via classe `dark` — usa tokens) */}
+      <aside className="dark bg-background text-foreground relative hidden flex-col justify-between border-r p-10 lg:flex">
+        <div className="flex items-center gap-2.5">
+          <ShieldCheck aria-hidden className="text-primary size-6" />
+          <div className="leading-tight">
+            <p className="font-heading text-sm">Canal de Ética e Ouvidoria</p>
             <p className="text-muted-foreground text-xs">Painel do Comitê de Ética</p>
           </div>
         </div>
+        <blockquote className="max-w-md space-y-4">
+          <p className="font-heading text-2xl leading-snug text-balance">
+            “Toda manifestação é tratada com sigilo, imparcialidade e sem retaliação a quem se
+            manifesta de boa-fé.”
+          </p>
+          <footer className="text-muted-foreground text-sm">
+            Compromisso do Comitê de Ética · Pitang
+          </footer>
+        </blockquote>
+        <p className="text-muted-foreground text-xs">
+          Acesso restrito aos membros autorizados do Comitê.
+        </p>
+      </aside>
 
-        <div className="bg-background rounded-xl border p-6">
-          <h1 className="font-heading text-xl font-semibold tracking-tight">Acesso restrito</h1>
-          <p className="text-muted-foreground mt-1 text-sm">
+      {/* Formulário */}
+      <div className="flex items-center justify-center px-6 py-12 sm:px-10">
+        <div className="w-full max-w-sm">
+          <div className="mb-8 flex items-center gap-2.5 lg:hidden">
+            <ShieldCheck aria-hidden className="text-primary size-6" />
+            <div className="leading-tight">
+              <p className="font-heading text-sm">Canal de Ética e Ouvidoria</p>
+              <p className="text-muted-foreground text-xs">Painel do Comitê de Ética</p>
+            </div>
+          </div>
+
+          <h1 className="font-heading text-2xl sm:text-3xl">Acesso restrito</h1>
+          <p className="text-muted-foreground mt-2 text-sm">
             Entre com sua conta corporativa para acessar o painel.
           </p>
 
@@ -65,7 +89,7 @@ export function LoginPage() {
             <Button
               type="button"
               variant="outline"
-              className="mt-6 w-full"
+              className="mt-8 w-full"
               onClick={startSignIn}
               disabled={phase === "redirecting"}
             >
@@ -77,8 +101,8 @@ export function LoginPage() {
               {phase === "redirecting" ? "Conectando…" : "Entrar com Microsoft"}
             </Button>
           ) : (
-            <div className="mt-6">
-              <p className="text-sm font-medium">Escolha uma conta</p>
+            <div className="mt-8">
+              <p className="text-sm">Escolha uma conta</p>
               <p className="text-muted-foreground text-xs">Contas de demonstração</p>
               <ul className="mt-3 space-y-2">
                 {mockUsers.map((user) => (
@@ -86,13 +110,13 @@ export function LoginPage() {
                     <button
                       type="button"
                       onClick={() => chooseAccount(user.id)}
-                      className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-3 rounded-lg border p-3 text-left outline-none focus-visible:ring-2"
+                      className="hover:bg-muted focus-visible:ring-ring flex w-full items-center gap-3 rounded-lg border p-3 text-left outline-none transition-colors focus-visible:ring-2"
                     >
-                      <span className="bg-primary/10 text-primary-text flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
+                      <span className="bg-primary/10 text-primary-text flex size-9 shrink-0 items-center justify-center rounded-full text-sm">
                         {user.initials}
                       </span>
                       <span className="min-w-0">
-                        <span className="block truncate text-sm font-medium">{user.name}</span>
+                        <span className="block truncate text-sm">{user.name}</span>
                         <span className="text-muted-foreground block truncate text-xs">
                           {user.email} · {roleLabels[user.role]}
                         </span>
