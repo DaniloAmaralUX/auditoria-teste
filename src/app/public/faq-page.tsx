@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Container } from "@/components/layout/container"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { messages } from "@/messages/pt-BR"
 
@@ -67,7 +68,7 @@ export function FaqPage() {
   }, [])
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <Container width="read" className="py-12 sm:py-16">
       <header className="space-y-3">
         <h1 className="font-heading text-3xl font-semibold tracking-tight">
           {messages.faq.title}
@@ -93,6 +94,6 @@ export function FaqPage() {
           </AccordionItem>
         ))}
       </Accordion>
-    </div>
+    </Container>
   )
 }

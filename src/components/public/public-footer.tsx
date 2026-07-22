@@ -1,6 +1,7 @@
 import { Mail, Phone } from "lucide-react"
 
 import { PitangLogo } from "@/components/ui/pitang-logo"
+import { Container } from "@/components/layout/container"
 import { ContactLink } from "@/components/public/contact-link"
 import { PublicNavLink } from "@/components/public/nav-link"
 import { footerNav, siteConfig } from "@/lib/site-config"
@@ -13,7 +14,7 @@ const linkClass =
 export function PublicFooter() {
   return (
     <footer className="border-t bg-muted/30">
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <Container className="grid gap-8 py-12 md:grid-cols-3">
         <div className="space-y-3">
           {/* Logo institucional vermelha: no footer não há ação competindo (guia /design/marca). */}
           <PitangLogo variant="brand" className="h-5" />
@@ -55,12 +56,12 @@ export function PublicFooter() {
             </li>
           </ul>
         </div>
-      </div>
+      </Container>
 
       <div className="border-t">
-        <div className="text-muted-foreground mx-auto w-full max-w-6xl px-4 py-6 text-xs sm:px-6">
+        <Container className="text-muted-foreground py-6 text-xs">
           {siteConfig.name} · {siteConfig.org}
-        </div>
+        </Container>
       </div>
     </footer>
   )

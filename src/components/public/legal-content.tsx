@@ -1,6 +1,7 @@
 import { TriangleAlert } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Container } from "@/components/layout/container"
 
 type LegalContentProps = {
   title: string
@@ -29,7 +30,7 @@ export function LegalContent({
   className,
 }: LegalContentProps) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <Container width="read" className="py-12 sm:py-16">
       <header className="animate-in fade-in slide-in-from-bottom-1.5 fill-mode-both space-y-3 duration-[var(--motion-base)] ease-[var(--ease-enter)]">
         <p className="text-primary-text text-sm font-medium tracking-wide uppercase">
           Canal de Ética e Ouvidoria
@@ -69,6 +70,6 @@ export function LegalContent({
       >
         {children}
       </div>
-    </div>
+    </Container>
   )
 }

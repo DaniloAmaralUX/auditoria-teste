@@ -4,12 +4,16 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Spot } from "@/components/ui/spot"
 import { Eyebrow } from "@/components/ui/eyebrow"
+import { Container } from "@/components/layout/container"
 import { messages } from "@/messages/pt-BR"
 
 /** Página não encontrada (PUB-015). Recupera a navegação, sem humor inadequado. */
 export function NotFoundPage() {
   return (
-    <div className="mx-auto flex min-h-[60vh] w-full max-w-xl flex-col items-start justify-center gap-4 px-4 py-16 sm:px-6">
+    <Container
+      width="narrow"
+      className="flex min-h-[60vh] flex-col items-start justify-center gap-4 py-16"
+    >
       <div className="animate-in fade-in slide-in-from-bottom-1.5 fill-mode-both flex flex-col items-start gap-4 duration-[var(--motion-base)] ease-[var(--ease-enter)]">
         <Spot name="empty" className="w-40" />
         <Eyebrow>Erro 404</Eyebrow>
@@ -32,6 +36,6 @@ export function NotFoundPage() {
           </Button>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }

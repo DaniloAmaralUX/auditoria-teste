@@ -49,7 +49,7 @@ export function TrackingDetail({ record, onReset }: TrackingDetailProps) {
   const StatusIcon = statusIcons[record.status]
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
+    <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <Eyebrow>Acompanhamento</Eyebrow>

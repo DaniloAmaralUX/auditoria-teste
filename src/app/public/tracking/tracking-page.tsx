@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { Container } from "@/components/layout/container"
 import { TrackingLookupForm } from "./tracking-lookup-form"
 import { TrackingDetail } from "./tracking-detail"
 import type { TrackingRecord } from "@/features/tracking/mock-store"
@@ -24,7 +25,7 @@ export function TrackingPage() {
   }, [record])
 
   return (
-    <div className="px-4 py-12 sm:px-6 sm:py-16">
+    <Container width="flow" className="py-12 sm:py-16">
       <div
         ref={containerRef}
         key={record ? record.protocol : "lookup"}
@@ -36,6 +37,6 @@ export function TrackingPage() {
           <TrackingLookupForm onSuccess={setRecord} />
         )}
       </div>
-    </div>
+    </Container>
   )
 }

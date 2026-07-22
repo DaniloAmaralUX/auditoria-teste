@@ -17,6 +17,36 @@ const radii = [
   { name: "full", px: "pill", className: "rounded-full", use: "badges de status, progresso" },
 ]
 
+/** Escala de materiais flutuantes — nomeada à la Vercel/Geist Materials, mas
+ *  sobre nossos tokens (superfícies de página seguem flat com borda 1px).
+ *  Cada tier é um shadow-material-* declarado em index.css. */
+const floatingMaterials = [
+  {
+    name: "tooltip",
+    className: "shadow-material-tooltip",
+    lift: "menor lift",
+    use: "tooltip: quase colado à origem",
+  },
+  {
+    name: "menu",
+    className: "shadow-material-menu",
+    lift: "elevação clara",
+    use: "select, popover, dropdown-menu",
+  },
+  {
+    name: "modal",
+    className: "shadow-material-modal",
+    lift: "acima do fluxo",
+    use: "dialog, alert-dialog",
+  },
+  {
+    name: "fullscreen",
+    className: "shadow-material-fullscreen",
+    lift: "maior lift",
+    use: "sheet, drawer",
+  },
+]
+
 export default function MaterialsPage() {
   return (
     <>
@@ -56,13 +86,67 @@ export default function MaterialsPage() {
               Borda 1px. Passe o mouse: o hover é a borda escurecendo, não sombra.
             </p>
           </div>
-          <div className="bg-popover rounded-lg p-5 shadow-2xl ring-1 ring-foreground/5">
+          <div className="bg-popover shadow-material-menu rounded-lg p-5">
             <p className="font-heading text-sm font-semibold">Overlay</p>
             <p className="text-muted-foreground mt-1 text-sm">
-              Elevação real (dropdown, sheet): sombra profunda + anel sutil.
+              Elevação real (dropdown, sheet): material flutuante graduado.
             </p>
           </div>
         </div>
+      </GuideSection>
+
+      <GuideSection
+        title="Materiais flutuantes"
+        description="Alinhado ao Vercel/Geist Materials: quatro tiers de sombra graduada exclusivos para overlays. Cada camada tem uma quantidade de lift proporcional à sua função. Superfícies de página continuam flat com borda 1px — a escala aqui existe só para o que está acima do papel."
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {floatingMaterials.map((m) => (
+            <div
+              key={m.name}
+              className={`bg-popover text-popover-foreground rounded-lg p-5 ${m.className}`}
+            >
+              <p className="font-mono text-xs font-semibold">shadow-material-{m.name}</p>
+              <p className="text-muted-foreground mt-2 text-xs">{m.lift}</p>
+              <p className="mt-1 text-xs">{m.use}</p>
+            </div>
+          ))}
+        </div>
+        <div className="overflow-x-auto rounded-xl border">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-muted/40 border-b text-left">
+                <th className="px-4 py-2 text-xs font-semibold">Tier</th>
+                <th className="px-4 py-2 text-xs font-semibold">Token</th>
+                <th className="px-4 py-2 text-xs font-semibold">Radius</th>
+                <th className="px-4 py-2 text-xs font-semibold">Componentes</th>
+                <th className="px-4 py-2 text-xs font-semibold">Equivalente no Geist</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["tooltip", "shadow-material-tooltip", "rounded-lg (8)", "tooltip", "material-tooltip (6)"],
+                ["menu", "shadow-material-menu", "rounded-lg (8)", "select, popover, dropdown-menu", "material-menu (12)"],
+                ["modal", "shadow-material-modal", "rounded-xl (~11)", "dialog, alert-dialog", "material-modal (12)"],
+                ["fullscreen", "shadow-material-fullscreen", "—", "sheet, drawer", "material-fullscreen (16)"],
+              ].map(([tier, token, radius, comps, geist]) => (
+                <tr key={tier} className="border-b last:border-0">
+                  <td className="px-4 py-2 font-mono text-xs font-semibold">{tier}</td>
+                  <td className="text-muted-foreground px-4 py-2 font-mono text-[11px]">{token}</td>
+                  <td className="text-muted-foreground px-4 py-2 font-mono text-[11px]">{radius}</td>
+                  <td className="text-muted-foreground px-4 py-2 text-xs">{comps}</td>
+                  <td className="text-muted-foreground px-4 py-2 font-mono text-[11px]">{geist}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-muted-foreground text-sm">
+          Nosso radius base é <span className="text-foreground font-medium">8px</span>{" "}
+          (decisão travada), então a progressão 8 → 11 encosta na Geist 6 → 12 → 16 sem
+          desalinhar a marca. O <span className="text-foreground font-medium">radius</span>{" "}
+          do overlay segue o tipo de superfície (controle vs. card vs. tela cheia), não o
+          nível de sombra.
+        </p>
       </GuideSection>
 
       <GuideSection
@@ -155,6 +239,7 @@ export default function MaterialsPage() {
           items={[
             { do: true, text: "hairline border-y/border-x para estruturar seções e colunas — o esqueleto visível da página." },
             { do: true, text: "spot illustration só em momento raro (404, sucesso, estado inicial); monocromática, laranja apenas para estado." },
+            { do: true, text: "escolher o material do overlay pelo papel: tooltip → menu → modal → fullscreen; nunca inventar sombra fora dos 4 tokens." },
             { do: false, text: "sombras em cards de conteúdo — borda 1px resolve em qualquer fundo." },
             { do: false, text: "dot-grid solto no fundo da página ou com fade — sempre dentro de painel com borda." },
           ]}

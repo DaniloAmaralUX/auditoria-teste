@@ -9,8 +9,14 @@ type Responsive<T> = T | { sm?: T; md?: T; lg?: T }
 
 const BREAKPOINTS = { sm: 640, md: 768, lg: 1024 } as const
 
-/** Resolve um valor responsivo ({sm,md,lg}) pelo breakpoint ativo. */
-function useResponsiveValue(value: Responsive<number>, fallback: number): number {
+/** Detecta valor responsivo por objeto (o oposto de valor primitivo/undefined). */
+function isResponsiveObject<T>(v: Responsive<T> | undefined): v is { sm?: T; md?: T; lg?: T } {
+  return typeof v === "object" && v !== null && ("sm" in v || "md" in v || "lg" in v)
+}
+
+/** Resolve um valor responsivo ({sm,md,lg}) pelo breakpoint ativo. Genérico
+ *  para servir tanto às dimensões da grade (números) quanto às posições de célula. */
+function useResponsiveValue<T>(value: Responsive<T>, fallback: T): T {
   const subscribe = React.useCallback((notify: () => void) => {
     const queries = Object.values(BREAKPOINTS).map((px) =>
       window.matchMedia(`(min-width: ${px}px)`)
@@ -20,7 +26,7 @@ function useResponsiveValue(value: Responsive<number>, fallback: number): number
   }, [])
 
   const snapshot = React.useCallback(() => {
-    if (typeof value === "number") return value
+    if (!isResponsiveObject(value)) return value
     const matches = (px: number) => window.matchMedia(`(min-width: ${px}px)`).matches
     const active =
       (matches(BREAKPOINTS.lg) ? value.lg : undefined) ??
@@ -110,16 +116,19 @@ function Grid({
   )
 }
 
+type GridCellValue = React.CSSProperties["gridColumn"]
 type GridCellProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** Valor de grid-column (ex.: 1, "1 / 3", "2 / -1"). */
-  column?: React.CSSProperties["gridColumn"]
-  /** Valor de grid-row. */
-  row?: React.CSSProperties["gridRow"]
+  /** Valor de grid-column (ex.: 1, "1 / 3", "2 / -1"). Aceita objeto por breakpoint. */
+  column?: Responsive<GridCellValue>
+  /** Valor de grid-row. Aceita objeto por breakpoint. */
+  row?: Responsive<GridCellValue>
   /** Fundo sólido — oculta as guias que passam por baixo. */
   solid?: boolean
 }
 
 function GridCell({ column, row, solid = false, className, style, ...props }: GridCellProps) {
+  const col = useResponsiveValue<GridCellValue>(column, undefined)
+  const rw = useResponsiveValue<GridCellValue>(row, undefined)
   return (
     <div
       data-slot="grid-cell"
@@ -128,7 +137,7 @@ function GridCell({ column, row, solid = false, className, style, ...props }: Gr
         solid && "bg-background",
         className
       )}
-      style={{ gridColumn: column, gridRow: row, ...style }}
+      style={{ gridColumn: col, gridRow: rw, ...style }}
       {...props}
     />
   )

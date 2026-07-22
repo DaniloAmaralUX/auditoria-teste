@@ -4,6 +4,7 @@ import { Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { PitangLogo } from "@/components/ui/pitang-logo"
+import { Container } from "@/components/layout/container"
 import {
   Sheet,
   SheetContent,
@@ -27,7 +28,7 @@ export function PublicHeader() {
 
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 sm:px-6">
+      <Container className="flex h-16 items-center gap-4">
         {/* Logo institucional SEMPRE vermelha (decisão do designer, 2026-07-22) —
             a ação compartilha o matiz da marca, então não há disputa de cor. */}
         <Link
@@ -108,7 +109,7 @@ export function PublicHeader() {
             </SheetContent>
           </Sheet>
         </div>
-      </div>
+      </Container>
     </header>
   )
 }

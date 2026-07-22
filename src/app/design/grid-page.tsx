@@ -69,6 +69,44 @@ export default function GridPage() {
       </GuideSection>
 
       <GuideSection
+        title="Responsiva com clipping"
+        description="GridCell.column e .row também aceitam objeto por breakpoint. Aqui a célula sólida ocupa 1 coluna no sm, 2 no md e 3 no lg — o span cresce com a viewport, e o solid come as guias por baixo."
+      >
+        <Grid columns={{ sm: 2, md: 3, lg: 4 }} rows={2}>
+          <GridCell
+            solid
+            column={{ sm: "1 / 2", md: "1 / 3", lg: "1 / 4" }}
+            className="border-r border-b"
+          >
+            <span className="text-sm">solid · span responsivo</span>
+          </GridCell>
+          <GridCell>
+            <Numbered n={2} />
+          </GridCell>
+          <GridCell>
+            <Numbered n={3} />
+          </GridCell>
+          <GridCell>
+            <Numbered n={4} />
+          </GridCell>
+          <GridCell>
+            <Numbered n={5} />
+          </GridCell>
+        </Grid>
+      </GuideSection>
+
+      <GuideSection
+        title="Clipping específico"
+        description="Uma única célula sólida no meio da grade tracejada: as guias tracejadas continuam ao redor, mas somem por baixo do solid — o efeito clássico de recorte editorial."
+      >
+        <Grid columns={5} rows={3} dashedGuides className="h-56">
+          <GridCell solid column="2 / 5" row="2 / 3" className="border">
+            <span className="text-sm">solid · 3 colunas no meio</span>
+          </GridCell>
+        </Grid>
+      </GuideSection>
+
+      <GuideSection
         title="Guias ocultas"
         description='hideGuides="row" remove as horizontais; hideGuides="column", as verticais.'
       >
@@ -130,7 +168,7 @@ export default function GridPage() {
                 ["Grid", "columns / rows", "number | { sm, md, lg }", "dimensões da grade, fixas ou por breakpoint"],
                 ["Grid", "dashedGuides", "boolean", "guias internas tracejadas"],
                 ["Grid", "hideGuides", '"row" | "column"', "oculta as guias de uma direção"],
-                ["GridCell", "column / row", "grid-column / grid-row", 'posição e span (ex.: "1 / 3")'],
+                ["GridCell", "column / row", "grid-column / grid-row | { sm, md, lg }", 'posição/span (ex.: "1 / 3") ou responsivo'],
                 ["GridCell", "solid", "boolean", "fundo sólido que oculta as guias por baixo"],
                 ["GridCross", "column / row", "number", "interseção a marcar com o “+”"],
               ].map(([comp, prop, type, desc]) => (

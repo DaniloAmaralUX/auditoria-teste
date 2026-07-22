@@ -67,6 +67,22 @@
     --surface-sensitive: oklch(0.97 0.02 40);
     --surface-sensitive-foreground: oklch(0.3 0.05 40);
     --surface-sensitive-border: oklch(0.85 0.06 40);
+
+    /* Materiais flutuantes — escala graduada (adaptada do Vercel/Geist Materials).
+       Superfícies de página seguem flat com borda 1px (nossa assinatura).
+       Os overlays usam esta escala: tooltip → menu → modal → fullscreen. */
+    --shadow-material-tooltip:
+        0 1px 2px 0 rgb(0 0 0 / 0.08),
+        0 1px 1px -0.5px rgb(0 0 0 / 0.05);
+    --shadow-material-menu:
+        0 2px 4px -1px rgb(0 0 0 / 0.06),
+        0 4px 12px -2px rgb(0 0 0 / 0.10);
+    --shadow-material-modal:
+        0 8px 16px -4px rgb(0 0 0 / 0.08),
+        0 20px 40px -8px rgb(0 0 0 / 0.14);
+    --shadow-material-fullscreen:
+        0 12px 24px -6px rgb(0 0 0 / 0.10),
+        0 32px 64px -12px rgb(0 0 0 / 0.20);
 }
 
 .dark {
@@ -116,6 +132,23 @@
     --surface-sensitive: oklch(0.28 0.03 40);
     --surface-sensitive-foreground: oklch(0.92 0.03 60);
     --surface-sensitive-border: oklch(0.4 0.05 40);
+
+    /* No escuro: sombras mais profundas + anel sutil de luz para separar da brasa. */
+    --shadow-material-tooltip:
+        0 1px 2px 0 rgb(0 0 0 / 0.30),
+        0 0 0 1px rgb(255 255 255 / 0.04);
+    --shadow-material-menu:
+        0 4px 8px -2px rgb(0 0 0 / 0.35),
+        0 8px 24px -4px rgb(0 0 0 / 0.45),
+        0 0 0 1px rgb(255 255 255 / 0.05);
+    --shadow-material-modal:
+        0 12px 24px -6px rgb(0 0 0 / 0.45),
+        0 32px 64px -12px rgb(0 0 0 / 0.60),
+        0 0 0 1px rgb(255 255 255 / 0.06);
+    --shadow-material-fullscreen:
+        0 20px 40px -10px rgb(0 0 0 / 0.50),
+        0 48px 96px -24px rgb(0 0 0 / 0.70),
+        0 0 0 1px rgb(255 255 255 / 0.08);
 }
 
 @theme inline {
@@ -166,6 +199,11 @@
     --color-surface-sensitive: var(--surface-sensitive);
     --color-surface-sensitive-foreground: var(--surface-sensitive-foreground);
     --color-surface-sensitive-border: var(--surface-sensitive-border);
+    /* Escala de materiais flutuantes — expostos como shadow-material-* no Tailwind. */
+    --shadow-material-tooltip: var(--shadow-material-tooltip);
+    --shadow-material-menu: var(--shadow-material-menu);
+    --shadow-material-modal: var(--shadow-material-modal);
+    --shadow-material-fullscreen: var(--shadow-material-fullscreen);
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
