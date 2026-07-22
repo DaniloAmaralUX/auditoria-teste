@@ -29,12 +29,12 @@ function SwatchGrid({ swatches }: { swatches: Swatch[] }) {
 }
 
 const neutrals: Swatch[] = [
-  { token: "background", light: "oklch(0.985 0.003 80)", bg: "bg-background", note: "O papel. Fundo de página." },
-  { token: "card", light: "oklch(0.998 0.002 80)", bg: "bg-card", note: "Superfície de conteúdo, um passo acima do papel." },
-  { token: "muted", light: "oklch(0.962 0.004 80)", bg: "bg-muted", note: "Faixas de seção, tiles, estados hover." },
-  { token: "border", light: "oklch(0.915 0.005 80)", bg: "bg-border", note: "Hairlines de 1px — o esqueleto da página." },
-  { token: "foreground", light: "oklch(0.205 0.004 80)", bg: "bg-foreground", note: "Texto principal, quase-preto quente." },
-  { token: "muted-foreground", light: "oklch(0.45 0.006 75)", bg: "bg-muted-foreground", note: "Texto secundário (AA sobre papel e muted)." },
+  { token: "background", light: "oklch(0.9818 0.0054 95.1)", bg: "bg-background", note: "O papel. Fundo de página." },
+  { token: "card", light: "oklch(0.9665 0.0067 97.35)", bg: "bg-card", note: "Superfície de conteúdo — meio passo abaixo do papel (à la Claude)." },
+  { token: "muted", light: "oklch(0.9341 0.0153 90.24)", bg: "bg-muted", note: "Faixas de seção, tiles, estados hover." },
+  { token: "border", light: "oklch(0.8847 0.0069 97.36)", bg: "bg-border", note: "Hairlines de 1px — o esqueleto da página." },
+  { token: "foreground", light: "oklch(0.3438 0.0269 95.72)", bg: "bg-foreground", note: "Texto principal, marrom-grafite quente." },
+  { token: "muted-foreground", light: "oklch(0.5341 0.0078 97.45)", bg: "bg-muted-foreground", note: "Texto secundário (AA sobre papel e muted)." },
 ]
 
 const accents: Swatch[] = [
@@ -59,7 +59,7 @@ export default function ColorsPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Cores"
-        lede="Neutros papel quente (hue ~75–85, croma 0.002–0.006) como base; o laranja Pitang é o único acento de ação. Valores em oklch, com par completo claro/escuro — alterne o tema para auditar."
+        lede="Neutros papel âmbar quente (hue ~90–106) adaptados do tema Claude + (tweakcn) — só a paleta; radius, tipografia e materiais permanecem nossos. O laranja Pitang segue como único acento de ação. Valores em oklch, com par completo claro/escuro — alterne o tema para auditar."
       />
 
       <GuideSection title="Neutros" description="A temperatura quente é sutil de propósito: percebe-se o conforto, não a cor.">

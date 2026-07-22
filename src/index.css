@@ -6,45 +6,48 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Direção "elegância por contenção" (referências: Notion, Perplexity, Vercel/Geist).
-   Neutros papel quente (hue ~75-85, croma 0.002-0.006) harmonizando com o laranja
-   Pitang #ff8000 — único acento de ação. Azul #0099ff informacional; vermelho
-   #ed1c24 reservado à marca e ao destructive. Zero gradientes; bordas 1px planas. */
+   Neutros papel âmbar quente (hue ~90-106, croma 0.004-0.027) adaptados do tema
+   "Claude +" (tweakcn) — SÓ a paleta; radius 8px, Inter única e bordas-sem-sombra
+   permanecem. O laranja Pitang #ff8000 segue como único acento de ação. Azul
+   #0099ff informacional; vermelho #ed1c24 reservado à marca e ao destructive.
+   Zero gradientes; bordas 1px planas. */
 :root {
-    --background: oklch(0.985 0.003 80);
-    --foreground: oklch(0.205 0.004 80);
-    --card: oklch(0.998 0.002 80);
-    --card-foreground: oklch(0.205 0.004 80);
-    --popover: oklch(0.998 0.002 80);
-    --popover-foreground: oklch(0.205 0.004 80);
+    --background: oklch(0.9818 0.0054 95.1);
+    --foreground: oklch(0.3438 0.0269 95.72);
+    --card: oklch(0.9665 0.0067 97.35);
+    --card-foreground: oklch(0.1908 0.002 106.59);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.2671 0.0196 98.94);
     --primary: oklch(0.732 0.185 55);
     --primary-foreground: oklch(0.185 0.01 55);
     /* Laranja aprofundado p/ texto/links sobre o papel (contraste AA >= 4.5:1). */
     --primary-text: oklch(0.52 0.15 50);
-    --secondary: oklch(0.96 0.004 80);
-    --secondary-foreground: oklch(0.205 0.004 80);
-    --muted: oklch(0.962 0.004 80);
-    --muted-foreground: oklch(0.45 0.006 75);
-    --accent: oklch(0.962 0.004 80);
-    --accent-foreground: oklch(0.205 0.004 80);
+    --secondary: oklch(0.9245 0.0138 92.99);
+    --secondary-foreground: oklch(0.4334 0.0177 98.6);
+    --muted: oklch(0.9341 0.0153 90.24);
+    /* Escurecido vs. tema original (0.5341): AA >= 4.5 também sobre --muted. */
+    --muted-foreground: oklch(0.505 0.0078 97.45);
+    --accent: oklch(0.9245 0.0138 92.99);
+    --accent-foreground: oklch(0.2671 0.0196 98.94);
     /* Azul Pitang — acento informacional (aprofundado p/ uso como texto). */
     --info: oklch(0.55 0.15 245);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.915 0.005 80);
-    --input: oklch(0.915 0.005 80);
+    --border: oklch(0.8847 0.0069 97.36);
+    --input: oklch(0.8847 0.0069 97.36);
     --ring: oklch(0.64 0.15 55);
-    --chart-1: oklch(0.871 0.15 154.449);
-    --chart-2: oklch(0.723 0.219 149.579);
-    --chart-3: oklch(0.627 0.194 149.214);
-    --chart-4: oklch(0.527 0.154 150.069);
-    --chart-5: oklch(0.448 0.119 151.328);
+    --chart-1: oklch(0.5583 0.1276 42.9956);
+    --chart-2: oklch(0.6898 0.1581 290.4107);
+    --chart-3: oklch(0.8816 0.0276 93.128);
+    --chart-4: oklch(0.8822 0.0403 298.1792);
+    --chart-5: oklch(0.5608 0.1348 42.0584);
     --radius: 0.5rem;
-    --sidebar: oklch(0.975 0.004 80);
-    --sidebar-foreground: oklch(0.205 0.004 80);
+    --sidebar: oklch(0.9663 0.008 98.88);
+    --sidebar-foreground: oklch(0.359 0.0051 106.65);
     --sidebar-primary: oklch(0.732 0.185 55);
     --sidebar-primary-foreground: oklch(0.185 0.01 55);
-    --sidebar-accent: oklch(0.962 0.004 80);
-    --sidebar-accent-foreground: oklch(0.205 0.004 80);
-    --sidebar-border: oklch(0.915 0.005 80);
+    --sidebar-accent: oklch(0.9245 0.0138 92.99);
+    --sidebar-accent-foreground: oklch(0.2671 0.0196 98.94);
+    --sidebar-border: oklch(0.8847 0.0069 97.36);
     --sidebar-ring: oklch(0.64 0.15 55);
 
     /* Tokens semânticos de status — workflow (PRD RF-023: 5 canônicos) + auxiliares.
@@ -64,38 +67,40 @@
 }
 
 .dark {
-    --background: oklch(0.19 0.005 75);
-    --foreground: oklch(0.955 0.004 85);
-    --card: oklch(0.235 0.005 75);
-    --card-foreground: oklch(0.955 0.004 85);
-    --popover: oklch(0.235 0.005 75);
-    --popover-foreground: oklch(0.955 0.004 85);
+    --background: oklch(0.2679 0.0036 106.64);
+    --foreground: oklch(0.9576 0.0027 106.45);
+    --card: oklch(0.2928 0.0018 106.51);
+    --card-foreground: oklch(0.9818 0.0054 95.1);
+    --popover: oklch(0.3085 0.0035 106.6);
+    --popover-foreground: oklch(0.9211 0.004 106.48);
     --primary: oklch(0.732 0.185 55);
     --primary-foreground: oklch(0.185 0.01 55);
     --primary-text: oklch(0.78 0.16 60);
-    --secondary: oklch(0.275 0.005 75);
-    --secondary-foreground: oklch(0.955 0.004 85);
-    --muted: oklch(0.275 0.005 75);
-    --muted-foreground: oklch(0.715 0.006 80);
-    --accent: oklch(0.275 0.005 75);
-    --accent-foreground: oklch(0.955 0.004 85);
+    --secondary: oklch(0.3085 0.0035 106.6);
+    --secondary-foreground: oklch(0.9211 0.004 106.48);
+    /* No tema Claude+ o muted escuro fica ABAIXO do papel — faixas de seção
+       levemente mais fundas que o fundo, à la Claude. */
+    --muted: oklch(0.2213 0.0038 106.71);
+    --muted-foreground: oklch(0.7713 0.0169 99.07);
+    --accent: oklch(0.213 0.0078 95.42);
+    --accent-foreground: oklch(0.9663 0.008 98.88);
     --info: oklch(0.7 0.15 240);
     --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
+    --border: oklch(0.3618 0.0101 106.89);
+    --input: oklch(0.4336 0.0113 100.22);
     --ring: oklch(0.72 0.15 55);
-    --chart-1: oklch(0.871 0.15 154.449);
-    --chart-2: oklch(0.723 0.219 149.579);
-    --chart-3: oklch(0.627 0.194 149.214);
-    --chart-4: oklch(0.527 0.154 150.069);
-    --chart-5: oklch(0.448 0.119 151.328);
-    --sidebar: oklch(0.235 0.005 75);
-    --sidebar-foreground: oklch(0.955 0.004 85);
+    --chart-1: oklch(0.5583 0.1276 42.9956);
+    --chart-2: oklch(0.6898 0.1581 290.4107);
+    --chart-3: oklch(0.213 0.0078 95.4245);
+    --chart-4: oklch(0.3074 0.0516 289.323);
+    --chart-5: oklch(0.5608 0.1348 42.0584);
+    --sidebar: oklch(0.2357 0.0024 67.71);
+    --sidebar-foreground: oklch(0.8074 0.0142 93.01);
     --sidebar-primary: oklch(0.732 0.185 55);
     --sidebar-primary-foreground: oklch(0.185 0.01 55);
-    --sidebar-accent: oklch(0.275 0.005 75);
-    --sidebar-accent-foreground: oklch(0.955 0.004 85);
-    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-accent: oklch(0.168 0.002 106.62);
+    --sidebar-accent-foreground: oklch(0.8074 0.0142 93.01);
+    --sidebar-border: oklch(0.3618 0.0101 106.89);
     --sidebar-ring: oklch(0.72 0.15 55);
 
     --status-received: oklch(0.7 0.15 240);
