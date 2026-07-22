@@ -34,6 +34,12 @@ type TrackingLookupFormProps = {
 const GENERIC_ERROR =
   "Não encontramos uma manifestação com esses dados. Verifique o protocolo e o código de acesso e tente novamente."
 
+/* Padrões do comprovante (içados do handler — js-hoist-regexp). Liberais no que
+   aceitam: incluem 0/1, ausentes do alfabeto do gerador, para funcionar até com
+   comprovante transcrito à mão. */
+const PROTOCOL_PATTERN = /OUV-\d{4}-[A-Z0-9]{4,8}/i
+const CODE_PATTERN = /\b[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\b/i
+
 export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   const [error, setError] = React.useState<string | null>(null)
   const errorRef = React.useRef<HTMLDivElement>(null)
@@ -88,12 +94,10 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
    */
   const onPasteReceipt = (e: React.ClipboardEvent<HTMLDivElement>) => {
     const text = e.clipboardData.getData("text")
-    const protocol = text.match(/OUV-\d{4}-[A-Z0-9]{4,8}/i)?.[0]
-    // Liberal no que aceita (inclui 0/1, ausentes do alfabeto do gerador):
-    // colar deve funcionar até com comprovante transcrito à mão.
-    const code = text
-      .replace(protocol, "")
-      .match(/\b[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\b/i)?.[0]
+    const protocol = text.match(PROTOCOL_PATTERN)?.[0]
+    const code = protocol
+      ? text.replace(protocol, "").match(CODE_PATTERN)?.[0]
+      : undefined
     if (!protocol || !code) return
     e.preventDefault()
     form.setValue("protocol", protocol.toUpperCase(), { shouldValidate: true })

@@ -38,13 +38,13 @@ export function LegalContent({
         {subtitle ? (
           <p className="text-muted-foreground text-lg text-pretty">{subtitle}</p>
         ) : null}
-        {(updatedAt || version) && (
+        {updatedAt || version ? (
           <p className="text-muted-foreground text-sm">
             {version ? <>Versão {version}</> : null}
             {version && updatedAt ? " · " : null}
             {updatedAt ? <>Atualizado em {updatedAt}</> : null}
           </p>
-        )}
+        ) : null}
         {draft ? (
           <p
             role="note"

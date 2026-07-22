@@ -94,7 +94,7 @@ export function RegistrationProvider({ children }: { children: React.ReactNode }
 }
 
 export function useRegistration(): RegistrationContextValue {
-  const context = React.useContext(RegistrationContext)
+  const context = React.use(RegistrationContext)
   if (context === undefined) {
     throw new Error("useRegistration deve ser usado dentro de RegistrationProvider")
   }

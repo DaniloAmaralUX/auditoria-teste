@@ -141,7 +141,7 @@ type GridCrossProps = React.HTMLAttributes<HTMLDivElement> & {
 }
 
 function GridCross({ column, row, className, ...props }: GridCrossProps) {
-  const { columns, rows } = React.useContext(GridContext)
+  const { columns, rows } = React.use(GridContext)
   return (
     <div
       aria-hidden
