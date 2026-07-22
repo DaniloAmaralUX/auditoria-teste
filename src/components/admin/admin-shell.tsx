@@ -4,7 +4,7 @@ import { LayoutDashboard, Inbox, FileText, Menu, LogOut, ShieldCheck } from "luc
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import {
   Sheet,
   SheetContent,
@@ -49,7 +49,18 @@ function useBreadcrumbs() {
   return crumbs
 }
 
-function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
+/**
+ * Nav do painel. No rail (desktop), os rótulos aparecem só quando a sidebar
+ * expande (hover/foco) — a expansão é do container `group/sidebar`. No Sheet
+ * (mobile) os rótulos ficam sempre visíveis (`expanded`).
+ */
+function SidebarNav({
+  expanded = false,
+  onNavigate,
+}: {
+  expanded?: boolean
+  onNavigate?: () => void
+}) {
   return (
     <nav aria-label="Navegação do painel" className="flex flex-col gap-1">
       {navItems.map((item) => {
@@ -58,18 +69,29 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           <NavLink
             key={item.to}
             to={item.to}
+            end={item.to === "/admin/dashboard"}
             onClick={onNavigate}
+            title={expanded ? undefined : item.label}
             className={({ isActive }) =>
               cn(
-                "flex items-center gap-3 rounded-md px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "group/nav relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm outline-none transition-colors duration-[var(--motion-fast)] focus-visible:ring-2 focus-visible:ring-ring",
                 isActive
-                  ? "bg-primary/10 text-primary-text font-medium"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-primary/8 text-primary-text"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
               )
             }
           >
-            <Icon aria-hidden className="size-4" />
-            {item.label}
+            <Icon aria-hidden className="size-5 shrink-0" />
+            <span
+              className={cn(
+                "min-w-0 truncate whitespace-nowrap",
+                expanded
+                  ? ""
+                  : "opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
+              )}
+            >
+              {item.label}
+            </span>
           </NavLink>
         )
       })}
@@ -77,58 +99,93 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   )
 }
 
-function BrandBlock() {
+function BrandBlock({ expanded = false }: { expanded?: boolean }) {
   return (
     <Link
       to="/admin/dashboard"
-      className="flex items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="flex items-center gap-3 rounded-lg px-1 outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <ShieldCheck aria-hidden className="text-primary-text size-6 shrink-0" />
-      <span className="text-sm leading-tight font-semibold">
-        Painel do Comitê
-        <span className="text-muted-foreground block text-xs font-normal">Ética e Ouvidoria</span>
+      <ShieldCheck aria-hidden className="text-primary size-6 shrink-0" />
+      <span
+        className={cn(
+          "leading-tight whitespace-nowrap",
+          expanded
+            ? ""
+            : "opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
+        )}
+      >
+        <span className="font-heading block text-sm">Painel do Comitê</span>
+        <span className="text-muted-foreground block text-xs">Ética e Ouvidoria</span>
       </span>
     </Link>
   )
 }
 
-/** Shell do painel administrativo: sidebar + breadcrumbs + topbar (RF-020). */
-export function AdminShell() {
+function UserFooter({ expanded = false }: { expanded?: boolean }) {
   const { user, logout } = useAuth()
+  if (!user) return null
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-3 px-1 py-1.5">
+        <span className="bg-accent text-foreground flex size-8 shrink-0 items-center justify-center rounded-full text-xs">
+          {user.initials}
+        </span>
+        <div
+          className={cn(
+            "min-w-0",
+            expanded
+              ? ""
+              : "opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
+          )}
+        >
+          <p className="truncate text-sm">{user.name}</p>
+          <p className="text-muted-foreground truncate text-xs">{roleLabels[user.role]}</p>
+        </div>
+      </div>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="justify-start"
+        onClick={logout}
+        title={expanded ? undefined : "Sair"}
+      >
+        <LogOut aria-hidden className="size-4 shrink-0" />
+        <span
+          className={cn(
+            expanded
+              ? ""
+              : "opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100 group-focus-within/sidebar:opacity-100"
+          )}
+        >
+          Sair
+        </span>
+      </Button>
+    </div>
+  )
+}
+
+/** Shell do painel: rail que expande no hover/foco (Midday) + topbar com breadcrumbs. */
+export function AdminShell() {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const crumbs = useBreadcrumbs()
 
   return (
-    <div className="bg-muted/20 min-h-svh">
-      {/* Sidebar fixa (desktop) */}
-      <aside className="bg-background fixed inset-y-0 left-0 hidden w-64 border-r md:flex md:flex-col">
-        <div className="flex h-16 items-center border-b px-4">
+    <div className="bg-background min-h-svh">
+      {/* Rail fixo (desktop): 72px, expande p/ 240px no hover/foco */}
+      <aside className="group/sidebar bg-sidebar fixed inset-y-0 left-0 z-40 hidden w-[72px] flex-col border-r transition-[width,box-shadow] duration-200 ease-[var(--ease-standard)] hover:w-60 hover:shadow-material-menu focus-within:w-60 focus-within:shadow-material-menu md:flex">
+        <div className="flex h-16 items-center overflow-hidden px-4">
           <BrandBlock />
         </div>
-        <div className="flex-1 overflow-y-auto p-3">
+        <div className="flex-1 overflow-x-hidden overflow-y-auto px-3 py-2">
           <SidebarNav />
         </div>
-        {user ? (
-          <div className="border-t p-3">
-            <div className="flex items-center gap-3 px-1 py-2">
-              <span className="bg-primary/10 text-primary-text flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
-                {user.initials}
-              </span>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium">{user.name}</p>
-                <p className="text-muted-foreground truncate text-xs">{roleLabels[user.role]}</p>
-              </div>
-            </div>
-            <Button variant="ghost" size="sm" className="mt-1 w-full justify-start" onClick={logout}>
-              <LogOut aria-hidden className="size-4" />
-              Sair
-            </Button>
-          </div>
-        ) : null}
+        <div className="overflow-hidden border-t px-3 py-2">
+          <UserFooter />
+        </div>
       </aside>
 
       {/* Conteúdo */}
-      <div className="md:pl-64">
+      <div className="md:pl-[72px]">
         <header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-30 flex h-16 items-center gap-3 border-b px-4 backdrop-blur sm:px-6">
           {/* Menu mobile */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -140,30 +197,19 @@ export function AdminShell() {
             <SheetContent side="left" className="w-72 p-0">
               <SheetHeader className="border-b">
                 <SheetTitle className="text-left">
-                  <BrandBlock />
+                  <BrandBlock expanded />
                 </SheetTitle>
               </SheetHeader>
-              <div className="p-3">
-                <SidebarNav onNavigate={() => setMobileOpen(false)} />
-                {user ? (
-                  <>
-                    <Separator className="my-3" />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={logout}
-                    >
-                      <LogOut aria-hidden className="size-4" />
-                      Sair
-                    </Button>
-                  </>
-                ) : null}
+              <div className="flex flex-1 flex-col justify-between p-3">
+                <SidebarNav expanded onNavigate={() => setMobileOpen(false)} />
+                <div className="border-t pt-3">
+                  <UserFooter expanded />
+                </div>
               </div>
             </SheetContent>
           </Sheet>
 
-          <nav aria-label="Trilha de navegação" className="min-w-0">
+          <nav aria-label="Trilha de navegação" className="min-w-0 flex-1">
             <ol className="flex items-center gap-1.5 text-sm">
               {crumbs.map((crumb, i) => {
                 const isLast = i === crumbs.length - 1
@@ -171,7 +217,7 @@ export function AdminShell() {
                   <li key={crumb.to} className="flex items-center gap-1.5">
                     {i > 0 ? <span className="text-muted-foreground">/</span> : null}
                     {isLast ? (
-                      <span className="font-medium" aria-current="page">
+                      <span className="text-foreground" aria-current="page">
                         {crumb.label}
                       </span>
                     ) : (
@@ -184,9 +230,11 @@ export function AdminShell() {
               })}
             </ol>
           </nav>
+
+          <ThemeToggle />
         </header>
 
-        <main className="p-4 sm:p-6">
+        <main className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
           <Outlet />
         </main>
       </div>

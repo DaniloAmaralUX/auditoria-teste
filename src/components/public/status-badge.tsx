@@ -13,8 +13,8 @@ type StatusBadgeProps = {
 }
 
 /**
- * Selo de status (doc 15 — StatusBadge). Rótulo textual + marcador colorido:
- * o status nunca é comunicado só por cor (RNF-007).
+ * Selo de status (Midday: dot colorido + rótulo). O rótulo fica em foreground e
+ * a cor mora só no ponto — o status nunca é comunicado só por cor (RNF-007).
  */
 export function StatusBadge({ status, flag, className }: StatusBadgeProps) {
   const config = flag ? flagConfig[flag] : statusConfig[status]
@@ -22,13 +22,13 @@ export function StatusBadge({ status, flag, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        "border-border bg-muted/40 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium transition-colors duration-[var(--motion-fast)]",
+        "text-foreground inline-flex items-center gap-2 text-sm whitespace-nowrap",
         className
       )}
     >
       <span
         aria-hidden
-        className="size-2 rounded-full ring-1 ring-black/10 ring-inset dark:ring-white/20"
+        className="size-2 shrink-0 rounded-full"
         style={{ backgroundColor: `var(--${config.token})` }}
       />
       {config.label}
