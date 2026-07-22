@@ -1,8 +1,9 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-import { ArrowRight, Clock } from "lucide-react"
+import { ArrowRight, Clock, Inbox, FileText } from "lucide-react"
 
-import { Eyebrow } from "@/components/ui/eyebrow"
+import { Button } from "@/components/ui/button"
+import { PageGreeting } from "@/components/ui/page-greeting"
 import { StatusBadge } from "@/components/public/status-badge"
 import { useAuth } from "@/features/auth/auth-context"
 import { listAll } from "@/features/tracking/mock-store"
@@ -20,6 +21,13 @@ const STATUS_ORDER: ManifestationStatus[] = [
   "arquivada",
 ]
 
+function greetingByHour(): string {
+  const h = new Date().getHours()
+  if (h < 12) return "Bom dia"
+  if (h < 18) return "Boa tarde"
+  return "Boa noite"
+}
+
 function formatRelativeDate(iso: string): string {
   const now = new Date("2026-07-22T00:00:00.000Z").getTime()
   const then = new Date(iso).getTime()
@@ -32,12 +40,11 @@ function formatRelativeDate(iso: string): string {
 }
 
 /**
- * Dashboard inicial do painel (RF-020 lite): visão geral por status + últimas
- * manifestações. Ponto de entrada depois do login. Ainda sem ações — este é o
- * walking skeleton; ações de triagem vêm em /admin/manifestacoes.
+ * Overview do painel (RF-020): saudação editorial + visão por status + últimas
+ * manifestações. Ponto de entrada depois do login; a triagem vive na fila.
  */
 export function AdminDashboardPage() {
-  const { user } = useAuth()
+  const { user, can } = useAuth()
   const records = React.useMemo(() => listAll(), [])
   const counts = React.useMemo(() => {
     const c: Record<ManifestationStatus, number> = {
@@ -52,18 +59,34 @@ export function AdminDashboardPage() {
   }, [records])
 
   const recent = records.slice(0, 5)
+  const firstName = user?.name.split(" ")[0] ?? "Comitê"
+  const pending = counts.recebida
+  const subtitle =
+    pending > 0
+      ? `${pending} ${pending === 1 ? "manifestação aguarda" : "manifestações aguardam"} triagem.`
+      : "Nenhuma manifestação nova aguardando triagem."
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-8">
-      <header className="space-y-1">
-        <Eyebrow>Painel do Comitê</Eyebrow>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-          Olá, {user?.name.split(" ")[0] ?? "Comitê"}
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          Visão geral das manifestações em andamento.
-        </p>
-      </header>
+    <div className="space-y-10">
+      <div className="space-y-6 pt-4">
+        <PageGreeting title={`${greetingByHour()},`} highlight={firstName} subtitle={subtitle} />
+        <div className="flex flex-wrap justify-center gap-2">
+          <Button asChild variant="outline" size="sm">
+            <Link to="/admin/manifestacoes">
+              <Inbox aria-hidden />
+              Ver fila
+            </Link>
+          </Button>
+          {can("manageDocuments") ? (
+            <Button asChild variant="outline" size="sm">
+              <Link to="/admin/documentos">
+                <FileText aria-hidden />
+                Documentos
+              </Link>
+            </Button>
+          ) : null}
+        </div>
+      </div>
 
       <section aria-labelledby="counts-title">
         <h2 id="counts-title" className="sr-only">
@@ -73,16 +96,18 @@ export function AdminDashboardPage() {
           {STATUS_ORDER.map((status) => {
             const cfg = statusConfig[status]
             return (
-              <div
-                key={status}
-                className="bg-card rounded-xl border p-4"
-              >
-                <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                  {cfg.label}
-                </p>
-                <p className="font-heading mt-2 text-3xl font-semibold tabular-nums">
-                  {counts[status]}
-                </p>
+              <div key={status} className="bg-card rounded-xl border p-4">
+                <div className="flex items-center gap-2">
+                  <span
+                    aria-hidden
+                    className="size-2 shrink-0 rounded-full"
+                    style={{ backgroundColor: `var(--${cfg.token})` }}
+                  />
+                  <p className="text-muted-foreground text-xs tracking-wide uppercase">
+                    {cfg.label}
+                  </p>
+                </div>
+                <p className="font-heading mt-2 text-3xl tabular-nums">{counts[status]}</p>
               </div>
             )
           })}
@@ -91,15 +116,12 @@ export function AdminDashboardPage() {
 
       <section aria-labelledby="recent-title" className="space-y-3">
         <div className="flex items-baseline justify-between">
-          <h2
-            id="recent-title"
-            className="font-heading text-lg font-semibold tracking-tight"
-          >
+          <h2 id="recent-title" className="font-heading text-xl">
             Últimas manifestações
           </h2>
           <Link
             to="/admin/manifestacoes"
-            className="link-underline text-primary-text text-sm font-medium"
+            className="link-underline text-primary-text text-sm"
           >
             Ver todas
             <ArrowRight aria-hidden className="ml-1 inline size-3.5" />
@@ -111,10 +133,10 @@ export function AdminDashboardPage() {
               <li key={record.protocol}>
                 <Link
                   to="/admin/manifestacoes"
-                  className="hover:bg-muted/40 focus-visible:bg-muted/40 flex flex-col gap-2 p-4 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring sm:flex-row sm:items-center sm:justify-between"
+                  className="hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:ring-ring flex flex-col gap-2 px-4 py-3.5 outline-none focus-visible:ring-2 focus-visible:ring-inset sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="min-w-0 space-y-1">
-                    <p className="font-mono text-sm font-medium">{record.protocol}</p>
+                    <p className="font-mono text-sm">{record.protocol}</p>
                     <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
                       <Clock aria-hidden className="size-3" />
                       Atualizada {formatRelativeDate(record.updatedAt)}

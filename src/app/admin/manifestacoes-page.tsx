@@ -1,12 +1,11 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-import { Search, Download, MessageCircleQuestion } from "lucide-react"
+import { Search, Download, Inbox } from "lucide-react"
 
-import { Eyebrow } from "@/components/ui/eyebrow"
+import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Chip } from "@/components/ui/chip"
+import { EmptyState } from "@/components/ui/empty-state"
 import {
   Select,
   SelectContent,
@@ -14,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Spot } from "@/components/ui/spot"
 import { StatusBadge } from "@/components/public/status-badge"
 import { useAuth } from "@/features/auth/auth-context"
 import {
@@ -29,15 +27,16 @@ import {
   manifestationCategories,
   labelFor,
 } from "@/lib/registration-taxonomy"
-import { statusConfig, type ManifestationStatus } from "@/lib/manifestation-status"
+import { type ManifestationStatus } from "@/lib/manifestation-status"
 
-const STATUS_FILTERS: Array<{ value: "todos" | ManifestationStatus; label: string }> = [
-  { value: "todos", label: "Todos os status" },
-  { value: "recebida", label: statusConfig.recebida.label },
-  { value: "em_analise", label: statusConfig.em_analise.label },
-  { value: "em_apuracao", label: statusConfig.em_apuracao.label },
-  { value: "concluida", label: statusConfig.concluida.label },
-  { value: "arquivada", label: statusConfig.arquivada.label },
+/** Abas de filtro por status — rótulos curtos (plural) no estilo Midday. */
+const STATUS_TABS: Array<{ value: "todos" | ManifestationStatus; label: string }> = [
+  { value: "todos", label: "Todas" },
+  { value: "recebida", label: "Recebidas" },
+  { value: "em_analise", label: "Em análise" },
+  { value: "em_apuracao", label: "Em apuração" },
+  { value: "concluida", label: "Concluídas" },
+  { value: "arquivada", label: "Arquivadas" },
 ]
 
 type SortOrder = "recentes" | "antigas"
@@ -47,19 +46,17 @@ function formatDate(iso: string): string {
 }
 
 /**
- * Fila de manifestações do Comitê (RF-022) com busca, filtro por status,
- * ordenação e exportação de planilha (RF-027, restrita a quem pode exportar).
- * Cada linha leva ao detalhe, onde ficam o workflow e as devolutivas.
+ * Fila de manifestações do Comitê (RF-022): busca, abas por status, ordenação e
+ * exportação (RF-027, restrita). Cada linha leva ao detalhe (workflow/devolutivas).
  */
 export function AdminManifestacoesPage() {
   const { can } = useAuth()
-  // A assinatura re-renderiza a página a cada mutação do store; a leitura é
-  // direta (dados pequenos, sem necessidade de memo).
+  // A assinatura re-renderiza a página a cada mutação do store; leitura direta.
   React.useSyncExternalStore(subscribeAdmin, getAdminVersion)
   const all = listManifestations()
 
   const [query, setQuery] = React.useState("")
-  const [status, setStatus] = React.useState<(typeof STATUS_FILTERS)[number]["value"]>("todos")
+  const [status, setStatus] = React.useState<(typeof STATUS_TABS)[number]["value"]>("todos")
   const [order, setOrder] = React.useState<SortOrder>("recentes")
 
   const q = query.trim().toLowerCase()
@@ -90,64 +87,70 @@ export function AdminManifestacoesPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6">
+    <div className="space-y-6">
       <header className="space-y-1">
-        <Eyebrow>Painel do Comitê</Eyebrow>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-          Manifestações
-        </h1>
+        <h1 className="font-heading text-2xl sm:text-3xl">Manifestações</h1>
         <p className="text-muted-foreground text-sm">
-          {all.length} manifestações no sistema
+          {all.length} no sistema
           {filtered.length !== all.length ? ` · ${filtered.length} no filtro atual` : ""}.
         </p>
       </header>
 
-      {/* Barra de ferramentas: busca + filtros + exportação */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-        <div className="min-w-0 flex-1 space-y-1.5">
-          <Label htmlFor="queue-search">Buscar</Label>
-          <div className="relative">
-            <Search
-              aria-hidden
-              className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
-            />
-            <Input
-              id="queue-search"
-              type="search"
-              placeholder="Protocolo, título, tipo ou categoria"
-              className="pl-9"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
+      {/* Abas de status */}
+      <div className="overflow-x-auto">
+        <div
+          role="tablist"
+          aria-label="Filtrar por status"
+          className="flex min-w-max gap-1 border-b"
+        >
+          {STATUS_TABS.map((tab) => {
+            const active = status === tab.value
+            return (
+              <button
+                key={tab.value}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setStatus(tab.value)}
+                className={cn(
+                  "-mb-px border-b-2 px-3 py-2 text-sm whitespace-nowrap outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+                  active
+                    ? "border-primary text-foreground"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {tab.label}
+              </button>
+            )
+          })}
         </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="queue-status">Status</Label>
-          <Select value={status} onValueChange={(v) => setStatus(v as typeof status)}>
-            <SelectTrigger id="queue-status" className="w-full sm:w-44">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {STATUS_FILTERS.map((s) => (
-                <SelectItem key={s.value} value={s.value}>
-                  {s.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      </div>
+
+      {/* Busca + ordenação + exportação */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="relative min-w-0 flex-1">
+          <Search
+            aria-hidden
+            className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+          />
+          <Input
+            type="search"
+            aria-label="Buscar manifestações"
+            placeholder="Buscar por protocolo, título, tipo ou categoria"
+            className="pl-9"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
         </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="queue-order">Ordenar</Label>
-          <Select value={order} onValueChange={(v) => setOrder(v as SortOrder)}>
-            <SelectTrigger id="queue-order" className="w-full sm:w-44">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="recentes">Mais recentes</SelectItem>
-              <SelectItem value="antigas">Mais antigas</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <Select value={order} onValueChange={(v) => setOrder(v as SortOrder)}>
+          <SelectTrigger aria-label="Ordenar" className="w-full sm:w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="recentes">Mais recentes</SelectItem>
+            <SelectItem value="antigas">Mais antigas</SelectItem>
+          </SelectContent>
+        </Select>
         {can("exportData") ? (
           <Button
             type="button"
@@ -155,44 +158,47 @@ export function AdminManifestacoesPage() {
             onClick={() => exportRows(filtered)}
             disabled={filtered.length === 0}
           >
-            <Download aria-hidden className="size-4" />
-            Exportar planilha
+            <Download aria-hidden />
+            Exportar
           </Button>
         ) : null}
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-card flex flex-col items-center gap-3 rounded-xl border p-10 text-center">
-          <Spot name="empty" className="w-32" />
-          <p className="font-heading text-sm font-semibold">
-            {all.length === 0 ? "Nada por aqui ainda" : "Nenhum resultado no filtro"}
-          </p>
-          <p className="text-muted-foreground max-w-sm text-sm">
-            {all.length === 0
-              ? "Quando o portal público receber manifestações, elas aparecem nesta lista."
-              : "Ajuste a busca ou o filtro de status para ver outras manifestações."}
-          </p>
+        <div className="rounded-xl border">
+          <EmptyState
+            icon={Inbox}
+            title={all.length === 0 ? "Nada por aqui ainda" : "Nenhum resultado no filtro"}
+            description={
+              all.length === 0
+                ? "Quando o portal público receber manifestações, elas aparecem nesta lista."
+                : "Ajuste a busca ou as abas de status para ver outras manifestações."
+            }
+          />
         </div>
       ) : (
         <div className="overflow-x-auto rounded-xl border">
           <table className="w-full min-w-[720px] text-sm">
             <thead>
-              <tr className="bg-muted/40 border-b text-left">
-                <th className="px-4 py-3 text-xs font-semibold">Protocolo</th>
-                <th className="px-4 py-3 text-xs font-semibold">Título</th>
-                <th className="px-4 py-3 text-xs font-semibold">Tipo</th>
-                <th className="px-4 py-3 text-xs font-semibold">Categoria</th>
-                <th className="px-4 py-3 text-xs font-semibold">Status</th>
-                <th className="px-4 py-3 text-xs font-semibold">Atualizada</th>
+              <tr className="text-muted-foreground border-b text-left">
+                <th className="px-4 py-2.5 text-xs font-normal">Protocolo</th>
+                <th className="px-4 py-2.5 text-xs font-normal">Título</th>
+                <th className="px-4 py-2.5 text-xs font-normal">Tipo</th>
+                <th className="px-4 py-2.5 text-xs font-normal">Categoria</th>
+                <th className="px-4 py-2.5 text-xs font-normal">Status</th>
+                <th className="px-4 py-2.5 text-xs font-normal">Atualizada</th>
               </tr>
             </thead>
             <tbody>
               {filtered.map(({ tracking, detail }) => (
-                <tr key={tracking.protocol} className="group border-b last:border-0">
+                <tr
+                  key={tracking.protocol}
+                  className="hover:bg-muted/40 border-b transition-colors last:border-0"
+                >
                   <td className="px-4 py-3">
                     <Link
                       to={`/admin/manifestacoes/${tracking.protocol}`}
-                      className="link-underline font-mono text-xs font-medium"
+                      className="link-underline font-mono text-xs"
                     >
                       {tracking.protocol}
                     </Link>
@@ -209,17 +215,14 @@ export function AdminManifestacoesPage() {
                       : "—"}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="flex flex-wrap items-center gap-1.5">
+                    <div className="flex flex-col gap-1">
                       <StatusBadge status={tracking.status} className="text-xs" />
                       {detail.waitingInfo ? (
-                        <Chip className="px-2 py-0.5 text-xs">
-                          <MessageCircleQuestion aria-hidden className="size-3" />
-                          Aguardando informações
-                        </Chip>
+                        <StatusBadge flag="aguardando_informacoes" className="text-xs" />
                       ) : null}
                     </div>
                   </td>
-                  <td className="text-muted-foreground px-4 py-3 text-xs tabular-nums">
+                  <td className="text-muted-foreground px-4 py-3 text-xs whitespace-nowrap tabular-nums">
                     {formatDate(tracking.updatedAt)}
                   </td>
                 </tr>
