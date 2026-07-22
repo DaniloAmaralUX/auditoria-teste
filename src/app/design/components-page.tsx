@@ -279,7 +279,7 @@ export default function ComponentsPage() {
       {/* ============ 1. AÇÕES ============ */}
       <GuideSection
         title="Ações — Button"
-        description="O componente mais usado do portal. O primário é o único elemento laranja da tela; asChild encaixa o <Link> do router."
+        description="O componente mais usado do portal. O primário é o único elemento vermelho da tela; asChild encaixa o <Link> do router."
       >
         <UsageMeta files="11 arquivos" where="todas as rotas" />
         <DemoPanel className="space-y-4">
@@ -517,7 +517,7 @@ export default function ComponentsPage() {
             <Eyebrow>Pitang · Canal oficial</Eyebrow>
             <p className="text-muted-foreground text-xs">
               <code className="bg-muted rounded px-1 py-0.5">Eyebrow</code> — era 5
-              cópias inline; neutro por padrão (o laranja saiu dos rótulos).
+              cópias inline; neutro por padrão (o vermelho saiu dos rótulos).
             </p>
           </DemoPanel>
           <DemoPanel className="space-y-3">
@@ -584,7 +584,7 @@ export default function ComponentsPage() {
               selecionável via <code className="bg-muted rounded px-1 py-0.5">:has()</code> da
               etapa de identificação, promovido a{" "}
               <code className="bg-muted rounded px-1 py-0.5">forms/radio-card.tsx</code>. O
-              laranja aqui é estado selecionado — uso permitido.
+              vermelho aqui é estado selecionado — uso permitido.
             </p>
           </DemoPanel>
         </div>

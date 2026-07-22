@@ -1,6 +1,7 @@
 import { Mail, Phone } from "lucide-react"
 
 import { PitangLogo } from "@/components/ui/pitang-logo"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { Container } from "@/components/layout/container"
 import { ContactLink } from "@/components/public/contact-link"
 import { PublicNavLink } from "@/components/public/nav-link"
@@ -59,8 +60,11 @@ export function PublicFooter() {
       </Container>
 
       <div className="border-t">
-        <Container className="text-muted-foreground py-6 text-xs">
-          {siteConfig.name} · {siteConfig.org}
+        <Container className="flex items-center justify-between gap-4 py-4">
+          <p className="text-muted-foreground text-xs">
+            {siteConfig.name} · {siteConfig.org}
+          </p>
+          <ThemeToggle />
         </Container>
       </div>
     </footer>

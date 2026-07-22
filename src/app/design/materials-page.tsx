@@ -210,7 +210,7 @@ export default function MaterialsPage() {
 
       <GuideSection
         title="Spot illustrations — blueprint hairline"
-        description="A assinatura estendida à ilustração: cada spot é um diagrama de registro de engenharia — painel com dot-grid recortado por borda, marca “+” de registro no canto e o assunto em contorno de 1,5px. Monocromáticos (herdam currentColor); o laranja só entra onde marca um estado ativo, como o nó atual da linha do tempo. Estáticos por design — a personalidade está no diagrama, não em animá-lo. Vivem em ui/spot.tsx."
+        description="A assinatura estendida à ilustração: cada spot é um diagrama de registro de engenharia — painel com dot-grid recortado por borda, marca “+” de registro no canto e o assunto em contorno de 1,5px. Monocromáticos (herdam currentColor); o vermelho só entra onde marca um estado ativo, como o nó atual da linha do tempo. Estáticos por design — a personalidade está no diagrama, não em animá-lo. Vivem em ui/spot.tsx."
       >
         <div className="grid gap-4 sm:grid-cols-3">
           {spots.map((s) => (
@@ -238,7 +238,7 @@ export default function MaterialsPage() {
         <RuleList
           items={[
             { do: true, text: "hairline border-y/border-x para estruturar seções e colunas — o esqueleto visível da página." },
-            { do: true, text: "spot illustration só em momento raro (404, sucesso, estado inicial); monocromática, laranja apenas para estado." },
+            { do: true, text: "spot illustration só em momento raro (404, sucesso, estado inicial); monocromática, vermelho apenas para estado." },
             { do: true, text: "escolher o material do overlay pelo papel: tooltip → menu → modal → fullscreen; nunca inventar sombra fora dos 4 tokens." },
             { do: false, text: "sombras em cards de conteúdo — borda 1px resolve em qualquer fundo." },
             { do: false, text: "dot-grid solto no fundo da página ou com fade — sempre dentro de painel com borda." },

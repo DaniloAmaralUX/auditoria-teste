@@ -7,7 +7,7 @@ export default function BrandPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Marca"
-        lede="A logo oficial da Pitang é vermelha (#ED1C24) — e o acento de ação do portal é laranja. A regra de convivência: a marca identifica, o laranja age. Os dois nunca disputam o mesmo olhar."
+        lede="A logo oficial da Pitang é vermelha (#ED1C24) — e o acento de ação do produto também é vermelho. Como marca e ação partilham o matiz, a logo aparece sempre vermelha sobre a base monocromática; a versão mono fica só para fundos escuros saturados."
       />
 
       <GuideSection title="Logo oficial">
@@ -41,7 +41,7 @@ export default function BrandPage() {
           <div className="overflow-hidden rounded-xl border">
             <div className="bg-background/90 flex items-center justify-between border-b px-4 py-3">
               <span className="flex items-center gap-3">
-                <PitangLogo variant="mono" className="text-foreground h-5" />
+                <PitangLogo variant="brand" className="h-5" />
                 <span className="text-muted-foreground border-l pl-3 text-xs">
                   Canal de Ética e Ouvidoria
                 </span>
@@ -51,7 +51,7 @@ export default function BrandPage() {
               </span>
             </div>
             <p className="text-muted-foreground px-4 py-2.5 text-xs">
-              Header — logo mono + CTA laranja: um só ponto de cor.
+              Header — logo vermelha + CTA vermelho: a mesma família de cor.
             </p>
           </div>
           <div className="overflow-hidden rounded-xl border">

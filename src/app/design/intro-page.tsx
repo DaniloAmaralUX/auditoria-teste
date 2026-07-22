@@ -7,7 +7,7 @@ const foundationCards = [
   {
     to: "/design/cores",
     title: "Cores",
-    description: "Papel quente, laranja como único acento de ação.",
+    description: "Base monocromática do Midday, vermelho como único acento.",
     art: (
       <div className="flex gap-1.5">
         <span className="bg-background size-8 rounded-md border" />
@@ -163,7 +163,7 @@ export default function IntroPage() {
             },
             {
               title: "Autocrítica anti-default",
-              text: "Se a escolha serviria para qualquer projeto parecido, ela não serve para este. Papel quente + laranja aqui não é o default de IA: é a marca Pitang, decidida pelo designer — mas cada escolha nova precisa passar pelo mesmo teste.",
+              text: "Se a escolha serviria para qualquer projeto parecido, ela não serve para este. A base monocromática + o vermelho como único acento é uma direção decidida com o designer (linguagem Midday) — mas cada escolha nova precisa passar pelo mesmo teste.",
             },
             {
               title: "A regra de Chanel",

@@ -7,7 +7,8 @@ import {
 } from "@/lib/manifestation-status"
 
 type StatusBadgeProps = {
-  status: ManifestationStatus
+  /** Obrigatório quando `flag` não é informada. */
+  status?: ManifestationStatus
   flag?: ManifestationFlag
   className?: string
 }
@@ -17,7 +18,8 @@ type StatusBadgeProps = {
  * a cor mora só no ponto — o status nunca é comunicado só por cor (RNF-007).
  */
 export function StatusBadge({ status, flag, className }: StatusBadgeProps) {
-  const config = flag ? flagConfig[flag] : statusConfig[status]
+  const config = flag ? flagConfig[flag] : status ? statusConfig[status] : null
+  if (!config) return null
 
   return (
     <span
