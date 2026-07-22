@@ -29,17 +29,17 @@ function SwatchGrid({ swatches }: { swatches: Swatch[] }) {
 }
 
 const neutrals: Swatch[] = [
-  { token: "background", light: "oklch(0.9818 0.0054 95.1)", bg: "bg-background", note: "O papel. Fundo de página." },
-  { token: "card", light: "oklch(0.9665 0.0067 97.35)", bg: "bg-card", note: "Superfície de conteúdo — meio passo abaixo do papel (à la Claude)." },
-  { token: "muted", light: "oklch(0.9341 0.0153 90.24)", bg: "bg-muted", note: "Faixas de seção, tiles, estados hover." },
-  { token: "border", light: "oklch(0.8847 0.0069 97.36)", bg: "bg-border", note: "Hairlines de 1px — o esqueleto da página." },
-  { token: "foreground", light: "oklch(0.3438 0.0269 95.72)", bg: "bg-foreground", note: "Texto principal, marrom-grafite quente." },
-  { token: "muted-foreground", light: "oklch(0.5341 0.0078 97.45)", bg: "bg-muted-foreground", note: "Texto secundário (AA sobre papel e muted)." },
+  { token: "background", light: "oklch(0.982 0.009 78)", bg: "bg-background", note: "O papel — o matiz do laranja, dessaturado." },
+  { token: "card", light: "oklch(0.968 0.011 76)", bg: "bg-card", note: "Superfície de conteúdo — meio passo abaixo do papel." },
+  { token: "muted", light: "oklch(0.936 0.022 74)", bg: "bg-muted", note: "Faixas de seção, tiles, estados hover." },
+  { token: "border", light: "oklch(0.884 0.024 72)", bg: "bg-border", note: "Hairlines de 1px — o esqueleto da página." },
+  { token: "foreground", light: "oklch(0.31 0.035 55)", bg: "bg-foreground", note: "Texto principal — café-terracota, mesmo matiz da ação." },
+  { token: "muted-foreground", light: "oklch(0.50 0.04 58)", bg: "bg-muted-foreground", note: "Texto secundário (AA ≥ 4.5 sobre papel, card e muted)." },
 ]
 
 const accents: Swatch[] = [
-  { token: "primary", light: "oklch(0.732 0.185 55)", bg: "bg-primary", note: "Laranja Pitang — o único acento de ação." },
-  { token: "primary-text", light: "oklch(0.52 0.15 50)", bg: "bg-primary-text", note: "Laranja aprofundado para links e texto (AA ≥ 4.5:1)." },
+  { token: "primary", light: "oklch(0.57 0.17 54)", bg: "bg-primary", note: "Degrau de ação da matriz — laranja queimado com texto BRANCO (AA 4.6:1)." },
+  { token: "primary-text", light: "oklch(0.53 0.165 54)", bg: "bg-primary-text", note: "Degrau de texto — links AA ≥ 4.5 até sobre muted." },
   { token: "info", light: "oklch(0.55 0.15 245)", bg: "bg-info", note: "Azul Pitang — estritamente informacional." },
   { token: "destructive", light: "oklch(0.577 0.245 27)", bg: "bg-destructive", note: "Vermelho — destrutivo e erros. Compartilha o matiz da marca." },
 ]
@@ -59,7 +59,7 @@ export default function ColorsPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Cores"
-        lede="Neutros papel âmbar quente (hue ~90–106) adaptados do tema Claude + (tweakcn) — só a paleta; radius, tipografia e materiais permanecem nossos. O laranja Pitang segue como único acento de ação. Valores em oklch, com par completo claro/escuro — alterne o tema para auditar."
+        lede="Matrizes do mesmo matiz (método oklch.fyi: lightness consistente, shades previsíveis, hue constante). A âncora é o matiz do laranja Pitang (hue ~54): a ação usa o degrau 0.57 — que suporta texto branco com AA — e os neutros são o mesmo matiz dessaturado, do papel ao café. Todos os pares texto/fundo medidos AA ≥ 4.5 nos dois temas."
       />
 
       <GuideSection title="Neutros" description="A temperatura quente é sutil de propósito: percebe-se o conforto, não a cor.">
