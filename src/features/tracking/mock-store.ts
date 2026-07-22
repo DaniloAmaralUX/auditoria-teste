@@ -81,6 +81,134 @@ const demoRecord: TrackingRecord = {
 
 store.set(keyOf(demoRecord.protocol), demoRecord)
 
+/** Fixtures adicionais para o painel do Comitê — sem código de acesso público,
+ *  só existem no store para popular a fila. Códigos válidos são fake e não são
+ *  publicados, então o acompanhamento público não consegue consultá-las. */
+const adminDemoRecords: TrackingRecord[] = [
+  {
+    protocol: "OUV-2026-A7B2C9",
+    accessCode: "____-____-____",
+    status: "recebida",
+    createdAt: "2026-07-20T14:30:00.000Z",
+    updatedAt: "2026-07-20T14:30:00.000Z",
+    timeline: [
+      {
+        kind: "status",
+        status: "recebida",
+        title: "Manifestação recebida",
+        description: "Registro recebido e adicionado à fila de triagem.",
+        date: "2026-07-20T14:30:00.000Z",
+      },
+    ],
+  },
+  {
+    protocol: "OUV-2026-F3E8D4",
+    accessCode: "____-____-____",
+    status: "recebida",
+    createdAt: "2026-07-19T09:15:00.000Z",
+    updatedAt: "2026-07-19T09:15:00.000Z",
+    timeline: [
+      {
+        kind: "status",
+        status: "recebida",
+        title: "Manifestação recebida",
+        description: "Registro recebido e adicionado à fila de triagem.",
+        date: "2026-07-19T09:15:00.000Z",
+      },
+    ],
+  },
+  {
+    protocol: "OUV-2026-K1M5P8",
+    accessCode: "____-____-____",
+    status: "em_analise",
+    createdAt: "2026-07-14T11:00:00.000Z",
+    updatedAt: "2026-07-18T16:40:00.000Z",
+    timeline: [
+      {
+        kind: "status",
+        status: "recebida",
+        title: "Manifestação recebida",
+        date: "2026-07-14T11:00:00.000Z",
+      },
+      {
+        kind: "status",
+        status: "em_analise",
+        title: "Em análise",
+        description: "O Comitê iniciou a análise das informações.",
+        date: "2026-07-18T16:40:00.000Z",
+      },
+    ],
+  },
+  {
+    protocol: "OUV-2026-Q9R4T2",
+    accessCode: "____-____-____",
+    status: "concluida",
+    createdAt: "2026-06-25T08:00:00.000Z",
+    updatedAt: "2026-07-16T15:30:00.000Z",
+    timeline: [
+      {
+        kind: "status",
+        status: "recebida",
+        title: "Manifestação recebida",
+        date: "2026-06-25T08:00:00.000Z",
+      },
+      {
+        kind: "status",
+        status: "em_analise",
+        title: "Em análise",
+        date: "2026-06-28T10:00:00.000Z",
+      },
+      {
+        kind: "status",
+        status: "em_apuracao",
+        title: "Em apuração",
+        date: "2026-07-05T14:20:00.000Z",
+      },
+      {
+        kind: "status",
+        status: "concluida",
+        title: "Concluída",
+        description: "Apuração encerrada com devolutiva ao manifestante.",
+        date: "2026-07-16T15:30:00.000Z",
+      },
+    ],
+  },
+  {
+    protocol: "OUV-2026-W6X8Y1",
+    accessCode: "____-____-____",
+    status: "arquivada",
+    createdAt: "2026-06-10T13:00:00.000Z",
+    updatedAt: "2026-06-20T09:00:00.000Z",
+    timeline: [
+      {
+        kind: "status",
+        status: "recebida",
+        title: "Manifestação recebida",
+        date: "2026-06-10T13:00:00.000Z",
+      },
+      {
+        kind: "status",
+        status: "arquivada",
+        title: "Arquivada",
+        description: "Fora do escopo do canal.",
+        date: "2026-06-20T09:00:00.000Z",
+      },
+    ],
+  },
+]
+
+for (const r of adminDemoRecords) {
+  store.set(keyOf(r.protocol), r)
+}
+
+/** Retorna todas as manifestações do store — uso restrito ao painel do Comitê.
+ *  Ordenadas por updatedAt desc (mais recentes primeiro). */
+export function listAll(): TrackingRecord[] {
+  return Array.from(store.values()).sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+  )
+}
+
 /** Registra uma nova manifestação no store (bridge a partir do registro concluído). */
 export function addManifestation(input: {
   protocol: string

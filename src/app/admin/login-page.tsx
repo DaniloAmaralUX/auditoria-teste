@@ -55,7 +55,7 @@ export function LoginPage() {
           </div>
         </div>
 
-        <div className="bg-background rounded-xl border p-6 shadow-sm">
+        <div className="bg-background rounded-xl border p-6">
           <h1 className="font-heading text-xl font-semibold tracking-tight">Acesso restrito</h1>
           <p className="text-muted-foreground mt-1 text-sm">
             Entre com sua conta corporativa para acessar o painel.

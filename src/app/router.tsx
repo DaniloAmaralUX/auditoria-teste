@@ -29,6 +29,12 @@ import { ExpectativaStep } from "@/app/public/registration/expectativa-step"
 import { ReviewStep } from "@/app/public/registration/review-step"
 import { SuccessStep } from "@/app/public/registration/success-step"
 import { TrackingPage } from "@/app/public/tracking/tracking-page"
+import { AdminRoot } from "@/features/auth/admin-root"
+import { RequireAuth } from "@/features/auth/require-auth"
+import { AdminShell } from "@/components/admin/admin-shell"
+import { LoginPage as AdminLoginPage } from "@/app/admin/login-page"
+import { AdminDashboardPage } from "@/app/admin/dashboard-page"
+import { AdminManifestacoesPage } from "@/app/admin/manifestacoes-page"
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +54,26 @@ export const router = createBrowserRouter([
       { path: "conteudo", element: <DesignContentPage /> },
       { path: "motion", element: <DesignMotionPage /> },
       { path: "componentes", element: <DesignComponentsPage /> },
+    ],
+  },
+  {
+    path: "admin",
+    element: <AdminRoot />,
+    children: [
+      { path: "login", element: <AdminLoginPage /> },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            element: <AdminShell />,
+            children: [
+              { index: true, element: <AdminDashboardPage /> },
+              { path: "dashboard", element: <AdminDashboardPage /> },
+              { path: "manifestacoes", element: <AdminManifestacoesPage /> },
+            ],
+          },
+        ],
+      },
     ],
   },
   {

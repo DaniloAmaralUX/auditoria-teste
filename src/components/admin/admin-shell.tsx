@@ -38,6 +38,9 @@ function useBreadcrumbs() {
   let acc = "/admin"
   for (const seg of segments) {
     acc += `/${seg}`
+    // O "Painel" já cobre /admin e /admin/dashboard — não repete o crumb quando é
+    // o mesmo destino (evita duplicidade de key na lista renderizada).
+    if (acc === "/admin/dashboard") continue
     const label = breadcrumbLabels[seg] ?? seg
     crumbs.push({ label, to: acc })
   }
