@@ -22,9 +22,9 @@ type QuestionScreenProps = {
 }
 
 /**
- * Tela de pergunta do fluxo conversacional (ADR fluxo-conversacional).
- * Padrão GOV.UK one-thing-per-page: uma decisão por tela, "Pular" preserva a
- * agência (Callisto: escolha), Voltar nunca apaga.
+ * Moldura das etapas do registro (RF-006): título + helper acolhedor +
+ * zona de resposta + Voltar/Continuar (Voltar nunca apaga). "Pular" fica
+ * disponível para telas totalmente opcionais.
  *
  * Piso Web Interface Guidelines embutido: autofocus do campo SÓ em desktop
  * (hover+pointer fine — "autoFocus sparingly"); no toque, o foco vai ao h1.

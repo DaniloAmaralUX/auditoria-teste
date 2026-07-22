@@ -381,10 +381,10 @@ export default function ComponentsPage() {
 
       {/* ============ 3. FLUXO DE REGISTRO ============ */}
       <GuideSection
-        title="Fluxo de registro — conversacional"
-        description="O registro segue o padrão uma-pergunta-por-tela (GOV.UK one-thing-per-page; ADR fluxo-conversacional): QuestionScreen é a moldura de cada pergunta — h1 literal, resposta única, Pular nas opcionais, Voltar nunca apaga. FormStep permanece para formulários densos (admin). O progresso é dinâmico: o total muda com as respostas."
+        title="Fluxo de registro"
+        description="As 5 etapas oficiais do documento de requisitos (RF-006) + revisão, com a camada de UX writing acolhedora: QuestionScreen é a moldura de cada etapa (título + helper + Voltar/Continuar; Voltar nunca apaga), classificações com a pressão tirada pela copy, opcionais sinalizados. FormStep permanece para formulários densos (admin)."
       >
-        <UsageMeta files="QuestionScreen (8), StepProgress, ReviewSection, ProtocolCard" where="/registrar" />
+        <UsageMeta files="QuestionScreen (5), StepProgress, ReviewSection, ProtocolCard" where="/registrar" />
         <div className="space-y-4">
           <DemoPanel className="space-y-4">
             <div className="flex items-center justify-between gap-3">
@@ -401,8 +401,8 @@ export default function ComponentsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  disabled={stepIndex === 4}
-                  onClick={() => setStepIndex((i) => Math.min(4, i + 1))}
+                  disabled={stepIndex === 5}
+                  onClick={() => setStepIndex((i) => Math.min(5, i + 1))}
                 >
                   Avançar
                 </Button>
@@ -410,8 +410,12 @@ export default function ComponentsPage() {
             </div>
             <StepProgress
               current={stepIndex + 1}
-              total={5}
-              label={["Relato", "Quando e onde", "Pessoas", "Contato", "Revisão"][stepIndex]}
+              total={6}
+              label={
+                ["Identificação", "Sobre", "Relato", "Complementares", "Expectativa", "Revisão"][
+                  stepIndex
+                ]
+              }
             />
           </DemoPanel>
 

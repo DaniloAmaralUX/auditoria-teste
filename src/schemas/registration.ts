@@ -1,14 +1,17 @@
 import { z } from "zod"
 
-import { relationshipValues, recurrenceValues } from "@/lib/registration-taxonomy"
+import {
+  typeValues,
+  categoryValues,
+  relationshipValues,
+  recurrenceValues,
+} from "@/lib/registration-taxonomy"
 
 /**
- * Schemas Zod do fluxo conversacional — um por pergunta + composto final.
- * ADR fluxo-conversacional: uma coisa por tela (GOV.UK one-thing-per-page);
- * a única pergunta de texto obrigatória é o relato. Tipo/categoria saíram do
- * formulário público — o Comitê classifica na triagem (delta de RF-008).
- * E-mail segue obrigatório nos dois modos (RF-007), pedido UMA vez, depois
- * do relato. Mensagens em pt-BR (RF-013).
+ * Schemas Zod da manifestação — um por etapa + composto final (RF-006).
+ * Estrutura conforme o documento de requisitos v1.0 (5 etapas, RF-008 com
+ * tipo/categoria); a camada de UX writing é dos componentes. E-mail pedido
+ * UMA vez (RF-007 não pede confirmação duplicada). Mensagens pt-BR (RF-013).
  */
 
 const email = z
@@ -18,50 +21,63 @@ const email = z
 
 const requiredText = (msg: string) => z.string().trim().min(1, msg)
 
-// Pergunta 1 — O que aconteceu? (única obrigatória de texto)
-export const relatoSchema = z.object({
+// Etapa 1 — Identificação (RF-007)
+export const identificationSchema = z
+  .object({
+    mode: z.enum(["anonimo", "identificado"], {
+      message: "Escolha como deseja registrar.",
+    }),
+    name: z.string().trim().max(200).optional(),
+    email,
+    phone: z.string().trim().max(40).optional(),
+    relationship: z.enum(relationshipValues, {
+      message: "Selecione sua relação com a Pitang.",
+    }),
+  })
+  .refine((data) => data.mode !== "identificado" || !!data.name?.trim(), {
+    path: ["name"],
+    message: "Informe seu nome para o registro identificado.",
+  })
+
+// Etapa 2 — Sobre a manifestação (RF-008)
+export const aboutSchema = z
+  .object({
+    type: z.enum(typeValues, { message: "Selecione o tipo de manifestação." }),
+    typeOther: z.string().trim().max(120).optional(),
+    category: z.enum(categoryValues, { message: "Selecione a categoria mais próxima." }),
+    categoryOther: z.string().trim().max(120).optional(),
+    area: z.string().trim().max(160).optional(),
+    period: z.string().trim().max(120).optional(),
+    recurrence: z.enum(recurrenceValues).optional(),
+    peopleInvolved: z.string().trim().max(1000).optional(),
+  })
+  .refine((d) => d.type !== "outro" || !!d.typeOther?.trim(), {
+    path: ["typeOther"],
+    message: "Descreva o tipo quando selecionar “Outro”.",
+  })
+  .refine((d) => d.category !== "outro" || !!d.categoryOther?.trim(), {
+    path: ["categoryOther"],
+    message: "Descreva a categoria quando selecionar “Outro”.",
+  })
+
+// Etapa 3 — Relato (RF-006)
+export const reportSchema = z.object({
+  title: requiredText("Escreva um resumo curto da manifestação.").max(160),
   description: requiredText("Conte o que aconteceu para registrar.").max(8000),
+  context: z.string().trim().max(2000).optional(),
+  consequences: z.string().trim().max(2000).optional(),
 })
 
-// Pergunta 2 — Quando e onde? (opcional)
-export const quandoOndeSchema = z.object({
-  whenWhere: z.string().trim().max(2000).optional(),
-  recurrence: z.enum(recurrenceValues).optional(),
+// Etapa 4 — Complementares (anexos validados no componente FileUpload)
+export const complementarySchema = z.object({
+  witnesses: z.string().trim().max(2000).optional(),
+  measuresTaken: z.string().trim().max(2000).optional(),
+  additionalInfo: z.string().trim().max(2000).optional(),
 })
 
-// Pergunta 3 — Quem esteve envolvido? (opcional)
-export const pessoasSchema = z.object({
-  people: z.string().trim().max(2000).optional(),
-})
-
-// Pergunta 4 — Algo mais? (opcional; anexos validados no FileUpload)
-export const maisSchema = z.object({
-  more: z.string().trim().max(4000).optional(),
-})
-
-// Pergunta 5 — Como você quer registrar? (RF-007)
-export const modoSchema = z.object({
-  mode: z.enum(["anonimo", "identificado"], {
-    message: "Escolha como deseja registrar.",
-  }),
-})
-
-// Pergunta 6 — Como podemos te chamar? (só no modo identificado)
-export const dadosSchema = z.object({
-  name: requiredText("Informe seu nome para o registro identificado.").max(200),
-  phone: z.string().trim().max(40).optional(),
-})
-
-// Pergunta 7 — Relação com a Pitang
-export const relacaoSchema = z.object({
-  relationship: z.enum(relationshipValues, {
-    message: "Selecione sua relação com a Pitang.",
-  }),
-})
-
-// Pergunta 8 — Contato para devolutivas (RF-007: e-mail nos dois modos)
-export const contatoSchema = z.object({
-  email,
+// Etapa 5 — Expectativa (RF-006; sem confirmação duplicada de e-mail)
+export const expectationSchema = z.object({
+  expectation: z.string().trim().max(2000).optional(),
   availableForFollowUp: z.boolean(),
 })
 
@@ -72,25 +88,19 @@ export const termsSchema = z.object({
     .refine((v) => v === true, "É necessário aceitar os Termos de uso para enviar."),
 })
 
-/** Schema composto final. */
+/** Schema composto final (RF-006). */
 export const registrationSchema = z.object({
-  relato: relatoSchema,
-  quandoOnde: quandoOndeSchema.optional(),
-  pessoas: pessoasSchema.optional(),
-  mais: maisSchema.optional(),
-  modo: modoSchema,
-  dados: dadosSchema.optional(),
-  relacao: relacaoSchema,
-  contato: contatoSchema,
+  identification: identificationSchema,
+  about: aboutSchema,
+  report: reportSchema,
+  complementary: complementarySchema,
+  expectation: expectationSchema,
 })
 
 export type TermsValues = z.infer<typeof termsSchema>
-export type RelatoValues = z.infer<typeof relatoSchema>
-export type QuandoOndeValues = z.infer<typeof quandoOndeSchema>
-export type PessoasValues = z.infer<typeof pessoasSchema>
-export type MaisValues = z.infer<typeof maisSchema>
-export type ModoValues = z.infer<typeof modoSchema>
-export type DadosValues = z.infer<typeof dadosSchema>
-export type RelacaoValues = z.infer<typeof relacaoSchema>
-export type ContatoValues = z.infer<typeof contatoSchema>
+export type IdentificationValues = z.infer<typeof identificationSchema>
+export type AboutValues = z.infer<typeof aboutSchema>
+export type ReportValues = z.infer<typeof reportSchema>
+export type ComplementaryValues = z.infer<typeof complementarySchema>
+export type ExpectationValues = z.infer<typeof expectationSchema>
 export type RegistrationValues = z.infer<typeof registrationSchema>

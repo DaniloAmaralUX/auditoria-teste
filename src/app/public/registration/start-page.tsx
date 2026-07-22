@@ -69,7 +69,7 @@ export function StartPage() {
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button asChild size="lg">
-          <Link to="/registrar/relato">
+          <Link to="/registrar/identificacao">
             {t.cta}
             <ArrowRight aria-hidden className="size-4" />
           </Link>

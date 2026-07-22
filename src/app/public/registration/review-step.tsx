@@ -20,12 +20,18 @@ import { TrustNotice } from "@/components/feedback/trust-notice"
 import { termsSchema, type TermsValues } from "@/schemas/registration"
 import { useRegistration } from "@/features/registration/registration-context"
 import { submitRegistration } from "@/services/registration-service"
-import { relationshipOptions, recurrenceOptions, labelFor } from "@/lib/registration-taxonomy"
+import {
+  manifestationTypes,
+  manifestationCategories,
+  relationshipOptions,
+  recurrenceOptions,
+  labelFor,
+} from "@/lib/registration-taxonomy"
 import { TERMS_VERSION } from "@/lib/site-config"
 
 /**
- * Revisão no padrão "Check your answers" (GOV.UK): tudo editável, nada
- * enviado sem confirmação. Conta como última parada do progresso.
+ * Revisão (RF-013) no padrão "Check your answers": cada seção editável,
+ * nada enviado sem confirmação (RF-005). Conta no indicador de progresso.
  */
 export function ReviewStep() {
   const navigate = useNavigate()
@@ -42,11 +48,11 @@ export function ReviewStep() {
     headingRef.current?.focus()
   }, [])
 
-  const { relato, quandoOnde, pessoas, mais, modo, dados, relacao, contato } = data
+  const { identification, about, report, complementary, expectation } = data
 
-  // Guarda: sem as respostas obrigatórias, volta ao início do fluxo.
-  if (!relato || !modo || !relacao || !contato) {
-    return <Navigate to="/registrar/relato" replace />
+  // Guarda: sem os dados obrigatórios, volta ao início do fluxo.
+  if (!identification || !about || !report || !expectation) {
+    return <Navigate to="/registrar/identificacao" replace />
   }
 
   const validAttachments = attachments.filter((a) => a.status === "valid")
@@ -76,23 +82,70 @@ export function ReviewStep() {
         Revise antes de enviar
       </h1>
       <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-        Confira suas respostas — cada uma pode ser editada. Nada é enviado sem a sua
+        Confira suas respostas — cada seção pode ser editada. Nada é enviado sem a sua
         confirmação.
       </p>
 
       <div className="mt-6 space-y-4">
         <ReviewSection
-          title="O que aconteceu"
+          title="Identificação"
+          editHref="/registrar/identificacao"
+          rows={[
+            { label: "Modo", value: identification.mode === "anonimo" ? "Anônima" : "Identificada" },
+            ...(identification.mode === "identificado"
+              ? [{ label: "Nome", value: identification.name }]
+              : []),
+            { label: "E-mail", value: identification.email },
+            { label: "Telefone", value: identification.phone },
+            {
+              label: "Relação",
+              value: labelFor(relationshipOptions, identification.relationship),
+            },
+          ]}
+        />
+
+        <ReviewSection
+          title="Sobre a manifestação"
+          editHref="/registrar/sobre-a-manifestacao"
+          rows={[
+            {
+              label: "Tipo",
+              value:
+                about.type === "outro"
+                  ? about.typeOther
+                  : labelFor(manifestationTypes, about.type),
+            },
+            {
+              label: "Categoria",
+              value:
+                about.category === "outro"
+                  ? about.categoryOther
+                  : labelFor(manifestationCategories, about.category),
+            },
+            { label: "Área/unidade", value: about.area },
+            { label: "Período", value: about.period },
+            { label: "Recorrência", value: labelFor(recurrenceOptions, about.recurrence) },
+            { label: "Pessoas envolvidas", value: about.peopleInvolved },
+          ]}
+        />
+
+        <ReviewSection
+          title="Relato"
           editHref="/registrar/relato"
           rows={[
-            { label: "Relato", value: relato.description },
-            { label: "Quando e onde", value: quandoOnde?.whenWhere },
-            {
-              label: "Recorrência",
-              value: labelFor(recurrenceOptions, quandoOnde?.recurrence),
-            },
-            { label: "Pessoas envolvidas", value: pessoas?.people },
-            { label: "Complementos", value: mais?.more },
+            { label: "Resumo", value: report.title },
+            { label: "O que aconteceu", value: report.description },
+            { label: "Local/contexto", value: report.context },
+            { label: "Consequências", value: report.consequences },
+          ]}
+        />
+
+        <ReviewSection
+          title="Complementares"
+          editHref="/registrar/complementares"
+          rows={[
+            { label: "Testemunhas", value: complementary?.witnesses },
+            { label: "Providências", value: complementary?.measuresTaken },
             {
               label: "Anexos",
               value:
@@ -100,25 +153,18 @@ export function ReviewStep() {
                   ? validAttachments.map((a) => a.name).join(", ")
                   : "Nenhum",
             },
+            { label: "Outras informações", value: complementary?.additionalInfo },
           ]}
         />
 
         <ReviewSection
-          title="Quem envia"
-          editHref="/registrar/modo"
+          title="Expectativa"
+          editHref="/registrar/expectativa"
           rows={[
-            { label: "Modo", value: modo.mode === "anonimo" ? "Anônima" : "Identificada" },
-            ...(modo.mode === "identificado"
-              ? [
-                  { label: "Nome", value: dados?.name },
-                  { label: "Telefone", value: dados?.phone },
-                ]
-              : []),
-            { label: "Relação", value: labelFor(relationshipOptions, relacao.relationship) },
-            { label: "E-mail", value: contato.email },
+            { label: "Expectativa", value: expectation.expectation },
             {
               label: "Disponível para complementar",
-              value: contato.availableForFollowUp ? "Sim" : "Não",
+              value: expectation.availableForFollowUp ? "Sim" : "Não",
             },
           ]}
         />
@@ -176,7 +222,7 @@ export function ReviewStep() {
             <Button
               type="button"
               variant="ghost"
-              onClick={() => navigate("/registrar/contato")}
+              onClick={() => navigate("/registrar/expectativa")}
               disabled={submitting}
             >
               Voltar

@@ -11,72 +11,66 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { QuestionScreen } from "@/components/forms/question-screen"
-import { TrustNotice } from "@/components/feedback/trust-notice"
-import { contatoSchema, type ContatoValues } from "@/schemas/registration"
+import { expectationSchema, type ExpectationValues } from "@/schemas/registration"
 import { useRegistration } from "@/features/registration/registration-context"
 import { nextRoute, prevRoute } from "@/features/registration/steps"
 
-/** Pergunta 8 — e-mail pedido UMA vez, com o porquê no lugar certo (RF-007). */
-export function ContatoStep() {
+/** Etapa 5 — Sua expectativa (RF-006). O e-mail já foi pedido na Etapa 1 — uma vez só. */
+export function ExpectativaStep() {
   const navigate = useNavigate()
   const { data, updateStep } = useRegistration()
-  const anonymous = data.modo?.mode === "anonimo"
 
-  const form = useForm<ContatoValues>({
-    resolver: zodResolver(contatoSchema),
+  const form = useForm<ExpectationValues>({
+    resolver: zodResolver(expectationSchema),
     defaultValues: {
-      email: data.contato?.email ?? "",
-      availableForFollowUp: data.contato?.availableForFollowUp ?? false,
+      expectation: data.expectation?.expectation ?? "",
+      availableForFollowUp: data.expectation?.availableForFollowUp ?? false,
     },
   })
 
   const onSubmit = form.handleSubmit((values) => {
-    updateStep("contato", values)
-    navigate(nextRoute("contato", { ...data, contato: values }))
+    updateStep("expectation", values)
+    navigate(nextRoute("expectativa"))
   })
 
   const onBack = () => {
-    updateStep("contato", form.getValues())
-    navigate(prevRoute("contato", data))
+    updateStep("expectation", form.getValues())
+    navigate(prevRoute("expectativa"))
   }
 
   return (
     <QuestionScreen
-      question="Onde enviamos as devolutivas?"
-      helper="Usamos o e-mail somente para confirmar o registro e enviar as respostas do Comitê de Ética. Nada além disso."
+      question="Sua expectativa"
+      helper="Se quiser, conte o que você espera deste canal — ajuda o Comitê a entender o caso."
       onSubmit={onSubmit}
       onBack={onBack}
       nextLabel="Revisar antes de enviar"
-      footer={
-        anonymous ? (
-          <TrustNotice variant="anonymity" title="E o anonimato?">
-            O e-mail não entra no relato nem identifica você para a empresa — só o Comitê
-            o utiliza, para as devolutivas.
-          </TrustNotice>
-        ) : null
-      }
     >
       <Form {...form}>
         <div className="space-y-6">
           <FormField
             control={form.control}
-            name="email"
+            name="expectation"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>E-mail para devolutivas</FormLabel>
+                <FormLabel>
+                  O que você espera que aconteça?{" "}
+                  <span className="text-muted-foreground font-normal">(opcional)</span>
+                </FormLabel>
                 <FormControl>
-                  <Input
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    spellCheck={false}
-                    placeholder="voce@exemplo.com"
+                  <Textarea
+                    rows={4}
+                    placeholder="Ex.: espero que a conduta seja apurada…"
+                    className="break-words"
                     {...field}
                   />
                 </FormControl>
+                <FormDescription>
+                  A expectativa orienta o Comitê, mas não garante um resultado específico.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

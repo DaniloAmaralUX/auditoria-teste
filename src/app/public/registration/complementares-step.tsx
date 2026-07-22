@@ -5,98 +5,60 @@ import { useNavigate } from "react-router-dom"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
 import { QuestionScreen } from "@/components/forms/question-screen"
-import { reportSchema, type ReportValues } from "@/schemas/registration"
+import { FileUpload } from "@/components/forms/file-upload"
+import { complementarySchema, type ComplementaryValues } from "@/schemas/registration"
 import { useRegistration } from "@/features/registration/registration-context"
 import { nextRoute, prevRoute } from "@/features/registration/steps"
 
-/** Etapa 3 — Relato (RF-006): o coração da manifestação. */
-export function RelatoStep() {
+/** Etapa 4 — Complementares (RF-006/RF-009): tudo opcional, tudo escolha. */
+export function ComplementaresStep() {
   const navigate = useNavigate()
-  const { data, updateStep } = useRegistration()
+  const { data, updateStep, attachments, setAttachments } = useRegistration()
 
-  const form = useForm<ReportValues>({
-    resolver: zodResolver(reportSchema),
+  const form = useForm<ComplementaryValues>({
+    resolver: zodResolver(complementarySchema),
     defaultValues: {
-      title: data.report?.title ?? "",
-      description: data.report?.description ?? "",
-      context: data.report?.context ?? "",
-      consequences: data.report?.consequences ?? "",
+      witnesses: data.complementary?.witnesses ?? "",
+      measuresTaken: data.complementary?.measuresTaken ?? "",
+      additionalInfo: data.complementary?.additionalInfo ?? "",
     },
   })
 
   const onSubmit = form.handleSubmit((values) => {
-    updateStep("report", values)
-    navigate(nextRoute("relato"))
+    updateStep("complementary", values)
+    navigate(nextRoute("complementares"))
   })
 
   const onBack = () => {
-    updateStep("report", form.getValues())
-    navigate(prevRoute("relato"))
+    updateStep("complementary", form.getValues())
+    navigate(prevRoute("complementares"))
   }
 
   return (
     <QuestionScreen
-      question="Relato"
-      helper="Conte o que aconteceu com suas palavras, pouco ou muito. Você não precisa anexar provas para registrar — e pode revisar tudo antes de enviar."
+      question="Informações complementares"
+      helper="Tudo nesta etapa é opcional — acrescente o que puder ajudar na apuração e siga em frente quando quiser."
       onSubmit={onSubmit}
       onBack={onBack}
-      nextLabel="Continuar para complementares"
+      nextLabel="Continuar para expectativa"
     >
       <Form {...form}>
         <div className="space-y-6">
           <FormField
             control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Resumo</FormLabel>
-                <FormControl>
-                  <Input placeholder="Uma frase que resuma a manifestação…" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>O que aconteceu?</FormLabel>
-                <FormControl>
-                  <Textarea
-                    rows={8}
-                    placeholder="Conte o que aconteceu, quando e onde, do seu jeito…"
-                    className="break-words"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Inclua os detalhes que julgar relevantes — datas aproximadas valem.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="context"
+            name="witnesses"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Local ou contexto{" "}
-                  <span className="text-muted-foreground font-normal">(opcional)</span>
+                  Testemunhas <span className="text-muted-foreground font-normal">(opcional)</span>
                 </FormLabel>
                 <FormControl>
                   <Textarea rows={3} className="break-words" {...field} />
@@ -108,11 +70,38 @@ export function RelatoStep() {
 
           <FormField
             control={form.control}
-            name="consequences"
+            name="measuresTaken"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Consequências que você percebeu{" "}
+                  Providências já tomadas{" "}
+                  <span className="text-muted-foreground font-normal">(opcional)</span>
+                </FormLabel>
+                <FormControl>
+                  <Textarea rows={3} className="break-words" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="space-y-2">
+            <Label className="text-foreground">
+              Anexos{" "}
+              <span className="text-muted-foreground font-normal">
+                (documentos, imagens, áudio ou vídeo — opcional)
+              </span>
+            </Label>
+            <FileUpload value={attachments} onChange={setAttachments} />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="additionalInfo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Outras informações{" "}
                   <span className="text-muted-foreground font-normal">(opcional)</span>
                 </FormLabel>
                 <FormControl>

@@ -1,6 +1,15 @@
-# ADR — Fluxo conversacional do registro (uma pergunta por tela)
+# ADR — Fluxo do registro: 5 etapas com camada conversacional
 
-Data: 2026-07-22 · Status: implementado na branch `direcao-visual`, aguardando validação do designer e homologação do Comitê para os deltas de PRD.
+Data: 2026-07-22 · Status: **revisado após análise do documento de requisitos v1.0 (Luana Leão, 17/07/2026)** — a estrutura voltou às 5 etapas oficiais (RF-006) com a classificação do RF-008; a camada de UX writing acolhedora permanece. A versão uma-pergunta-por-tela ficou registrada abaixo como recomendação para uma futura v1.1 do documento.
+
+## Decisão vigente (alinhada ao documento de requisitos)
+
+- **Estrutura**: as 5 etapas oficiais, na ordem oficial (Identificação → Sobre a manifestação → Relato → Complementares → Expectativa) + revisão, com "Etapa X de 6" no indicador.
+- **RF-008 mantido**: tipo e categoria voltam ao formulário; a copy tira a pressão do acerto ("escolha a mais próxima — o Comitê ajusta na triagem").
+- **Camada de UX writing preservada** (melhoria, não divergência): helpers acolhedores por etapa, RadioCards de anonimato, opcionais sinalizados, e-mail pedido UMA vez (o documento nunca pediu confirmação duplicada — essa era uma adição antiga do protótipo), "Prefiro não informar" na relação, aviso de anonimato no momento da escolha.
+- **Também preservados**: sucesso com "Copiar tudo", colar comprovante no acompanhamento, FAQ "Perdi meu código", moldura QuestionScreen com piso Web Interface Guidelines.
+
+## Registro histórico — proposta uma-pergunta-por-tela (para v1.1)
 
 ## Contexto
 

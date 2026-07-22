@@ -60,7 +60,7 @@ export const messages = {
         step: 1,
         title: "Registre sua manifestação",
         description:
-          "Responda uma pergunta de cada vez, de forma anônima ou identificada. Só o relato é obrigatório.",
+          "Preencha cinco etapas curtas, de forma anônima ou identificada — e revise tudo antes de enviar.",
       },
       {
         step: 2,
@@ -92,12 +92,14 @@ export const messages = {
     eyebrow: "Registrar manifestação",
     title: "Antes de começar",
     subtitle:
-      "Uma pergunta de cada vez, no seu ritmo. Só uma resposta é obrigatória — o que aconteceu. O resto, você decide se conta.",
-    stepsTitle: "Como vai ser",
+      "Cinco etapas curtas, no seu ritmo. Boa parte dos campos é opcional, você pode revisar tudo antes de enviar — e nada é enviado sem a sua confirmação.",
+    stepsTitle: "Como será o preenchimento",
     moments: [
-      "Conte o que aconteceu, do seu jeito",
-      "Diga como quer se identificar",
-      "Revise tudo e envie quando estiver pronto",
+      "Identificação — como você quer registrar",
+      "Sobre a manifestação",
+      "Relato — o que aconteceu",
+      "Complementares (tudo opcional)",
+      "Sua expectativa",
     ],
     trustChips: ["Sigilo garantido", "Anonimato possível", "Não retaliação"],
     cta: "Começar",

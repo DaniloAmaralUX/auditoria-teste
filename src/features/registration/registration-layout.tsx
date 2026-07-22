@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { RegistrationProvider, useRegistration } from "./registration-context"
 import { StepProgress } from "@/components/forms/step-progress"
 import { TrustNotice } from "@/components/feedback/trust-notice"
-import { registrationSteps, stepByPath, visibleSteps } from "./steps"
+import { registrationSteps, stepByPath, totalSteps } from "./steps"
 
 /** Aviso do navegador ao sair com dados não enviados (RF-006). */
 function useUnsavedChangesGuard(active: boolean) {
@@ -32,13 +32,12 @@ function RegistrationInner() {
   const location = useLocation()
   const outlet = useOutlet()
   const reduced = useReducedMotion()
-  const { data, isDirty } = useRegistration()
+  const { isDirty } = useRegistration()
   useUnsavedChangesGuard(isDirty)
 
   const segment = location.pathname.split("/").filter(Boolean)[1]
   const step = stepByPath(segment)
-  const steps = visibleSteps(data)
-  const currentIndex = step ? steps.findIndex((s) => s.key === step.key) : -1
+  const currentIndex = step ? registrationSteps.findIndex((s) => s.key === step.key) : -1
 
   // Direção: avançar entra da direita, voltar entra da esquerda (continuidade espacial).
   // Estado ajustado durante o render (padrão React p/ estado derivado de navegação).
@@ -57,8 +56,8 @@ function RegistrationInner() {
         <div className="mb-8">
           <StepProgress
             current={currentIndex + 1}
-            total={steps.length}
-            label={steps[currentIndex]?.label}
+            total={totalSteps}
+            label={registrationSteps[currentIndex]?.label}
           />
         </div>
       ) : null}
