@@ -6,7 +6,9 @@ import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-const foundations = [
+type DesignNavItem = { to: string; label: string; end?: boolean }
+
+const foundations: DesignNavItem[] = [
   { to: "/design", label: "Introdução", end: true },
   { to: "/design/cores", label: "Cores" },
   { to: "/design/tipografia", label: "Tipografia" },
@@ -17,14 +19,14 @@ const foundations = [
   { to: "/design/motion", label: "Motion" },
 ]
 
-const componentPages = [{ to: "/design/componentes", label: "Componentes" }]
+const componentPages: DesignNavItem[] = [{ to: "/design/componentes", label: "Componentes" }]
 
 function NavGroup({
   title,
   items,
 }: {
   title: string
-  items: { to: string; label: string; end?: boolean }[]
+  items: DesignNavItem[]
 }) {
   return (
     <div className="space-y-1">
