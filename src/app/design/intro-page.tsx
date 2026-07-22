@@ -20,9 +20,9 @@ const foundationCards = [
   {
     to: "/design/tipografia",
     title: "Tipografia",
-    description: "Inter única, tracking negativo proporcional ao tamanho.",
+    description: "Par Hedvig Letters: serif no display, sans na interface.",
     art: (
-      <span className="font-heading text-4xl font-semibold tracking-[-0.022em]">Aa</span>
+      <span className="font-heading text-4xl">Aa</span>
     ),
   },
   {
@@ -38,7 +38,7 @@ const foundationCards = [
   {
     to: "/design/marca",
     title: "Marca",
-    description: "Logo oficial Pitang e a convivência do vermelho com o laranja.",
+    description: "Logo oficial Pitang, sempre vermelha, sobre a base monocromática.",
     art: <img src="/favicon.svg" alt="" aria-hidden width={40} height={40} className="size-10" />,
   },
   {
@@ -76,15 +76,15 @@ const principles = [
   },
   {
     title: "Zero gradientes",
-    text: "Superfícies planas. A variação vem do papel, das faixas muted e das bordas 1px.",
+    text: "Superfícies planas. A variação vem do card creme, das faixas muted e das bordas 1px.",
   },
   {
-    title: "Papel quente",
-    text: "Neutros com leve temperatura (à la Notion/Perplexity) harmonizam com o vermelho e acalmam a leitura.",
+    title: "Base monocromática",
+    text: "Branco puro, cards creme, quase-preto (à la Midday). O único matiz é o vermelho da ação.",
   },
   {
-    title: "Geometria precisa",
-    text: "Hairlines, crosshairs e numerais (à la Vercel) dão esqueleto ao espaço em branco.",
+    title: "Serif editorial",
+    text: "Hedvig Serif nas saudações, títulos e hero; muito whitespace; tabelas hairline. É a assinatura.",
   },
   {
     title: "Confiança em primeiro lugar",

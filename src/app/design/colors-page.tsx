@@ -29,28 +29,28 @@ function SwatchGrid({ swatches }: { swatches: Swatch[] }) {
 }
 
 const neutrals: Swatch[] = [
-  { token: "background", light: "oklch(0.982 0.009 78)", bg: "bg-background", note: "O papel — o matiz do laranja, dessaturado." },
-  { token: "card", light: "oklch(0.968 0.011 76)", bg: "bg-card", note: "Superfície de conteúdo — meio passo abaixo do papel." },
-  { token: "muted", light: "oklch(0.936 0.022 74)", bg: "bg-muted", note: "Faixas de seção, tiles, estados hover." },
-  { token: "border", light: "oklch(0.884 0.024 72)", bg: "bg-border", note: "Hairlines de 1px — o esqueleto da página." },
-  { token: "foreground", light: "oklch(0.31 0.035 55)", bg: "bg-foreground", note: "Texto principal — café-terracota, mesmo matiz da ação." },
-  { token: "muted-foreground", light: "oklch(0.50 0.04 58)", bg: "bg-muted-foreground", note: "Texto secundário (AA ≥ 4.5 sobre papel, card e muted)." },
+  { token: "background", light: "oklch(1 0 0)", bg: "bg-background", note: "Branco puro — o fundo do Midday." },
+  { token: "card", light: "oklch(0.972 0.008 90)", bg: "bg-card", note: "Creme quente sutil — superfície de conteúdo, meio passo abaixo do branco." },
+  { token: "muted", light: "oklch(0.905 0.008 90)", bg: "bg-muted", note: "Faixas de seção, tiles, estados hover." },
+  { token: "border", light: "oklch(0.877 0.004 90)", bg: "bg-border", note: "Hairlines de 1px — o esqueleto da página (border-first)." },
+  { token: "foreground", light: "oklch(0.205 0 0)", bg: "bg-foreground", note: "Texto principal — quase-preto neutro." },
+  { token: "muted-foreground", light: "oklch(0.515 0 0)", bg: "bg-muted-foreground", note: "Texto secundário (AA ≥ 4.5 sobre branco, card e muted)." },
 ]
 
 const accents: Swatch[] = [
   { token: "primary", light: "oklch(0.58 0.21 28)", bg: "bg-primary", note: "O vermelho Pitang no degrau AA — texto BRANCO 4.63:1 (a marca pura reprova)." },
-  { token: "primary-text", light: "oklch(0.54 0.20 28)", bg: "bg-primary-text", note: "Degrau de texto — links AA ≥ 4.5 até sobre muted." },
-  { token: "info", light: "oklch(0.55 0.15 245)", bg: "bg-info", note: "Azul Pitang — estritamente informacional." },
+  { token: "primary-text", light: "oklch(0.52 0.20 28)", bg: "bg-primary-text", note: "Degrau de texto — links AA ≥ 4.5 até sobre muted." },
+  { token: "info", light: "oklch(0.52 0.14 245)", bg: "bg-info", note: "Azul dessaturado — estritamente informacional." },
   { token: "destructive", light: "oklch(0.577 0.245 27)", bg: "bg-destructive", note: "Erros — mesmo matiz da ação, por isso erro NUNCA comunica só por cor (ícone + texto)." },
 ]
 
 const statuses: Swatch[] = [
-  { token: "status-received", light: "oklch(0.55 0.15 245)", bg: "bg-status-received", note: "Recebida" },
-  { token: "status-analysis", light: "oklch(0.62 0.14 90)", bg: "bg-status-analysis", note: "Em análise" },
-  { token: "status-investigation", light: "oklch(0.55 0.16 300)", bg: "bg-status-investigation", note: "Em apuração" },
-  { token: "status-completed", light: "oklch(0.6 0.15 150)", bg: "bg-status-completed", note: "Concluída" },
-  { token: "status-archived", light: "oklch(0.5 0.008 75)", bg: "bg-status-archived", note: "Arquivada" },
-  { token: "status-waiting", light: "oklch(0.65 0.13 60)", bg: "bg-status-waiting", note: "Flag: aguardando informações" },
+  { token: "status-received", light: "oklch(0.54 0.13 245)", bg: "bg-status-received", note: "Recebida" },
+  { token: "status-analysis", light: "oklch(0.60 0.11 85)", bg: "bg-status-analysis", note: "Em análise" },
+  { token: "status-investigation", light: "oklch(0.52 0.13 300)", bg: "bg-status-investigation", note: "Em apuração" },
+  { token: "status-completed", light: "oklch(0.57 0.12 150)", bg: "bg-status-completed", note: "Concluída" },
+  { token: "status-archived", light: "oklch(0.55 0 0)", bg: "bg-status-archived", note: "Arquivada — neutro puro" },
+  { token: "status-waiting", light: "oklch(0.62 0.10 60)", bg: "bg-status-waiting", note: "Flag: aguardando informações" },
 ]
 
 export default function ColorsPage() {
@@ -59,10 +59,10 @@ export default function ColorsPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Cores"
-        lede="A âncora de ação é o vermelho Pitang #ED1C24 no seu degrau acessível: a marca pura dá 4.27:1 com branco e reprova; a ação usa oklch(0.58 0.21 28) — visualmente o mesmo vermelho, AA 4.63:1 medido. Links no degrau 0.54 (AA até sobre muted). Neutros papel âmbar quente como contraponto. Todos os pares texto/fundo medidos AA ≥ 4.5 nos dois temas."
+        lede="Base monocromática do Midday — branco puro, cards creme, quase-preto — com o vermelho Pitang como ÚNICO acento. A marca pura #ED1C24 dá 4.27:1 com branco e reprova; a ação usa oklch(0.58 0.21 28) — visualmente o mesmo vermelho, AA 4.63:1 medido. Links no degrau 0.52 (AA até sobre muted). Status viram dot colorido, nunca fundo preenchido. Todos os pares de texto medidos AA ≥ 4.5 nos dois temas."
       />
 
-      <GuideSection title="Neutros" description="A temperatura quente é sutil de propósito: percebe-se o conforto, não a cor.">
+      <GuideSection title="Neutros" description="Monocromáticos: branco puro no fundo, um toque de creme quente nos cards. A separação vem de bordas hairline, não de sombra.">
         <SwatchGrid swatches={neutrals} />
       </GuideSection>
 
@@ -72,7 +72,7 @@ export default function ColorsPage() {
 
       <GuideSection
         title="Status de manifestação"
-        description="Workflow do PRD (RF-023). Cor nunca comunica sozinha — sempre acompanhada de rótulo (RNF-007)."
+        description="Workflow do PRD (RF-023). Usados como DOT + rótulo (nunca fundo preenchido); o rótulo fica em foreground. Cor nunca comunica sozinha (RNF-007)."
       >
         <SwatchGrid swatches={statuses} />
       </GuideSection>
@@ -80,11 +80,11 @@ export default function ColorsPage() {
       <GuideSection title="Regras de uso">
         <RuleList
           items={[
-            { do: true, text: "laranja em CTAs primários, links, item de navegação ativo, progresso e estados de seleção." },
-            { do: true, text: "tiles de ícone e ornamentos em neutros (muted, border) — a página inteira sustenta o acento." },
-            { do: false, text: "laranja decorativo: fundos de seção, ícones ilustrativos, eyebrows. Se não é ação nem estado, é neutro." },
-            { do: false, text: "vermelho fora da marca e do destructive — nunca como acento de interface." },
-            { do: false, text: "gradientes de qualquer tipo. Variação de superfície = papel, muted e bordas." },
+            { do: true, text: "vermelho em CTAs primários, links, item de navegação ativo, progresso e estados de seleção." },
+            { do: true, text: "tudo o que não é ação nem estado é neutro mono (background, card, muted, border, foreground)." },
+            { do: true, text: "status como dot + rótulo; o rótulo em foreground, a cor só no ponto." },
+            { do: false, text: "vermelho decorativo: fundos de seção, ícones ilustrativos, eyebrows. Se não é ação nem estado, é neutro." },
+            { do: false, text: "badge de status com fundo preenchido colorido. E gradientes de qualquer tipo — variação de superfície = card, muted e bordas." },
           ]}
         />
       </GuideSection>

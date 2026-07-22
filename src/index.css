@@ -1,72 +1,76 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
+@import "@fontsource/hedvig-letters-sans/latin.css";
+@import "@fontsource/hedvig-letters-serif/latin.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Direção "elegância por contenção" (referências: Notion, Perplexity, Vercel/Geist).
-   Âncora de ação = o VERMELHO Pitang #ed1c24 (oklch ~0.583/0.227/28): a ação usa
-   o degrau AA mais próximo da marca — 0.58/0.21/28, texto BRANCO 4.63:1 (o
-   vermelho puro dá 4.27 e reprova). Links no degrau 0.54 (AA até sobre muted).
-   Neutros papel âmbar quente como contraponto (método oklch.fyi: degraus
-   previsíveis). Azul #0099ff informacional; erros compartilham o matiz da marca
-   e por isso NUNCA comunicam só por cor (ícone + texto sempre, RNF-007).
-   Todos os pares texto/fundo medidos AA >= 4.5. Zero gradientes; bordas 1px
-   planas; radius 8px; Inter única. */
+/* Direção "editorial contido" — linguagem visual do Midday (midday.ai).
+   Neutros MONOCROMÁTICOS: light branco puro + cards creme quente; dark #0d0d0d.
+   Âncora de ação = o VERMELHO Pitang, ÚNICO acento — CTA, link, estado ativo.
+   CTA vermelho + texto branco = 4.63:1 (independe do fundo). Links no degrau
+   --primary-text (AA sobre branco e sobre o card creme). Como erros compartilham
+   o matiz da marca, NUNCA comunicam só por cor (ícone + texto sempre, RNF-007).
+   Status de manifestação = dot colorido + rótulo (nunca fundo preenchido).
+   Todos os pares texto/fundo medidos AA >= 4.5. Zero gradientes; border-first
+   1px (sombra só em overlay); radius 8px; par Hedvig Sans (UI) + Serif (display). */
 :root {
-    --background: oklch(0.982 0.009 78);
-    --foreground: oklch(0.31 0.035 55);
-    --card: oklch(0.968 0.011 76);
-    --card-foreground: oklch(0.24 0.03 55);
-    --popover: oklch(0.995 0.006 80);
-    --popover-foreground: oklch(0.31 0.035 55);
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.205 0 0);
+    --card: oklch(0.972 0.008 90);
+    --card-foreground: oklch(0.205 0 0);
+    --popover: oklch(0.972 0.008 90);
+    --popover-foreground: oklch(0.205 0 0);
     /* Degrau de ação: o vermelho Pitang no passo AA (marca é 0.583 — reprova). */
     --primary: oklch(0.58 0.21 28);
     --primary-foreground: oklch(0.99 0.005 85);
-    /* Degrau de texto (links): AA >= 4.5 até sobre --muted. */
-    --primary-text: oklch(0.54 0.20 28);
-    --secondary: oklch(0.925 0.028 70);
-    --secondary-foreground: oklch(0.40 0.05 55);
-    --muted: oklch(0.936 0.022 74);
-    --muted-foreground: oklch(0.50 0.04 58);
-    --accent: oklch(0.925 0.028 70);
-    --accent-foreground: oklch(0.31 0.035 55);
-    /* Azul Pitang — acento informacional (aprofundado p/ uso como texto). */
-    --info: oklch(0.55 0.15 245);
+    /* Degrau de texto (links): AA >= 4.5 sobre branco, card creme E muted (medido). */
+    --primary-text: oklch(0.52 0.20 28);
+    --secondary: oklch(0.905 0.008 90);
+    --secondary-foreground: oklch(0.24 0 0);
+    --muted: oklch(0.905 0.008 90);
+    --muted-foreground: oklch(0.515 0 0);
+    --accent: oklch(0.948 0.007 90);
+    --accent-foreground: oklch(0.205 0 0);
+    /* Azul informacional dessaturado (assenta na base mono; AA como texto). */
+    --info: oklch(0.52 0.14 245);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.884 0.024 72);
-    --input: oklch(0.884 0.024 72);
+    --border: oklch(0.877 0.004 90);
+    --input: oklch(0.912 0.005 265);
     --ring: oklch(0.58 0.21 28);
-    --chart-1: oklch(0.5583 0.1276 42.9956);
-    --chart-2: oklch(0.6898 0.1581 290.4107);
-    --chart-3: oklch(0.8816 0.0276 93.128);
-    --chart-4: oklch(0.8822 0.0403 298.1792);
-    --chart-5: oklch(0.5608 0.1348 42.0584);
+    /* Escala de gráfico monocromática (Midday): preto → cinza claro. */
+    --chart-1: oklch(0.30 0 0);
+    --chart-2: oklch(0.50 0 0);
+    --chart-3: oklch(0.65 0 0);
+    --chart-4: oklch(0.78 0 0);
+    --chart-5: oklch(0.88 0 0);
     --radius: 0.5rem;
-    --sidebar: oklch(0.968 0.011 78);
-    --sidebar-foreground: oklch(0.35 0.03 55);
+    --sidebar: oklch(1 0 0);
+    --sidebar-foreground: oklch(0.44 0 0);
     --sidebar-primary: oklch(0.58 0.21 28);
     --sidebar-primary-foreground: oklch(0.99 0.005 85);
-    --sidebar-accent: oklch(0.925 0.028 70);
-    --sidebar-accent-foreground: oklch(0.31 0.035 55);
-    --sidebar-border: oklch(0.884 0.024 72);
+    --sidebar-accent: oklch(0.948 0.007 90);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.877 0.004 90);
     --sidebar-ring: oklch(0.58 0.21 28);
 
     /* Tokens semânticos de status — workflow (PRD RF-023: 5 canônicos) + auxiliares.
-       Não dependem só de cor: sempre acompanhados de rótulo/ícone (RNF-007). */
-    --status-received: oklch(0.55 0.15 245);        /* Recebida — azul Pitang aprofundado */
-    --status-analysis: oklch(0.62 0.14 90);         /* Em análise — âmbar */
-    --status-investigation: oklch(0.55 0.16 300);   /* Em apuração — violeta */
-    --status-completed: oklch(0.6 0.15 150);        /* Concluída — verde */
-    --status-archived: oklch(0.5 0.008 75);         /* Arquivada — neutro */
-    --status-waiting: oklch(0.65 0.13 60);          /* flag: Aguardando informações */
-    --status-overdue: oklch(0.58 0.22 27);          /* derivado do SLA: atrasada */
+       Chroma reduzido p/ assentar na base mono; usados como DOT + rótulo (nunca
+       fundo preenchido). Cor nunca comunica sozinha (rótulo + ícone, RNF-007). */
+    --status-received: oklch(0.54 0.13 245);        /* Recebida — azul */
+    --status-analysis: oklch(0.60 0.11 85);         /* Em análise — âmbar */
+    --status-investigation: oklch(0.52 0.13 300);   /* Em apuração — violeta */
+    --status-completed: oklch(0.57 0.12 150);       /* Concluída — verde */
+    --status-archived: oklch(0.55 0 0);             /* Arquivada — neutro puro */
+    --status-waiting: oklch(0.62 0.10 60);          /* flag: Aguardando informações */
+    --status-overdue: oklch(0.57 0.19 27);          /* derivado do SLA: atrasada */
 
-    /* Superfície de dados sensíveis (doc 10: surface-sensitive / SensitiveDataPanel) */
-    --surface-sensitive: oklch(0.97 0.02 40);
-    --surface-sensitive-foreground: oklch(0.3 0.05 40);
-    --surface-sensitive-border: oklch(0.85 0.06 40);
+    /* Superfície de dados sensíveis (identidade restrita). Neutro levemente
+       diferenciado do card + borda morna sutil como sinal (não por matiz quente). */
+    --surface-sensitive: oklch(0.965 0.006 60);
+    --surface-sensitive-foreground: oklch(0.30 0 0);
+    --surface-sensitive-border: oklch(0.83 0.03 50);
 
     /* Materiais flutuantes — escala graduada (adaptada do Vercel/Geist Materials).
        Superfícies de página seguem flat com borda 1px (nossa assinatura).
@@ -86,52 +90,54 @@
 }
 
 .dark {
-    /* A mesma matriz no escuro: brasa quente (hue 58), muted abaixo do papel. */
-    --background: oklch(0.252 0.018 58);
-    --foreground: oklch(0.962 0.008 80);
-    --card: oklch(0.29 0.02 58);
-    --card-foreground: oklch(0.975 0.008 80);
-    --popover: oklch(0.31 0.022 58);
-    --popover-foreground: oklch(0.93 0.01 75);
+    /* Base monocromática do Midday: quase-preto #0d0d0d, cards #121212, neutros #1c1c1c. */
+    --background: oklch(0.17 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.21 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.21 0 0);
+    --popover-foreground: oklch(0.97 0 0);
     --primary: oklch(0.58 0.21 28);
     --primary-foreground: oklch(0.99 0.005 85);
-    --primary-text: oklch(0.68 0.19 28);
-    --secondary: oklch(0.31 0.022 58);
-    --secondary-foreground: oklch(0.92 0.012 75);
-    --muted: oklch(0.222 0.016 58);
-    --muted-foreground: oklch(0.785 0.025 68);
-    --accent: oklch(0.30 0.022 58);
-    --accent-foreground: oklch(0.95 0.01 78);
-    --info: oklch(0.7 0.15 240);
+    /* Link no escuro: vermelho mais claro, AA sobre #0d0d0d e sobre o card. */
+    --primary-text: oklch(0.70 0.17 28);
+    --secondary: oklch(0.26 0 0);
+    --secondary-foreground: oklch(0.97 0 0);
+    --muted: oklch(0.26 0 0);
+    /* Midday usa 38% (reprova AA no escuro); subimos p/ AA >= 4.5 sobre bg/card/muted. */
+    --muted-foreground: oklch(0.645 0 0);
+    --accent: oklch(0.26 0 0);
+    --accent-foreground: oklch(0.97 0 0);
+    --info: oklch(0.70 0.14 240);
     --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(0.365 0.025 58);
-    --input: oklch(0.43 0.028 58);
-    --ring: oklch(0.68 0.19 28);
-    --chart-1: oklch(0.5583 0.1276 42.9956);
-    --chart-2: oklch(0.6898 0.1581 290.4107);
-    --chart-3: oklch(0.213 0.0078 95.4245);
-    --chart-4: oklch(0.3074 0.0516 289.323);
-    --chart-5: oklch(0.5608 0.1348 42.0584);
-    --sidebar: oklch(0.235 0.016 58);
-    --sidebar-foreground: oklch(0.81 0.02 70);
+    --border: oklch(0.26 0 0);
+    --input: oklch(0.30 0 0);
+    --ring: oklch(0.70 0.17 28);
+    --chart-1: oklch(0.90 0 0);
+    --chart-2: oklch(0.70 0 0);
+    --chart-3: oklch(0.55 0 0);
+    --chart-4: oklch(0.40 0 0);
+    --chart-5: oklch(0.30 0 0);
+    --sidebar: oklch(0.17 0 0);
+    --sidebar-foreground: oklch(0.65 0 0);
     --sidebar-primary: oklch(0.58 0.21 28);
     --sidebar-primary-foreground: oklch(0.99 0.005 85);
-    --sidebar-accent: oklch(0.20 0.014 58);
-    --sidebar-accent-foreground: oklch(0.81 0.02 70);
-    --sidebar-border: oklch(0.365 0.025 58);
-    --sidebar-ring: oklch(0.68 0.19 28);
+    --sidebar-accent: oklch(0.26 0 0);
+    --sidebar-accent-foreground: oklch(0.97 0 0);
+    --sidebar-border: oklch(0.26 0 0);
+    --sidebar-ring: oklch(0.70 0.17 28);
 
-    --status-received: oklch(0.7 0.15 240);
-    --status-analysis: oklch(0.75 0.14 90);
-    --status-investigation: oklch(0.7 0.15 300);
-    --status-completed: oklch(0.72 0.17 150);
-    --status-archived: oklch(0.7 0.008 75);
-    --status-waiting: oklch(0.76 0.13 60);
-    --status-overdue: oklch(0.7 0.19 22);
+    --status-received: oklch(0.70 0.13 240);
+    --status-analysis: oklch(0.74 0.12 85);
+    --status-investigation: oklch(0.70 0.13 300);
+    --status-completed: oklch(0.72 0.14 150);
+    --status-archived: oklch(0.70 0 0);
+    --status-waiting: oklch(0.75 0.11 60);
+    --status-overdue: oklch(0.70 0.17 27);
 
-    --surface-sensitive: oklch(0.28 0.03 40);
-    --surface-sensitive-foreground: oklch(0.92 0.03 60);
-    --surface-sensitive-border: oklch(0.4 0.05 40);
+    --surface-sensitive: oklch(0.22 0.008 60);
+    --surface-sensitive-foreground: oklch(0.92 0 0);
+    --surface-sensitive-border: oklch(0.34 0.02 50);
 
     /* No escuro: sombras mais profundas + anel sutil de luz para separar da brasa. */
     --shadow-material-tooltip:
@@ -152,10 +158,13 @@
 }
 
 @theme inline {
-    /* Uma única grotesca neutra (à la Notion/Perplexity). O token --font-heading
-       permanece para não tocar os ~20 usos de font-heading nas páginas. */
-    --font-sans: 'Inter Variable', sans-serif;
-    --font-heading: 'Inter Variable', sans-serif;
+    /* Par tipográfico do Midday: Hedvig Letters Sans (UI, peso único 400) +
+       Hedvig Letters Serif (display/saudações). Hierarquia por tamanho + serif +
+       cor (foreground vs muted-foreground), NÃO por peso. --font-heading aponta
+       para a serif (é a assinatura "Good afternoon, Sam"). */
+    --font-sans: 'Hedvig Letters Sans', system-ui, sans-serif;
+    --font-serif: 'Hedvig Letters Serif', Georgia, 'Times New Roman', serif;
+    --font-heading: 'Hedvig Letters Serif', Georgia, serif;
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -268,11 +277,11 @@
     @apply font-heading;
     text-wrap: balance;
     }
-  /* Tracking negativo proporcional ao tamanho (apple-design §15):
-     display apertado, corpo neutro. */
-  h1 { letter-spacing: -0.022em; }
-  h2 { letter-spacing: -0.015em; }
-  h3, h4 { letter-spacing: -0.01em; }
+  /* Tracking suave nos títulos serif (Hedvig Serif já é bem espaçada — só um
+     leve aperto no display; nada do tracking negativo forte calibrado p/ Inter). */
+  h1 { letter-spacing: -0.01em; }
+  h2 { letter-spacing: -0.008em; }
+  h3, h4 { letter-spacing: -0.005em; }
   p {
     text-wrap: pretty;
     }
