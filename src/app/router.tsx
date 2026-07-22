@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter, Navigate, type RouteObject } from "react-router-dom"
 
 import {
   DesignLayout,
@@ -38,71 +38,93 @@ import { AdminManifestacoesPage } from "@/app/admin/manifestacoes-page"
 import { AdminManifestationDetailPage } from "@/app/admin/manifestation-detail-page"
 import { AdminDocumentosPage } from "@/app/admin/documentos-page"
 
+/**
+ * Superfície do build (deploys separados por link):
+ * - "portal": só o portal público + guia /design (sem NENHUM código do painel);
+ * - "admin": só o painel do Comitê (/ redireciona para /admin);
+ * - ausente (dev local): tudo junto.
+ * O valor é substituído estaticamente no build (import.meta.env), então o
+ * bundler elimina as rotas — e os imports — da superfície excluída.
+ */
+const SURFACE: string = import.meta.env.VITE_APP_SURFACE ?? "all"
+
+const designRoutes: RouteObject = {
+  path: "design",
+  element: (
+    <Suspense fallback={null}>
+      <DesignLayout />
+    </Suspense>
+  ),
+  children: [
+    { index: true, element: <DesignIntroPage /> },
+    { path: "cores", element: <DesignColorsPage /> },
+    { path: "tipografia", element: <DesignTypographyPage /> },
+    { path: "materiais", element: <DesignMaterialsPage /> },
+    { path: "grid", element: <DesignGridPage /> },
+    { path: "marca", element: <DesignBrandPage /> },
+    { path: "conteudo", element: <DesignContentPage /> },
+    { path: "motion", element: <DesignMotionPage /> },
+    { path: "componentes", element: <DesignComponentsPage /> },
+  ],
+}
+
+const adminRoutes: RouteObject = {
+  path: "admin",
+  element: <AdminRoot />,
+  children: [
+    { path: "login", element: <AdminLoginPage /> },
+    {
+      element: <RequireAuth />,
+      children: [
+        {
+          element: <AdminShell />,
+          children: [
+            { index: true, element: <AdminDashboardPage /> },
+            { path: "dashboard", element: <AdminDashboardPage /> },
+            { path: "manifestacoes", element: <AdminManifestacoesPage /> },
+            { path: "manifestacoes/:protocol", element: <AdminManifestationDetailPage /> },
+            { path: "documentos", element: <AdminDocumentosPage /> },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const publicRoutes: RouteObject = {
+  element: <PublicShell />,
+  children: [
+    { index: true, element: <HomePage /> },
+    { path: "lgpd", element: <LgpdPage /> },
+    { path: "termos", element: <TermosPage /> },
+    { path: "faq", element: <FaqPage /> },
+    {
+      path: "registrar",
+      element: <RegistrationLayout />,
+      children: [
+        { index: true, element: <StartPage /> },
+        { path: "identificacao", element: <IdentificacaoStep /> },
+        { path: "sobre-a-manifestacao", element: <SobreStep /> },
+        { path: "relato", element: <RelatoStep /> },
+        { path: "complementares", element: <ComplementaresStep /> },
+        { path: "expectativa", element: <ExpectativaStep /> },
+        { path: "revisao", element: <ReviewStep /> },
+        { path: "sucesso", element: <SuccessStep /> },
+      ],
+    },
+    { path: "acompanhar", element: <TrackingPage /> },
+    { path: "*", element: <NotFoundPage /> },
+  ],
+}
+
+/** No deploy do sistema, qualquer rota fora de /admin volta para o painel. */
+const adminFallbackRoutes: RouteObject[] = [
+  { path: "/", element: <Navigate to="/admin" replace /> },
+  { path: "*", element: <Navigate to="/admin" replace /> },
+]
+
 export const router = createBrowserRouter([
-  {
-    path: "design",
-    element: (
-      <Suspense fallback={null}>
-        <DesignLayout />
-      </Suspense>
-    ),
-    children: [
-      { index: true, element: <DesignIntroPage /> },
-      { path: "cores", element: <DesignColorsPage /> },
-      { path: "tipografia", element: <DesignTypographyPage /> },
-      { path: "materiais", element: <DesignMaterialsPage /> },
-      { path: "grid", element: <DesignGridPage /> },
-      { path: "marca", element: <DesignBrandPage /> },
-      { path: "conteudo", element: <DesignContentPage /> },
-      { path: "motion", element: <DesignMotionPage /> },
-      { path: "componentes", element: <DesignComponentsPage /> },
-    ],
-  },
-  {
-    path: "admin",
-    element: <AdminRoot />,
-    children: [
-      { path: "login", element: <AdminLoginPage /> },
-      {
-        element: <RequireAuth />,
-        children: [
-          {
-            element: <AdminShell />,
-            children: [
-              { index: true, element: <AdminDashboardPage /> },
-              { path: "dashboard", element: <AdminDashboardPage /> },
-              { path: "manifestacoes", element: <AdminManifestacoesPage /> },
-              { path: "manifestacoes/:protocol", element: <AdminManifestationDetailPage /> },
-              { path: "documentos", element: <AdminDocumentosPage /> },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    element: <PublicShell />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "lgpd", element: <LgpdPage /> },
-      { path: "termos", element: <TermosPage /> },
-      { path: "faq", element: <FaqPage /> },
-      {
-        path: "registrar",
-        element: <RegistrationLayout />,
-        children: [
-          { index: true, element: <StartPage /> },
-          { path: "identificacao", element: <IdentificacaoStep /> },
-          { path: "sobre-a-manifestacao", element: <SobreStep /> },
-          { path: "relato", element: <RelatoStep /> },
-          { path: "complementares", element: <ComplementaresStep /> },
-          { path: "expectativa", element: <ExpectativaStep /> },
-          { path: "revisao", element: <ReviewStep /> },
-          { path: "sucesso", element: <SuccessStep /> },
-        ],
-      },
-      { path: "acompanhar", element: <TrackingPage /> },
-      { path: "*", element: <NotFoundPage /> },
-    ],
-  },
+  ...(SURFACE !== "admin" ? [designRoutes] : []),
+  ...(SURFACE !== "portal" ? [adminRoutes] : []),
+  ...(SURFACE !== "admin" ? [publicRoutes] : adminFallbackRoutes),
 ])
