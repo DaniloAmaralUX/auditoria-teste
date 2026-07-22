@@ -176,39 +176,29 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
                     inputMode="text"
                     pattern="[A-Za-z0-9]*"
                     aria-label="Código de acesso, 12 caracteres em três grupos de quatro"
+                    containerClassName="w-full min-w-0"
                   >
-                    {/* 12 slots não cabem em 375px no tamanho cheio: no mobile os
-                        slots encolhem e os separadores saem (o hífen é visual,
-                        não semântico — colar continua aceitando com hífens). */}
-                    <InputOTPGroup>
-                      {[0, 1, 2, 3].map((i) => (
-                        <InputOTPSlot
-                          key={i}
-                          index={i}
-                          className="size-6 text-xs sm:size-9 sm:text-sm"
-                        />
-                      ))}
-                    </InputOTPGroup>
-                    <InputOTPSeparator className="hidden sm:flex" />
-                    <InputOTPGroup>
-                      {[4, 5, 6, 7].map((i) => (
-                        <InputOTPSlot
-                          key={i}
-                          index={i}
-                          className="size-6 text-xs sm:size-9 sm:text-sm"
-                        />
-                      ))}
-                    </InputOTPGroup>
-                    <InputOTPSeparator className="hidden sm:flex" />
-                    <InputOTPGroup>
-                      {[8, 9, 10, 11].map((i) => (
-                        <InputOTPSlot
-                          key={i}
-                          index={i}
-                          className="size-6 text-xs sm:size-9 sm:text-sm"
-                        />
-                      ))}
-                    </InputOTPGroup>
+                    {/* 12 slots de largura fixa não cabem no card (max-w-md):
+                        cada slot é flex-1 com altura fixa — dividem o espaço por
+                        igual em qualquer largura, sem espremer torto nem estourar.
+                        No mobile os separadores saem (o hífen é visual, não
+                        semântico — colar continua aceitando com hífens). */}
+                    {[0, 1, 2].map((group) => (
+                      <React.Fragment key={group}>
+                        {group > 0 ? (
+                          <InputOTPSeparator className="hidden shrink-0 sm:flex" />
+                        ) : null}
+                        <InputOTPGroup className="min-w-0 flex-1">
+                          {[0, 1, 2, 3].map((i) => (
+                            <InputOTPSlot
+                              key={i}
+                              index={group * 4 + i}
+                              className="h-9 min-w-0 flex-1 text-xs sm:text-sm"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                      </React.Fragment>
+                    ))}
                   </InputOTP>
                 </FormControl>
                 <FormDescription>
