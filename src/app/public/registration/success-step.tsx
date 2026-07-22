@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Link, Navigate } from "react-router-dom"
+import { CircleCheck } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Spot } from "@/components/ui/spot"
 import { ProtocolCard } from "@/components/forms/protocol-card"
 import { TrustNotice } from "@/components/feedback/trust-notice"
 import { useRegistration } from "@/features/registration/registration-context"
@@ -22,11 +22,11 @@ export function SuccessStep() {
 
   return (
     <div>
-      <Spot name="sealed" className="w-36" />
+      <CircleCheck aria-hidden className="text-foreground size-8" strokeWidth={1.5} />
       <h1
         ref={headingRef}
         tabIndex={-1}
-        className="font-heading mt-4 text-2xl font-semibold tracking-tight outline-none"
+        className="font-heading mt-4 text-2xl outline-none sm:text-3xl"
       >
         Manifestação registrada
       </h1>

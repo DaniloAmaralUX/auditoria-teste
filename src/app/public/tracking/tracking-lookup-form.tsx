@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button"
 import { Eyebrow } from "@/components/ui/eyebrow"
-import { Spot } from "@/components/ui/spot"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { trackingLookupSchema, type TrackingLookupValues } from "@/schemas/tracking"
 import { lookup, type TrackingRecord } from "@/features/tracking/mock-store"
@@ -109,11 +108,10 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
 
   return (
     <div className="mx-auto w-full max-w-md" onPaste={onPasteReceipt}>
-      <Spot name="track" className="w-32" />
-      <Eyebrow className="mt-4">Acompanhamento</Eyebrow>
+      <Eyebrow>Acompanhamento</Eyebrow>
       <h1
         tabIndex={-1}
-        className="font-heading mt-1 text-2xl font-semibold tracking-tight outline-none"
+        className="font-heading mt-1 text-2xl outline-none sm:text-3xl"
       >
         Acompanhar manifestação
       </h1>
