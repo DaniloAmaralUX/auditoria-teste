@@ -28,12 +28,13 @@ export function PublicHeader() {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-40 border-b backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4 sm:px-6">
-        {/* Logo mono no header: o CTA laranja é o único ponto de cor (guia /design/marca). */}
+        {/* Logo institucional SEMPRE vermelha (decisão do designer, 2026-07-22) —
+            a ação compartilha o matiz da marca, então não há disputa de cor. */}
         <Link
           to="/"
           className="flex items-center gap-3 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <PitangLogo variant="mono" className="text-foreground h-5 shrink-0" />
+          <PitangLogo variant="brand" className="h-5 shrink-0" />
           <span className="text-muted-foreground border-l pl-3 text-xs leading-tight font-medium">
             {siteConfig.shortName}
           </span>

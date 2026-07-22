@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roteiro de personas — Canal de Ética e Ouvidoria Pitang</title>
+  <style>
+    :root {
+      --bg: oklch(0.982 0.009 78);
+      --card: oklch(0.968 0.011 76);
+      --muted: oklch(0.936 0.022 74);
+      --border: oklch(0.884 0.024 72);
+      --fg: oklch(0.31 0.035 55);
+      --muted-fg: oklch(0.5 0.04 58);
+      --primary: oklch(0.58 0.21 28);
+      --primary-fg: oklch(0.99 0.005 85);
+      --brand: #ed1c24;
+      --radius: 12px;
+      --shadow: 0 1px 2px oklch(0.31 0.035 55 / 0.04), 0 8px 24px -12px oklch(0.31 0.035 55 / 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+    /* Cabeçalho */
+    header.masthead { border-bottom: 1px solid var(--border); background: var(--bg); }
+    .masthead-inner { display: flex; align-items: center; gap: 14px; padding: 22px 0; flex-wrap: wrap; }
+    .logo { display: flex; align-items: center; }
+    .logo img { height: 24px; width: auto; }
+    .masthead-sep { width: 1px; height: 24px; background: var(--border); }
+    .masthead-label { color: var(--muted-fg); font-size: 13px; }
+    .hero { padding: 44px 0 28px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.09em; font-size: 12px; font-weight: 600; color: var(--muted-fg); margin: 0 0 12px; }
+    h1 { font-size: clamp(28px, 5vw, 42px); line-height: 1.08; letter-spacing: -0.025em; margin: 0 0 14px; font-weight: 600; }
+    .lede { font-size: clamp(16px, 2.4vw, 19px); color: var(--muted-fg); max-width: 62ch; margin: 0; text-wrap: pretty; }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--border); background: oklch(0.936 0.022 74 / 0.5); border-radius: 8px; padding: 5px 11px; font-size: 13px; color: var(--fg); }
+    .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
+
+    /* Persona */
+    .persona { margin: 46px 0; scroll-margin-top: 20px; }
+    .persona-head { display: grid; grid-template-columns: 60px 1fr; gap: 18px; align-items: start; padding: 22px; border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: var(--radius); background: var(--card); }
+    .avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--muted); border: 1px solid var(--border); display: grid; place-items: center; font-size: 24px; font-weight: 600; color: var(--primary); }
+    .persona-head h2 { margin: 0 0 4px; font-size: 22px; letter-spacing: -0.02em; }
+    .persona-role { color: var(--muted-fg); font-size: 14px; margin: 0 0 12px; }
+    .persona-facts { display: grid; gap: 8px; margin: 0; }
+    .fact { display: grid; grid-template-columns: 92px 1fr; gap: 10px; font-size: 14px; }
+    .fact dt { color: var(--muted-fg); }
+    .fact dd { margin: 0; }
+    .fact strong { color: var(--primary); font-weight: 600; }
+
+    /* Passos */
+    .flow-title { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-fg); margin: 34px 0 4px; }
+    .steps { display: grid; gap: 26px; margin-top: 18px; }
+    @media (min-width: 720px) { .steps { grid-template-columns: 1fr 1fr; } .steps .step.full { grid-column: 1 / -1; } }
+    .step { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); box-shadow: var(--shadow); }
+    .step figure { margin: 0; }
+    .step a.shot { display: block; border-bottom: 1px solid var(--border); background: var(--bg); }
+    .step img { display: block; width: 100%; height: auto; }
+    .step figcaption { padding: 16px 18px 18px; }
+    .step .num { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; padding: 0 8px; border-radius: 999px; background: var(--primary); color: var(--primary-fg); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 9px; }
+    .step h3 { display: flex; align-items: center; margin: 0 0 6px; font-size: 16px; letter-spacing: -0.01em; }
+    .step p { margin: 0; color: var(--muted-fg); font-size: 14px; text-wrap: pretty; }
+    .step .why { margin-top: 9px; font-size: 13px; color: var(--fg); background: oklch(0.936 0.022 74 / 0.55); border: 1px solid var(--border); border-radius: 8px; padding: 8px 11px; }
+    .step .why b { color: var(--primary); font-weight: 600; }
+
+    /* Faixa mobile */
+    .band { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: oklch(0.936 0.022 74 / 0.4); margin: 46px 0; }
+    .band .wrap { padding: 34px 20px; }
+    .band h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.02em; }
+    .band p.sub { margin: 0 0 24px; color: var(--muted-fg); max-width: 60ch; }
+    .phones { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .phone figure { margin: 0; text-align: center; }
+    .phone a { display: inline-block; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; background: var(--card); box-shadow: var(--shadow); max-width: 230px; }
+    .phone img { display: block; width: 100%; height: auto; }
+    .phone figcaption { margin-top: 10px; font-size: 13px; color: var(--muted-fg); }
+
+    /* Rodapé */
+    footer { border-top: 1px solid var(--border); margin-top: 12px; }
+    footer .wrap { padding: 30px 20px 48px; }
+    footer h2 { font-size: 16px; margin: 0 0 12px; letter-spacing: -0.01em; }
+    footer ul { margin: 0; padding-left: 18px; color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
+    footer b { color: var(--fg); font-weight: 600; }
+    .meta { margin-top: 22px; font-size: 12px; color: var(--muted-fg); border-top: 1px solid var(--border); padding-top: 16px; }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <span class="logo">
+        <img src="../../public/pitang-logo.svg" width="137" height="39" alt="Pitang" />
+      </span>
+      <span class="masthead-sep" aria-hidden="true"></span>
+      <span class="masthead-label">Canal de Ética e Ouvidoria · Roteiro de uso</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Roteiro de personas · teste real</p>
+      <h1>Como cada pessoa usa o canal</h1>
+      <p class="lede">Duas jornadas reais, do começo ao fim, com prints capturados por um teste automatizado que percorreu o portal de verdade. Serve para o Comitê e para quem valida o produto entenderem, em minutos, o que a pessoa vê e sente em cada passo.</p>
+      <div class="legend" aria-hidden="true">
+        <span class="chip"><span class="dot"></span> Vermelho = ação (registrar, continuar, consultar)</span>
+        <span class="chip">Prints reais, não mockups</span>
+        <span class="chip">Clique numa imagem para ampliar</span>
+      </div>
+    </section>
+
+    <!-- PERSONA 1 -->
+    <section class="persona" id="ana" aria-labelledby="ana-nome">
+      <div class="persona-head">
+        <div class="avatar" aria-hidden="true">A</div>
+        <div>
+          <h2 id="ana-nome">Ana — quer denunciar sem se expor</h2>
+          <p class="persona-role">29 anos · analista · colaboradora atual</p>
+          <dl class="persona-facts">
+            <div class="fact"><dt>Situação</dt><dd>Sofre assédio moral recorrente de um gestor em reuniões.</dd></div>
+            <div class="fact"><dt>Objetivo</dt><dd>Registrar o que aconteceu <strong>de forma anônima</strong> e com segurança.</dd></div>
+            <div class="fact"><dt>Medo</dt><dd>Ser identificada e sofrer retaliação; não saber por onde começar.</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <p class="flow-title">Fluxo: registrar manifestação anônima</p>
+      <div class="steps">
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-01-home.png"><img src="prints/p1-01-home.png" width="1280" height="860" alt="Página inicial do canal com o botão vermelho Registrar manifestação"></a>
+            <figcaption>
+              <h3><span class="num">1</span> Chega na home</h3>
+              <p>O propósito, as garantias de sigilo e o botão de ação aparecem de cara. A logo Pitang em vermelho ancora a confiança institucional.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-02-antes-de-comecar.png"><img src="prints/p1-02-antes-de-comecar.png" width="1280" height="860" alt="Tela Antes de começar, com o passo a passo das cinco etapas"></a>
+            <figcaption>
+              <h3><span class="num">2</span> Entende o caminho</h3>
+              <p>Antes de pedir qualquer dado, o canal mostra as cinco etapas e reforça: dá para revisar tudo, nada é enviado sem confirmar.</p>
+              <p class="why"><b>Por quê:</b> reduzir a ansiedade de "no que estou me metendo" antes do primeiro campo.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-03-etapa1-identificacao.png"><img src="prints/p1-03-etapa1-identificacao.png" width="1280" height="860" alt="Etapa 1, Identificação, com a opção Anônima selecionada" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">3</span> Etapa 1 · escolhe ser anônima</h3>
+              <p>Seleciona "Anônima". O e-mail é pedido uma vez só, com o motivo colado ao campo: serve apenas para as devolutivas do Comitê.</p>
+              <p class="why"><b>Craft:</b> um ícone-âncora e a barra "Etapa 1 de 6" situam sem sobrecarregar.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-04-etapa2-sobre.png"><img src="prints/p1-04-etapa2-sobre.png" width="1280" height="860" alt="Etapa 2, Sobre a manifestação, com tipo e categoria escolhidos" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">4</span> Etapa 2 · classifica sem pressão</h3>
+              <p>Escolhe tipo e categoria. A frase "na dúvida, escolha qualquer uma — o Comitê ajusta na triagem" tira o peso do acerto jurídico.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-05-etapa3-relato.png"><img src="prints/p1-05-etapa3-relato.png" width="1280" height="860" alt="Etapa 3, Relato, com a descrição do que aconteceu preenchida" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">5</span> Etapa 3 · conta o que aconteceu</h3>
+              <p>O relato é o coração. "Você não precisa anexar provas para registrar" e "datas aproximadas valem" convidam a escrever no seu ritmo.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-06-etapa4-complementares.png"><img src="prints/p1-06-etapa4-complementares.png" width="1280" height="860" alt="Etapa 4, Informações complementares, com todos os campos opcionais" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">6</span> Etapa 4 · complementos (opcional)</h3>
+              <p>Testemunhas, providências e anexos — tudo opcional e sinalizado. Ana segue direto: não é obrigada a nada aqui.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-07-etapa5-expectativa.png"><img src="prints/p1-07-etapa5-expectativa.png" width="1280" height="860" alt="Etapa 5, Sua expectativa, com o campo de expectativa preenchido" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">7</span> Etapa 5 · diz o que espera</h3>
+              <p>Um campo opcional para a expectativa, com o aviso honesto de que orienta o Comitê mas não garante um resultado específico.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p1-08-revisao.png"><img src="prints/p1-08-revisao.png" width="1280" height="860" alt="Tela de revisão com todas as respostas agrupadas e o aceite dos Termos" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">8</span> Revisa e aceita os Termos</h3>
+              <p>Todas as respostas aparecem agrupadas e editáveis. O envio só habilita após o aceite explícito dos Termos (checkbox).</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step full">
+          <figure>
+            <a class="shot" href="prints/p1-09-sucesso.png"><img src="prints/p1-09-sucesso.png" width="1280" height="860" alt="Tela de sucesso com protocolo, código de acesso e botão Copiar tudo" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">9</span> Recebe protocolo e código</h3>
+              <p>Registro confirmado. Um botão "Copiar tudo" guarda protocolo e código de uma vez, e o comprovante pode ser baixado. O aviso é acolhedor, não ameaçador: "por sigilo do seu relato, não emitimos segunda via".</p>
+              <p class="why"><b>Por quê:</b> o momento de maior alívio não pode virar ansiedade — guardar a chave tem que ser um clique.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONA 2 -->
+    <section class="persona" id="carlos" aria-labelledby="carlos-nome">
+      <div class="persona-head">
+        <div class="avatar" aria-hidden="true">C</div>
+        <div>
+          <h2 id="carlos-nome">Carlos — quer saber como está sua manifestação</h2>
+          <p class="persona-role">41 anos · ex-colaborador</p>
+          <dl class="persona-facts">
+            <div class="fact"><dt>Situação</dt><dd>Registrou uma manifestação semanas atrás e guardou o comprovante.</dd></div>
+            <div class="fact"><dt>Objetivo</dt><dd>Consultar o andamento <strong>sem criar conta</strong>, de qualquer dispositivo.</dd></div>
+            <div class="fact"><dt>Medo</dt><dd>Ter que digitar um código longo e errar; achar que "sumiu".</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <p class="flow-title">Fluxo: acompanhar manifestação</p>
+      <div class="steps">
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p2-01-acompanhar.png"><img src="prints/p2-01-acompanhar.png" width="1280" height="860" alt="Tela de acompanhamento com campos de protocolo e código de acesso" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">1</span> Abre "Acompanhar"</h3>
+              <p>Só dois campos: protocolo e código. Sem login, sem conta. O texto avisa que dá para colar o comprovante inteiro.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step">
+          <figure>
+            <a class="shot" href="prints/p2-02-comprovante-colado.png"><img src="prints/p2-02-comprovante-colado.png" width="1280" height="860" alt="Os dois campos preenchidos automaticamente após colar o comprovante" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">2</span> Cola o comprovante</h3>
+              <p>Carlos cola o texto inteiro do comprovante em qualquer campo. O portal reconhece e preenche protocolo e código sozinho — zero transcrição.</p>
+              <p class="why"><b>Craft:</b> resolve o medo do código de 12 caracteres sem tirar a opção de digitar.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="step full">
+          <figure>
+            <a class="shot" href="prints/p2-03-andamento.png"><img src="prints/p2-03-andamento.png" width="1280" height="860" alt="Tela de andamento com status Em apuração e a linha do tempo de devolutivas" loading="lazy"></a>
+            <figcaption>
+              <h3><span class="num">3</span> Vê o andamento</h3>
+              <p>O estado atual ("Em apuração"), as datas e uma linha do tempo com as devolutivas do Comitê. Cada evento tem ícone e rótulo — a cor nunca informa sozinha. A página mostra só o andamento público: o relato e os dados internos ficam protegidos.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RESPONSIVO -->
+  <section class="band" aria-labelledby="mobile-titulo">
+    <div class="wrap">
+      <h2 id="mobile-titulo">No celular, do mesmo jeito</h2>
+      <p class="sub">O canal é usado tanto do computador quanto do telefone. O formulário multietapas, o campo de código e a home se adaptam sem perder nada — mesmos prints, capturados a 390&nbsp;px de largura.</p>
+      <div class="phones">
+        <div class="phone">
+          <figure>
+            <a href="prints/m-03-home-mobile.png"><img src="prints/m-03-home-mobile.png" width="390" height="844" alt="Home no celular" loading="lazy"></a>
+            <figcaption>Home — hero e CTA empilhados</figcaption>
+          </figure>
+        </div>
+        <div class="phone">
+          <figure>
+            <a href="prints/m-01-relato-mobile.png"><img src="prints/m-01-relato-mobile.png" width="390" height="844" alt="Etapa de relato no celular" loading="lazy"></a>
+            <figcaption>Relato — textarea confortável</figcaption>
+          </figure>
+        </div>
+        <div class="phone">
+          <figure>
+            <a href="prints/m-02-acompanhar-mobile.png"><img src="prints/m-02-acompanhar-mobile.png" width="390" height="844" alt="Acompanhamento no celular com os 12 campos do código em uma linha" loading="lazy"></a>
+            <figcaption>Código — 12 campos numa linha só</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <h2>Como este roteiro foi feito</h2>
+      <ul>
+        <li><b>Teste real, não mockup:</b> um script (<code>docs/personas/capture.mjs</code>) abriu o portal no navegador, preencheu o formulário de verdade e fotografou cada passo.</li>
+        <li><b>Identidade Pitang:</b> logo institucional vermelha em todo o portal; a cor de ação usa o vermelho da marca no degrau acessível (contraste AA medido &ge;&nbsp;4,5:1 com texto branco).</li>
+        <li><b>Auxílios ao usuário:</b> ícones-âncora por etapa, helpers que orientam sem pressionar, "Copiar tudo" e colar-comprovante, spot illustrations nos momentos-chave.</li>
+        <li><b>Acessibilidade:</b> foco visível, navegação por teclado, cor nunca comunica sozinha, alvos de toque confortáveis no celular.</li>
+      </ul>
+      <p class="meta">Para regenerar os prints após mudanças: suba o dev server (porta 5179) e rode <code>node docs/personas/capture.mjs</code>. Canal de Ética e Ouvidoria Pitang · documento interno de validação de UX.</p>
+    </div>
+  </footer>
+</body>
+</html>

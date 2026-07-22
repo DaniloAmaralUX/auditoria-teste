@@ -9,7 +9,7 @@ O design system vive no próprio app, em **`/design`** (código em `src/app/desi
 Regras inegociáveis (detalhes e demos no guia):
 
 - **Tokens só via CSS variables** em `src/index.css` (oklch, Tailwind v4 `@theme` — não existe tailwind.config). Nunca cor hardcoded em componente.
-- **Neutros papel quente**; o **laranja Pitang é o único acento de ação** (CTA, link, estado ativo, progresso). Se não é ação nem estado, é neutro. Vermelho `#ED1C24` = marca + destructive, nunca acento de UI. Azul = informacional.
+- **Neutros papel quente**; o **vermelho Pitang é o único acento de ação** (CTA, link, estado ativo, progresso) — no degrau AA `oklch(0.58 0.21 28)`, o passo acessível mais próximo do `#ED1C24` da marca (que dá 4.27:1 e reprova com branco). Se não é ação nem estado, é neutro. Como erros compartilham o matiz, **cor nunca comunica erro sozinha** (ícone + texto sempre). Azul = informacional. Logo institucional **sempre vermelha**.
 - **Zero gradientes.** Superfícies planas; variação por papel/muted/bordas.
 - **Borda 1px no lugar de sombra** em cards de fluxo; sombra só em overlays (select, sheet, popover).
 - **Radius base 8px** (`rounded-lg` em controles, `rounded-xl` em cards). Pill apenas em badges de status e barras de progresso.

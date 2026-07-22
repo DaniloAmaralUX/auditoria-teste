@@ -2,10 +2,13 @@ import * as React from "react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { IconTile } from "@/components/ui/icon-tile"
 
 type QuestionScreenProps = {
   /** A pergunta, literal, em linguagem humana — vira o h1 da tela. */
   question: string
+  /** Âncora visual da etapa (ícone lucide, strokeWidth 1.75) — ajuda a situar. */
+  icon?: React.ReactNode
   /** Apoio curto sob a pergunta (tom acolhedor; termina orientando, não pressionando). */
   helper?: React.ReactNode
   /** Zona única de resposta (um campo, um grupo de RadioCards…). */
@@ -32,6 +35,7 @@ type QuestionScreenProps = {
  */
 export function QuestionScreen({
   question,
+  icon,
   helper,
   children,
   onBack,
@@ -61,6 +65,11 @@ export function QuestionScreen({
 
   return (
     <form noValidate onSubmit={onSubmit}>
+      {icon ? (
+        <IconTile className="mb-4">
+          {icon}
+        </IconTile>
+      ) : null}
       <h1
         ref={headingRef}
         tabIndex={-1}
@@ -93,7 +102,7 @@ export function QuestionScreen({
             type="submit"
             disabled={submitting}
             aria-busy={submitting}
-            className="sm:min-w-44"
+            className="min-h-11 sm:min-h-9 sm:min-w-44"
           >
             {nextLabel}
             <ArrowRight aria-hidden className="size-4" />

@@ -1,6 +1,7 @@
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
+import { Tags } from "lucide-react"
 
 import {
   Form,
@@ -70,6 +71,7 @@ export function SobreStep() {
   return (
     <QuestionScreen
       question="Sobre a manifestação"
+      icon={<Tags aria-hidden strokeWidth={1.75} />}
       helper="Essas escolhas ajudam o Comitê a direcionar a triagem. Escolha o mais próximo do seu caso — não precisa ser exato, o Comitê ajusta na análise."
       onSubmit={onSubmit}
       onBack={onBack}

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
+import { Paperclip } from "lucide-react"
 
 import {
   Form,
@@ -45,6 +46,7 @@ export function ComplementaresStep() {
   return (
     <QuestionScreen
       question="Informações complementares"
+      icon={<Paperclip aria-hidden strokeWidth={1.75} />}
       helper="Tudo nesta etapa é opcional — acrescente o que puder ajudar na apuração e siga em frente quando quiser."
       onSubmit={onSubmit}
       onBack={onBack}

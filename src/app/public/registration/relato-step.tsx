@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
+import { MessageSquareText } from "lucide-react"
 
 import {
   Form,
@@ -46,6 +47,7 @@ export function RelatoStep() {
   return (
     <QuestionScreen
       question="Relato"
+      icon={<MessageSquareText aria-hidden strokeWidth={1.75} />}
       helper="Conte o que aconteceu com suas palavras, pouco ou muito. Você não precisa anexar provas para registrar — e pode revisar tudo antes de enviar."
       onSubmit={onSubmit}
       onBack={onBack}

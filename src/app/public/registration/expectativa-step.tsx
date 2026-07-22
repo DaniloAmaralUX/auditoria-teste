@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
+import { Goal } from "lucide-react"
 
 import {
   Form,
@@ -44,6 +45,7 @@ export function ExpectativaStep() {
   return (
     <QuestionScreen
       question="Sua expectativa"
+      icon={<Goal aria-hidden strokeWidth={1.75} />}
       helper="Se quiser, conte o que você espera deste canal — ajuda o Comitê a entender o caso."
       onSubmit={onSubmit}
       onBack={onBack}

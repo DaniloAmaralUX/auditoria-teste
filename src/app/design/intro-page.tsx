@@ -72,7 +72,7 @@ const principles = [
   },
   {
     title: "Um acento só",
-    text: "O laranja Pitang marca ação e estado: CTAs, links, item ativo, progresso. Nunca decoração.",
+    text: "O vermelho Pitang marca ação e estado: CTAs, links, item ativo, progresso. Nunca decoração.",
   },
   {
     title: "Zero gradientes",
@@ -80,7 +80,7 @@ const principles = [
   },
   {
     title: "Papel quente",
-    text: "Neutros com leve temperatura (à la Notion/Perplexity) harmonizam com o laranja e acalmam a leitura.",
+    text: "Neutros com leve temperatura (à la Notion/Perplexity) harmonizam com o vermelho e acalmam a leitura.",
   },
   {
     title: "Geometria precisa",

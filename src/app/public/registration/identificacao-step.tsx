@@ -1,6 +1,7 @@
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
+import { UserRound } from "lucide-react"
 
 import {
   Form,
@@ -60,6 +61,7 @@ export function IdentificacaoStep() {
   return (
     <QuestionScreen
       question="Identificação"
+      icon={<UserRound aria-hidden strokeWidth={1.75} />}
       helper="Escolha como quer registrar — a decisão é sua, e nos dois modos o relato recebe o mesmo sigilo."
       onSubmit={onSubmit}
       onBack={onBack}

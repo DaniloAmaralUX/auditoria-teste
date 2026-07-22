@@ -6,13 +6,14 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Direção "elegância por contenção" (referências: Notion, Perplexity, Vercel/Geist).
-   Paleta em MATRIZES DO MESMO MATIZ (método oklch.fyi: lightness consistente,
-   shades previsíveis, hue constante). Âncora = matiz do laranja Pitang #ff8000
-   (hue ~54): a ação usa o degrau 0.57/0.17 (suporta texto BRANCO com AA 4.6:1 —
-   fim do texto escuro no CTA); os neutros são o mesmo matiz dessaturado (papel
-   âmbar vivo, croma 0.009-0.035). Azul #0099ff informacional; vermelho #ed1c24
-   reservado à marca e ao destructive. Todos os pares texto/fundo medidos
-   AA >= 4.5. Zero gradientes; bordas 1px planas; radius 8px; Inter única. */
+   Âncora de ação = o VERMELHO Pitang #ed1c24 (oklch ~0.583/0.227/28): a ação usa
+   o degrau AA mais próximo da marca — 0.58/0.21/28, texto BRANCO 4.63:1 (o
+   vermelho puro dá 4.27 e reprova). Links no degrau 0.54 (AA até sobre muted).
+   Neutros papel âmbar quente como contraponto (método oklch.fyi: degraus
+   previsíveis). Azul #0099ff informacional; erros compartilham o matiz da marca
+   e por isso NUNCA comunicam só por cor (ícone + texto sempre, RNF-007).
+   Todos os pares texto/fundo medidos AA >= 4.5. Zero gradientes; bordas 1px
+   planas; radius 8px; Inter única. */
 :root {
     --background: oklch(0.982 0.009 78);
     --foreground: oklch(0.31 0.035 55);
@@ -20,11 +21,11 @@
     --card-foreground: oklch(0.24 0.03 55);
     --popover: oklch(0.995 0.006 80);
     --popover-foreground: oklch(0.31 0.035 55);
-    /* Degrau de ação da matriz: laranja queimado vivo, texto branco AA. */
-    --primary: oklch(0.57 0.17 54);
+    /* Degrau de ação: o vermelho Pitang no passo AA (marca é 0.583 — reprova). */
+    --primary: oklch(0.58 0.21 28);
     --primary-foreground: oklch(0.99 0.005 85);
-    /* Degrau de texto da matriz (links): AA >= 4.5 até sobre --muted. */
-    --primary-text: oklch(0.53 0.165 54);
+    /* Degrau de texto (links): AA >= 4.5 até sobre --muted. */
+    --primary-text: oklch(0.54 0.20 28);
     --secondary: oklch(0.925 0.028 70);
     --secondary-foreground: oklch(0.40 0.05 55);
     --muted: oklch(0.936 0.022 74);
@@ -36,7 +37,7 @@
     --destructive: oklch(0.577 0.245 27.325);
     --border: oklch(0.884 0.024 72);
     --input: oklch(0.884 0.024 72);
-    --ring: oklch(0.57 0.17 54);
+    --ring: oklch(0.58 0.21 28);
     --chart-1: oklch(0.5583 0.1276 42.9956);
     --chart-2: oklch(0.6898 0.1581 290.4107);
     --chart-3: oklch(0.8816 0.0276 93.128);
@@ -45,12 +46,12 @@
     --radius: 0.5rem;
     --sidebar: oklch(0.968 0.011 78);
     --sidebar-foreground: oklch(0.35 0.03 55);
-    --sidebar-primary: oklch(0.57 0.17 54);
+    --sidebar-primary: oklch(0.58 0.21 28);
     --sidebar-primary-foreground: oklch(0.99 0.005 85);
     --sidebar-accent: oklch(0.925 0.028 70);
     --sidebar-accent-foreground: oklch(0.31 0.035 55);
     --sidebar-border: oklch(0.884 0.024 72);
-    --sidebar-ring: oklch(0.57 0.17 54);
+    --sidebar-ring: oklch(0.58 0.21 28);
 
     /* Tokens semânticos de status — workflow (PRD RF-023: 5 canônicos) + auxiliares.
        Não dependem só de cor: sempre acompanhados de rótulo/ícone (RNF-007). */
@@ -76,9 +77,9 @@
     --card-foreground: oklch(0.975 0.008 80);
     --popover: oklch(0.31 0.022 58);
     --popover-foreground: oklch(0.93 0.01 75);
-    --primary: oklch(0.57 0.17 54);
+    --primary: oklch(0.58 0.21 28);
     --primary-foreground: oklch(0.99 0.005 85);
-    --primary-text: oklch(0.76 0.16 58);
+    --primary-text: oklch(0.68 0.19 28);
     --secondary: oklch(0.31 0.022 58);
     --secondary-foreground: oklch(0.92 0.012 75);
     --muted: oklch(0.222 0.016 58);
@@ -89,7 +90,7 @@
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(0.365 0.025 58);
     --input: oklch(0.43 0.028 58);
-    --ring: oklch(0.72 0.15 55);
+    --ring: oklch(0.68 0.19 28);
     --chart-1: oklch(0.5583 0.1276 42.9956);
     --chart-2: oklch(0.6898 0.1581 290.4107);
     --chart-3: oklch(0.213 0.0078 95.4245);
@@ -97,12 +98,12 @@
     --chart-5: oklch(0.5608 0.1348 42.0584);
     --sidebar: oklch(0.235 0.016 58);
     --sidebar-foreground: oklch(0.81 0.02 70);
-    --sidebar-primary: oklch(0.57 0.17 54);
+    --sidebar-primary: oklch(0.58 0.21 28);
     --sidebar-primary-foreground: oklch(0.99 0.005 85);
     --sidebar-accent: oklch(0.20 0.014 58);
     --sidebar-accent-foreground: oklch(0.81 0.02 70);
     --sidebar-border: oklch(0.365 0.025 58);
-    --sidebar-ring: oklch(0.72 0.15 55);
+    --sidebar-ring: oklch(0.68 0.19 28);
 
     --status-received: oklch(0.7 0.15 240);
     --status-analysis: oklch(0.75 0.14 90);

@@ -35,7 +35,7 @@ export default function BrandPage() {
 
       <GuideSection
         title="Aplicação no portal"
-        description="Aplicada no repasse: monocromática no header (o vermelho ao lado de CTAs laranja criaria disputa), institucional vermelha no footer e em documentos, onde não há ação por perto."
+        description="Decisão vigente (2026-07-22): a logo institucional VERMELHA aparece em todo o portal — header, footer e documentos. Como a cor de ação adotou o matiz da marca (ver /design/cores), logo e CTA pertencem à mesma família e não disputam. A monocromática fica reservada a contextos de baixíssimo contraste."
       >
         <div className="space-y-4">
           <div className="overflow-hidden rounded-xl border">
@@ -82,9 +82,9 @@ export default function BrandPage() {
       <GuideSection title="Regras">
         <RuleList
           items={[
-            { do: true, text: "logo monocromática quando houver CTA ou acento laranja no mesmo campo visual." },
-            { do: true, text: "versão vermelha em footer, documentos, e-mails e peças institucionais." },
-            { do: false, text: "recolorir a logo de laranja ou usar o vermelho da marca como acento de interface." },
+            { do: true, text: "logo institucional vermelha em todo o portal — header, footer, documentos e e-mails." },
+            { do: true, text: "monocromática somente onde o vermelho não tiver contraste (superfícies escuras saturadas)." },
+            { do: false, text: "recolorir a logo com o degrau de ação — a marca usa o #ED1C24 oficial, sempre." },
             { do: false, text: "aplicar a logo sobre foto, gradiente ou superfície de baixo contraste." },
           ]}
         />

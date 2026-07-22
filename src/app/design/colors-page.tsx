@@ -38,10 +38,10 @@ const neutrals: Swatch[] = [
 ]
 
 const accents: Swatch[] = [
-  { token: "primary", light: "oklch(0.57 0.17 54)", bg: "bg-primary", note: "Degrau de ação da matriz — laranja queimado com texto BRANCO (AA 4.6:1)." },
-  { token: "primary-text", light: "oklch(0.53 0.165 54)", bg: "bg-primary-text", note: "Degrau de texto — links AA ≥ 4.5 até sobre muted." },
+  { token: "primary", light: "oklch(0.58 0.21 28)", bg: "bg-primary", note: "O vermelho Pitang no degrau AA — texto BRANCO 4.63:1 (a marca pura reprova)." },
+  { token: "primary-text", light: "oklch(0.54 0.20 28)", bg: "bg-primary-text", note: "Degrau de texto — links AA ≥ 4.5 até sobre muted." },
   { token: "info", light: "oklch(0.55 0.15 245)", bg: "bg-info", note: "Azul Pitang — estritamente informacional." },
-  { token: "destructive", light: "oklch(0.577 0.245 27)", bg: "bg-destructive", note: "Vermelho — destrutivo e erros. Compartilha o matiz da marca." },
+  { token: "destructive", light: "oklch(0.577 0.245 27)", bg: "bg-destructive", note: "Erros — mesmo matiz da ação, por isso erro NUNCA comunica só por cor (ícone + texto)." },
 ]
 
 const statuses: Swatch[] = [
@@ -59,7 +59,7 @@ export default function ColorsPage() {
       <PageHeader
         eyebrow="Fundações"
         title="Cores"
-        lede="Matrizes do mesmo matiz (método oklch.fyi: lightness consistente, shades previsíveis, hue constante). A âncora é o matiz do laranja Pitang (hue ~54): a ação usa o degrau 0.57 — que suporta texto branco com AA — e os neutros são o mesmo matiz dessaturado, do papel ao café. Todos os pares texto/fundo medidos AA ≥ 4.5 nos dois temas."
+        lede="A âncora de ação é o vermelho Pitang #ED1C24 no seu degrau acessível: a marca pura dá 4.27:1 com branco e reprova; a ação usa oklch(0.58 0.21 28) — visualmente o mesmo vermelho, AA 4.63:1 medido. Links no degrau 0.54 (AA até sobre muted). Neutros papel âmbar quente como contraponto. Todos os pares texto/fundo medidos AA ≥ 4.5 nos dois temas."
       />
 
       <GuideSection title="Neutros" description="A temperatura quente é sutil de propósito: percebe-se o conforto, não a cor.">

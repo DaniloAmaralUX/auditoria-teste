@@ -42,6 +42,7 @@ const CODE_PATTERN = /\b[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\b/i
 
 export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   const [error, setError] = React.useState<string | null>(null)
+  const [pasted, setPasted] = React.useState(false)
   const errorRef = React.useRef<HTMLDivElement>(null)
 
   const form = useForm<TrackingLookupValues>({
@@ -85,12 +86,11 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
   }
 
   const submitting = form.formState.isSubmitting
-  const [pasted, setPasted] = React.useState(false)
 
   /**
-   * Colar o comprovante inteiro preenche os dois campos — zero transcrição
-   * (ADR fluxo-conversacional; "nunca bloquear paste" segue valendo: só
-   * interceptamos quando o texto contém protocolo E código).
+   * Colar o comprovante inteiro preenche os dois campos — zero transcrição.
+   * "Nunca bloquear paste" segue valendo: só interceptamos quando o texto
+   * contém protocolo E código.
    */
   const onPasteReceipt = (e: React.ClipboardEvent<HTMLDivElement>) => {
     const text = e.clipboardData.getData("text")
@@ -126,7 +126,7 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
         {pasted ? "Protocolo e código preenchidos a partir do comprovante colado." : ""}
       </span>
 
-      <div className="bg-card mt-6 rounded-xl border p-6 sm:p-8">
+      <div className="bg-card mt-6 rounded-xl border p-4 sm:p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="space-y-6">
             {error ? (
@@ -177,21 +177,36 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
                     pattern="[A-Za-z0-9]*"
                     aria-label="Código de acesso, 12 caracteres em três grupos de quatro"
                   >
+                    {/* 12 slots não cabem em 375px no tamanho cheio: no mobile os
+                        slots encolhem e os separadores saem (o hífen é visual,
+                        não semântico — colar continua aceitando com hífens). */}
                     <InputOTPGroup>
                       {[0, 1, 2, 3].map((i) => (
-                        <InputOTPSlot key={i} index={i} />
+                        <InputOTPSlot
+                          key={i}
+                          index={i}
+                          className="size-6 text-xs sm:size-9 sm:text-sm"
+                        />
                       ))}
                     </InputOTPGroup>
-                    <InputOTPSeparator />
+                    <InputOTPSeparator className="hidden sm:flex" />
                     <InputOTPGroup>
                       {[4, 5, 6, 7].map((i) => (
-                        <InputOTPSlot key={i} index={i} />
+                        <InputOTPSlot
+                          key={i}
+                          index={i}
+                          className="size-6 text-xs sm:size-9 sm:text-sm"
+                        />
                       ))}
                     </InputOTPGroup>
-                    <InputOTPSeparator />
+                    <InputOTPSeparator className="hidden sm:flex" />
                     <InputOTPGroup>
                       {[8, 9, 10, 11].map((i) => (
-                        <InputOTPSlot key={i} index={i} />
+                        <InputOTPSlot
+                          key={i}
+                          index={i}
+                          className="size-6 text-xs sm:size-9 sm:text-sm"
+                        />
                       ))}
                     </InputOTPGroup>
                   </InputOTP>
@@ -218,7 +233,7 @@ export function TrackingLookupForm({ onSuccess }: TrackingLookupFormProps) {
 
             <Button
               type="submit"
-              className="w-full"
+              className="min-h-11 w-full sm:min-h-9"
               disabled={submitting}
               aria-busy={submitting}
             >
